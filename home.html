@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Instarent</title>
+
+		<!-- Bootstrap CSS -->
+		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<link href="custom-div.css" rel="stylesheet">	
+				<script src="jquery.js"></script>
+				<script src="hide_modal.js"></script>
+		<!-- Bootstrap JavaScript -->
+		<script src="bootstrap/js/bootstrap.min.js"></script>
+
+
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+		
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+			<![endif]-->
+		
+
+
+	</head>
+
+	<body>
+
+
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<a class="navbar-brand" href="//localhost">InstaRent</a>
+	<ul class="nav navbar-nav navbar-right">
+		<li >
+			<a href="#login" data-toggle ="modal">Log In</a>
+		</li>
+		<li>
+			<a href="#signup" data-toggle ="modal">Sign Up </a>
+		</li>
+		<li> &nbsp &nbsp &nbsp</li>
+	</ul>
+</nav>
+
+
+
+
+
+
+
+
+<div class="modal fade bs-example-modal-sm" id="signup">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+			</div>
+			<div class="modal-body">
+				<form action="" method="POST" role="form">
+					
+				<center><legend>Sign up using email</legend></center>
+					<div class="form-group">
+
+						<div class="input-group">
+    						<input type="text" class="form-control" id="fname" placeholder="First name" required="required">
+    						<span class="input-group-addon">
+        					<i class="glyphicon glyphicon-user"></i>
+    						</span>
+					</div>
+						<br>
+						<div class="input-group">
+    						<input type="text" required="required"class="form-control" id="sname" placeholder="Surname">
+    						<span class="input-group-addon">
+        					<i class="glyphicon glyphicon-user"></i>
+    						</span>
+					</div>
+<br>
+						<div class="input-group">
+    						<input type="text" required="required" class="form-control" id="" placeholder="Email address">
+    						<span class="input-group-addon">
+        					<i>@</i>
+    						</span>
+					</div>
+<br>
+						<div class="input-group">
+    						<input type="text" required="required" class="form-control" id="" placeholder="Password">
+    						<span class="input-group-addon">
+        					<i class="glyphicon glyphicon-lock"></i>
+    						</span>
+					</div>						
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" value="">
+								I'd like to receive coupons and inspiration
+							</label>
+						</div>
+					</div>
+				
+					
+				
+					<button type="submit" class="btn btn-primary">Sign up</button>
+				</form>
+				
+			</div>
+			<div class="modal-footer">
+				Already an Instarent member? <a href="#">Log in</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Login Section -->
+
+<div class="modal fade bs-example-modal-sm" id="login">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+			</div>
+			<div class="modal-body">
+				<form action="login.php" method="POST" role="form">
+					
+				<center><legend>Log In using Email</legend></center>
+					<div class="form-group">
+<br>
+						<div class="input-group">
+    						<input type="text" required="required" class="form-control" id="" placeholder="Email address">
+    						<span class="input-group-addon">
+        					<i>@</i>
+    						</span>
+					</div>
+<br>
+						<div class="input-group">
+    						<input type="text" required="required" class="form-control" id="" placeholder="Password">
+    						<span class="input-group-addon">
+        					<i class="glyphicon glyphicon-lock"></i>
+    						</span>
+					</div>						
+<br>				
+					<a href="#" data-toggle="" ><center>Forgot password</center></a>
+					<br>
+
+					<button type="submit" class="btn btn-primary ">Log In</button>
+				</form>
+				
+			</div>
+			<div class="modal-footer" >
+				Don't have an account? <a href="#signup" data-toggle="modal">Sign up</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+</body>
+</html>
