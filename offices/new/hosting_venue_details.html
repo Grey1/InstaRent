@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="" ng-app="AppController">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Instarent</title>
+
+		<!-- Bootstrap CSS -->
+		<link href="../../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<link href="../../custom-div.css" rel="stylesheet">	
+				<script src="../../jquery.js"></script>
+				<script src="../../hide_modal.js"></script>
+		<!-- Bootstrap JavaScript -->
+		<script src="../../bootstrap/js/bootstrap.min.js"></script>
+		<script src="../../bootstrap/js/ui-bootstrap.min.js"></script>
+		
+		
+		<script src = "../../Angular/js/angular.min.js"></script>
+    	<script src="app.js"></script>
+	</head>
+<body>
+
+<!-- Header -->
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<a class="navbar-brand" href="//localhost">InstaRent</a>
+	<ul class="nav navbar-nav navbar-right">
+		<li>
+			<a href="#">Host a Space</a>
+		</li>
+		<li>
+			<a href="#" >Messages &nbsp <img src ="../../member/message.png" class="img-rounded">  </a>
+
+		</li>
+		<li>
+			<a href="#" > <img src="../../member/button_round_blue.jpg" alt="" class="img-circle"> </a>
+		</li>
+
+		<li> &nbsp &nbsp &nbsp</li>
+	</ul>
+</nav>	
+
+<div class="well">
+	<div class="row" ng-controller="PanelController as panel">
+		<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+			<div class="panel panel-default">
+				<div class="panel-body" id ="top-menu">
+				   
+					<ul class="nav nav-pills nav-stacked">
+						<p claas="pull-right" style="color:#C0C0C0" > Listing </p>
+  						<li role="presentation" ng-class = "{current:panel.isSelected(1)}"><a href ng-click="panel.selectTab(1)" style="color:#808080" >Venue description <p class="pull-right">  <span class="glyphicon glyphicon-plus" aria-hidden="true"> </span> </p> </a></li>
+  						<li role="presentation" ng-class = "{current:panel.isSelected(2)}" ><a href ng-click="panel.selectTab(2)"style="color:#808080">Location <p class="pull-right">  <span class="glyphicon glyphicon-plus" aria-hidden="true"> </span> </p> </a></li>
+  						<li role="presentation" ng-class = "{current:panel.isSelected(3)}" ><a href ng-click="panel.selectTab(3)" style="color:#808080">Workspaces <p class="pull-right">  <span class="glyphicon glyphicon-plus" aria-hidden="true"> </span> </p> </a></li>
+  						
+  						<li role="presentation" ng-class = "{current:panel.isSelected(4)}"><a href ng-click="panel.selectTab(4)" style="color:#808080">Photos <p class="pull-right">  <span class="glyphicon glyphicon-plus" aria-hidden="true"> </span> </p> </a></li>
+  						<li role="presentation" ng-class = "{current:panel.isSelected(5)}" ><a href ng-click="panel.selectTab(5)" style="color:#808080">Amenities  </a></li>
+  						 <p claas="pull-right" style="color:#C0C0C0" > Hosting </p>
+  						<li role="presentation" ng-class = "{current:panel.isSelected(6)}" ><a href ng-click="panel.selectTab(6)" style="color:#808080">Pricing <p class="pull-right">  <span class="glyphicon glyphicon-plus" aria-hidden="true"> </span> </p> </a></li>
+  						<li role="presentation" ng-class = "{current:panel.isSelected(7)}" ><a href ng-click="panel.selectTab(7)" style="color:#808080">Calendar <p class="pull-right">  <span class="glyphicon glyphicon-plus" aria-hidden="true"> </span> </p> </a></li>
+  						<li role="presentation" ng-class = "{current:panel.isSelected(8)}"><a href ng-click="panel.selectTab(8)" style="color:#808080">Reservation <p class="pull-right">  <span class="glyphicon glyphicon-plus" aria-hidden="true"> </span> </p> </a></li>
+					</ul>
+
+				</div>
+				<div class="jumbotron " style="padding:20px"> Complete <i class="lead"><strong> 7 steps</strong></i> &nbsp for hosting your space
+				</div>
+			</div>
+		</div>
+
+		<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+			<div class="panel panel-info" ng-show="panel.isSelected(1)">
+				<div class="panel-heading">
+					<h3 class="panel-title lead text-center" style="padding:35px"> Give details about your space </h3>
+				</div>
+				<div class="panel-body" >										
+					<label> Description </label>
+					<textarea name="description" id="input" class="form-control" rows="4" required="required"></textarea><br>
+					<label> Venue type </label>
+					<select name="" id="type" class="form-control" required="required">
+						<option value="1">Business Centre</option>
+						<option value="2">Corporate Office</option>
+						<option value="3">Coworking Office</option>
+						<option value="4">Hotel</option>
+						<option value="5">Startup Office</option>
+						<option value="6">Studio</option>
+					</select><br>
+					
+					<label> Number of floors </label>
+					<input type="number" name="num_floors" id="num_floors" class="form-control" value="" min="{5"} max="" step="" required title=""><br>
+					<label> Floor Area </label>
+					<input type="number" name="floor_area" id="floor_area" class="form-control" value="" min="{5"} max="" step="" title=""><br>
+					<label> Number of rooms </label>
+					<input type="number" name="num_rooms" id="num_rooms" class="form-control" value="" min="{5"} max="" step="" required="required" title=""><br>
+					<label>  Number of desks </label>
+					<input type="number" name="num_desk" id="num_desk" class="form-control" value="" min="{5"} max="" step="" required="required" title=""><br>
+				</div>
+			</div>
+		</div>
+<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+			<div class="panel panel-info" ng-show="panel.isSelected(2)">
+				<div class="panel-heading">
+					<h3 class="panel-title lead text-center" style="padding:35px"> Set your listing location </h3>
+				</div>
+				<div class="panel-body" >							
+					<label for="addr" >Address</label>
+					<input type="text" name="" id="addr" class="form-control" value="" required="required" >
+					<br>
+					<label for="neighbourhood" >Neighbourhood</label>
+					<input type="text" name="neighbourhood" id="neighbourhood" class="form-control" value="" required="required" >
+					<br>
+					<label for="number" >Telephone number</label>
+					<input type="tel" name="" id="number" class="form-control" value="" required="required" title="">
+					<br>
+					<label for="email" >General email</label>
+					<input type="email" name="" id="email" class="form-control" value=""  title="">
+					<br>
+					<label for="website" >Website</label>
+					<input type="url" name="" id="website" class="form-control" value=""  title="">
+				
+				</div>
+			</div>
+		</div>		
+
+
+		<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+			<div class="panel panel-info" ng-show="panel.isSelected(3)">
+				<div class="panel-heading">
+					<h3 class="panel-title lead text-center" style="padding:35px"> Spaces are physical areas that can be booked in your venue</h3>
+				</div>
+				<div class="panel-body" >				
+					<label for="name">Space type</label>	
+					<select name="" id="input" class="form-control" required="required">
+						<option value=""></option>
+					</select>
+					<label for="name">Space name</label>						
+					<input type="text" name="space_name" id="name" class="form-control" value="" required="required"  title="">
+
+					<label for="name">Number of similar spaces</label>						
+					<input type="number" name="" id="input" class="form-control" value="" min="{5"} max="" step="" required="required" title="">
+
+					<label for="name">Description</label>						
+					<textarea name="" id="input" class="form-control" rows="3" required="required"></textarea>
+
+
+				</div>
+
+
+			</div>
+		</div>
+
+		<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+			<div class="panel panel-info" ng-show="panel.isSelected(6)">
+				<div class="panel-heading">
+					<h4 class="panel-title lead text-center" style="padding:35px"> Set a Price for your space  </h4>
+				</div>
+				<div class="panel-body" >										
+					<label for="name">Per hour</label>	
+					<div class="input-group">
+    					<span class="input-group-addon">
+        					<i>INR</i>
+    					</span>
+    				
+						<input type="number" name="" id="input" class="form-control" value="" min="{5"} max="" step="" required="required" title="">
+					</div>
+					<br>
+					<label for="name">Per day</label>	
+					<div class="input-group">
+    					<span class="input-group-addon">
+        					<i>INR</i>
+    					</span>
+    				
+						<input type="number" name="" id="input" class="form-control" value="" min="{5"} max="" step="" required="required" title="">
+					</div>
+					<br>
+					<label for="name">Per month</label>	
+					<div class="input-group">
+    					<span class="input-group-addon">
+        					<i>INR</i>
+    					</span>
+    					<input type="number" name="" id="input" class="form-control" value="" min="{5"} max="" step="" required="required" title="">
+    				</div>
+					
+				</div>
+			</div>
+		</div>
+
+		<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+			<div class="panel panel-info" ng-show="panel.isSelected(7)">
+				<div class="panel-heading">
+					<h4 class="panel-title lead text-center" style="padding:35px"> Opening hours  </h4>
+				</div>
+				<div class="panel-body" >										
+					<p> Monday-Friday </p>		
+
+					<select name="from" id="from_time" class="form-control" required="required">
+
+<option value="1">00:00</option>
+<option value="2">00:30</option>
+<option value="3">01:00</option>
+<option value="4">01:30</option>
+<option value="5">02:00</option>
+<option value="6">02:30</option>
+<option value="7">03:00</option>
+<option value="8">03:30</option>
+<option value="9">04:00</option>
+<option value="10">04:30</option>
+<option value="11">05:00</option>
+<option value="12">05:30</option>
+<option value="13">06:00</option>
+<option value="14">06:30</option>
+<option value="15">07:00</option>
+<option value="16">07:30</option>
+<option value="17">08:00</option>
+<option value="18">08:30</option>
+<option value="19">09:00</option>
+<option value="20">09:30</option>
+<option value="21">10:00</option>
+<option value="22">10:30</option>
+<option value="23">11:00</option>
+<option value="24">11:30</option>
+<option value="25">12:00</option>
+<option value="26">12:30</option>
+<option value="27">13:00</option>
+<option value="28">13:30</option>
+<option value="29">14:00</option>
+<option value="30">14:30</option>
+<option value="31">15:00</option>
+<option value="32">15:30</option>
+<option value="33">16:00</option>
+<option value="34">16:30</option>
+<option value="35">17:00</option>
+<option value="36">17:30</option>
+<option value="37">18:00</option>
+<option value="38">18:30</option>
+<option value="39">19:00</option>
+<option value="40">19:30</option>
+<option value="41">20:00</option>
+<option value="42">20:30</option>
+<option value="43">21:00</option>
+<option value="44">21:30</option>
+<option value="45">22:00</option>
+<option value="46">22:30</option>
+<option value="47">23:00</option>
+<option value="48">23:30</option>
+
+					</select>
+					
+					<select name="to" id="to_time" class="form-control" required="required">
+<option value="1">00:00</option>
+<option value="2">00:30</option>
+<option value="3">01:00</option>
+<option value="4">01:30</option>
+<option value="5">02:00</option>
+<option value="6">02:30</option>
+<option value="7">03:00</option>
+<option value="8">03:30</option>
+<option value="9">04:00</option>
+<option value="10">04:30</option>
+<option value="11">05:00</option>
+<option value="12">05:30</option>
+<option value="13">06:00</option>
+<option value="14">06:30</option>
+<option value="15">07:00</option>
+<option value="16">07:30</option>
+<option value="17">08:00</option>
+<option value="18">08:30</option>
+<option value="19">09:00</option>
+<option value="20">09:30</option>
+<option value="21">10:00</option>
+<option value="22">10:30</option>
+<option value="23">11:00</option>
+<option value="24">11:30</option>
+<option value="25">12:00</option>
+<option value="26">12:30</option>
+<option value="27">13:00</option>
+<option value="28">13:30</option>
+<option value="29">14:00</option>
+<option value="30">14:30</option>
+<option value="31">15:00</option>
+<option value="32">15:30</option>
+<option value="33">16:00</option>
+<option value="34">16:30</option>
+<option value="35">17:00</option>
+<option value="36">17:30</option>
+<option value="37">18:00</option>
+<option value="38">18:30</option>
+<option value="39">19:00</option>
+<option value="40">19:30</option>
+<option value="41">20:00</option>
+<option value="42">20:30</option>
+<option value="43">21:00</option>
+<option value="44">21:30</option>
+<option value="45">22:00</option>
+<option value="46">22:30</option>
+<option value="47">23:00</option>
+<option value="48">23:30</option>
+					</select>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+			<div class="panel panel-info" ng-show="panel.isSelected(8)">
+				<div class="panel-heading">
+					<h4 class="panel-title lead text-center" style="padding:35px"> Opening hours  </h4>
+				</div>
+				<div class="panel-body" >	
+
+				</div>
+			</div>
+		</div>
+
+
+
+
+		<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+			
+			
+		</div>
+	</div>
+</div>

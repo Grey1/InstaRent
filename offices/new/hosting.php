@@ -3,9 +3,11 @@
   
    
    if(isset($_POST['submit'])){
-    header("location:test.html");
+    header("location:hosting_venue_details.html");
 
 }
+
+
 
 
    

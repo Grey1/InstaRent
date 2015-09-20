@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="" ng-app="AppController">
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,7 +13,8 @@
 				<script src="../../hide_modal.js"></script>
 		<!-- Bootstrap JavaScript -->
 		<script src="../../bootstrap/js/bootstrap.min.js"></script>
-		<script src="hosting.js"></script>
+		<script src = "../../Angular/js/angular.min.js"></script>
+    	<script src="app.js"></script>
 
 
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -69,14 +70,14 @@
 <div class="container">
 <div class="row">
 	<div class="col-md-12">
-		<label>Space Type</label>
+		<label>Venue Type</label>
 	</div>
 </div>
 <div class="row">
 	<div class ="col-md-12">
 		<div class="btn-group btn-group-md" data-toggle="buttons" >
  		 	<label class="btn btn-default" >
-    			<input type="radio" name="options" value = "event" required="required" autocomplete="off" > Event
+    			<input type="radio" name="options" value = "event" required autocomplete="off" > Event
   			</label>
   			<label class="btn btn-default">
     			<input type="radio" name="options" value ="office" id="office" autocomplete="off"> Office
@@ -97,31 +98,19 @@
 <br> <br>
 <!--second Row -->
 
-<div class="row">
+<div class="row" ng-controller="WordController as wordController">
+<div   class="col-lg-3" >
+<label>Venue Name</label>
+</div>  
 
-
-
-	
-<div class="col-lg-2">
-<label>Capacity</label>
-<select name="capacity" id="capacity" class="form-control" required="required" >
-	<option value="any">Any</option>
-	<option value="1">1</option>
-	<option value="2">2</option>
-	<option value="3">3</option>
-	<option value="4">4</option>
-	<option value="5">5</option>
-	<option value="6">5+</option>
-	<option value="7">10+</option>
-	<option value="8">20+</option>
-	<option value="9">50+</option>
-	<option value="10">99+</option>
-</select>
-
-	
+<p ng-model="wordController.WordLength" >
+	<mark> {{35-wordController.WordLength}} </mark>	
+	characters left</p>
+<div class = col-lg-5>
+<input type="text" name="venue" id="inputVenue" class="form-control" value=""  placeholder="Be clear and descriptive." ng-model="wordController.Text"  
+	ng-change="wordController.UpdateWordLength()" ng-trim="false" maxlength=35 >
 </div>
-
-</div>
+	</div>
 
 
 <br><br>
@@ -134,7 +123,7 @@
 			<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
 				<div class="panel panel-default">
 					<div class="panel-body">
-						<input type="text" name="city" id="city" class="form-control" value="" required="required" title="City">
+						<input type="text" name="city" id="city" class="form-control" value="" required title="City">
 					</div>
 				</div>
 

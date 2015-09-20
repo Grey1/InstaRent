@@ -1,28 +1,31 @@
-.modal{
-    
+.modal{    
     top:60px;
-    
 } 
 
 .modal-footer{
 	text-align: left;
-
 }
 
-
+#top-menu .current a
+{
+    background-color:#3CB3FF !important;
+    color:#FFFFFF !important;
+}
 
 .btn{
-
 	width:18em;
 }
 
 #bg {
-  position: fixed; 
+  position: relative; 
   top: -50%; 
   left: -50%; 
   width: 200%; 
   height: 200%;
 }
+
+
+
 #bg img {
   position: absolute; 
   top: 0; 
@@ -46,16 +49,4 @@ height:120px;
 }
 
 body { padding-top: 62px; }
-
-<nav class="navbar navbar-default navbar-static-top" role="navigation">
-  <a class="navbar-brand" href="#">Title</a>
-  <ul class="nav navbar-nav">
-    <li class="active">
-      <a href="#">Home</a>
-    </li>
-    <li>
-      <a href="#">Link</a>
-    </li>
-  </ul>
-</nav>
 
