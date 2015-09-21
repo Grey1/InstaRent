@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="" ng-app = "store">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Title Page</title>
+		<!-- Bootstrap CSS -->
+		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<link href="custom-div.css" rel="stylesheet">	
+				<script src="jquery.js"></script>
+				<script src="hide_modal.js"></script>
+		<!-- Bootstrap JavaScript -->
+		<script src="bootstrap/js/bootstrap.min.js"></script>
+		<script src="bootstrap/js/ui-bootstrap.min.js"></script>
+		
+		
+		<script src = "Angular/js/angular.min.js"></script>
+    	<script src="app.js"></script>
+
+
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+		<h1 class="text-center">Hello World</h1>
+
+
+
+
+
+<div class="dropdown" ng-controller ="timeController as btnCtrl">
+  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style ="width:150px">
+    {{btnCtrl.text}}
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" >
+    
+    <li><a href ng-click ="btnCtrl.changeValue('01:00')">01:00</a></li>
+    <li><a href ng-click ="btnCtrl.changeValue('02:00')">02:00</a></li>
+    <li><a href ng-click ="btnCtrl.changeValue('03:00')">03:00</a></li>
+    <li><a href ng-click ="btnCtrl.changeValue('04:00')">04:00</a></li>
+    <li><a href ng-click ="btnCtrl.changeValue('05:00')">05:00</a></li>
+    <li><a href ng-click ="btnCtrl.changeValue('06:00')">06:00</a></li>
+    <li><a href ng-click ="btnCtrl.changeValue('07:00')">07:00</a></li>
+    <li><a href ng-click ="btnCtrl.changeValue('08:00')">08:00</a></li>
+    <li><a href ng-click ="btnCtrl.changeValue('09:00')">09:00</a></li>
+    <li><a href ng-click ="btnCtrl.changeValue('10:00')">10:00</a></li>
+    <li><a href ng-click ="btnCtrl.changeValue('11:00')">11:00</a></li>
+    <li ><a href ng-click ="btnCtrl.changeValue('12:00')">12:00</a></li>
+  </ul>
+
+  <button style ="width:150px" type="button" class="btn btn-default" ng-click = "btnCtrl.setfromMeridian()">{{btnCtrl.frommeridian}}</button>
+
+</div>
+
+
+	</body>
+</html>

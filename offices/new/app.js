@@ -24,10 +24,24 @@ app.controller("PanelController", function(){
 
 });
 
-app.controller=("TimeController",function(){
+app.controller('timeController', function(){
 
-	this.fromtime = 18;
-	this.totime = 36;
+	this.frommeridian = "AM" ;
+	this.temp="";
+	this.previousfrommeridian = "PM";
+	this.text = "9:00";
 	
+	this.changeValue = function(value){
+		this.text = value;
+	};
 
+	this.setfromMeridian = function(){
+		this.temp=this.frommeridian;
+		this.frommeridian = this.previousfrommeridian;
+		this.previousfrommeridian = this.temp;
+		
+	};
 });
+
+
+

@@ -13,11 +13,19 @@
 				<script src="../../hide_modal.js"></script>
 		<!-- Bootstrap JavaScript -->
 		<script src="../../bootstrap/js/bootstrap.min.js"></script>
-		<script src="../../bootstrap/js/ui-bootstrap.min.js"></script>
+		<script src="bootstrap/js/ui-bootstrap.min.js"></script>
+
 		
 		
 		<script src = "../../Angular/js/angular.min.js"></script>
     	<script src="app.js"></script>
+
+    	<style type="text/css">
+    	.panel-heading{
+    		height: 100px;
+    	}
+    	</style>
+
 	</head>
 <body>
 
@@ -39,6 +47,8 @@
 		<li> &nbsp &nbsp &nbsp</li>
 	</ul>
 </nav>	
+
+<form action = "hosting.php" method ="post"></form>
 
 <div class="well">
 	<div class="row" ng-controller="PanelController as panel">
@@ -183,121 +193,7 @@
 			</div>
 		</div>
 
-		<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-			<div class="panel panel-info" ng-show="panel.isSelected(7)">
-				<div class="panel-heading">
-					<h4 class="panel-title lead text-center" style="padding:35px"> Opening hours  </h4>
-				</div>
-				<div class="panel-body" >										
-					<p> Monday-Friday </p>		
-
-					<select name="from" id="from_time" class="form-control" required="required">
-
-<option value="1">00:00</option>
-<option value="2">00:30</option>
-<option value="3">01:00</option>
-<option value="4">01:30</option>
-<option value="5">02:00</option>
-<option value="6">02:30</option>
-<option value="7">03:00</option>
-<option value="8">03:30</option>
-<option value="9">04:00</option>
-<option value="10">04:30</option>
-<option value="11">05:00</option>
-<option value="12">05:30</option>
-<option value="13">06:00</option>
-<option value="14">06:30</option>
-<option value="15">07:00</option>
-<option value="16">07:30</option>
-<option value="17">08:00</option>
-<option value="18">08:30</option>
-<option value="19">09:00</option>
-<option value="20">09:30</option>
-<option value="21">10:00</option>
-<option value="22">10:30</option>
-<option value="23">11:00</option>
-<option value="24">11:30</option>
-<option value="25">12:00</option>
-<option value="26">12:30</option>
-<option value="27">13:00</option>
-<option value="28">13:30</option>
-<option value="29">14:00</option>
-<option value="30">14:30</option>
-<option value="31">15:00</option>
-<option value="32">15:30</option>
-<option value="33">16:00</option>
-<option value="34">16:30</option>
-<option value="35">17:00</option>
-<option value="36">17:30</option>
-<option value="37">18:00</option>
-<option value="38">18:30</option>
-<option value="39">19:00</option>
-<option value="40">19:30</option>
-<option value="41">20:00</option>
-<option value="42">20:30</option>
-<option value="43">21:00</option>
-<option value="44">21:30</option>
-<option value="45">22:00</option>
-<option value="46">22:30</option>
-<option value="47">23:00</option>
-<option value="48">23:30</option>
-
-					</select>
-					
-					<select name="to" id="to_time" class="form-control" required="required">
-<option value="1">00:00</option>
-<option value="2">00:30</option>
-<option value="3">01:00</option>
-<option value="4">01:30</option>
-<option value="5">02:00</option>
-<option value="6">02:30</option>
-<option value="7">03:00</option>
-<option value="8">03:30</option>
-<option value="9">04:00</option>
-<option value="10">04:30</option>
-<option value="11">05:00</option>
-<option value="12">05:30</option>
-<option value="13">06:00</option>
-<option value="14">06:30</option>
-<option value="15">07:00</option>
-<option value="16">07:30</option>
-<option value="17">08:00</option>
-<option value="18">08:30</option>
-<option value="19">09:00</option>
-<option value="20">09:30</option>
-<option value="21">10:00</option>
-<option value="22">10:30</option>
-<option value="23">11:00</option>
-<option value="24">11:30</option>
-<option value="25">12:00</option>
-<option value="26">12:30</option>
-<option value="27">13:00</option>
-<option value="28">13:30</option>
-<option value="29">14:00</option>
-<option value="30">14:30</option>
-<option value="31">15:00</option>
-<option value="32">15:30</option>
-<option value="33">16:00</option>
-<option value="34">16:30</option>
-<option value="35">17:00</option>
-<option value="36">17:30</option>
-<option value="37">18:00</option>
-<option value="38">18:30</option>
-<option value="39">19:00</option>
-<option value="40">19:30</option>
-<option value="41">20:00</option>
-<option value="42">20:30</option>
-<option value="43">21:00</option>
-<option value="44">21:30</option>
-<option value="45">22:00</option>
-<option value="46">22:30</option>
-<option value="47">23:00</option>
-<option value="48">23:30</option>
-					</select>
-				</div>
-			</div>
-		</div>
-
+			
 		<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
 			<div class="panel panel-info" ng-show="panel.isSelected(8)">
 				<div class="panel-heading">
@@ -316,5 +212,50 @@
 			
 			
 		</div>
+		<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+			<div class="panel panel-info" ng-show="panel.isSelected(7)">
+				<div class="panel-heading" style ="height:100px">
+					<h4 class="panel-title lead text-center" style="padding:25px"> Working hours  </h4>
+				</div>
+				<div class="panel-body"  ng-controller ="timeController as time">										
+					
+						
+						<table class ="table" style="width:23%">
+							
+							<tbody >
+								<tr>
+									<td>&nbsp
+										<a href="#"> <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span> </a>
+									</td>
+									<td></td>
+									<td>
+										<a href="#"> <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span> </a>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<input type="time" name="" id="input" class="form-control" value="" required="required" title=""> 
+									</td>
+									<td> : </td>
+									<td>
+										<input type="time" name="" id="input" class="form-control" value="" required="required" title=""> 
+									</td>
+									<td > 
+										<button style = "width:50px" type="button" class="btn btn-default" ng-click="time.setfromMeridian()">{{time.frommeridian}}</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						
+  						
+
+					</div>
+
+							
+				</div>
+			</div>
+		</div>
+		
+</form>
 	</div>
 </div>
