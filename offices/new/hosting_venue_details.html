@@ -68,6 +68,7 @@
   						<li role="presentation" ng-class = "{current:panel.isSelected(6)}" ><a href ng-click="panel.selectTab(6)" style="color:#808080">Pricing <p class="pull-right">  <span class="glyphicon glyphicon-plus" aria-hidden="true"> </span> </p> </a></li>
   						<li role="presentation" ng-class = "{current:panel.isSelected(7)}" ><a href ng-click="panel.selectTab(7)" style="color:#808080">Calendar <p class="pull-right">  <span class="glyphicon glyphicon-plus" aria-hidden="true"> </span> </p> </a></li>
   						<li role="presentation" ng-class = "{current:panel.isSelected(8)}"><a href ng-click="panel.selectTab(8)" style="color:#808080">Reservation <p class="pull-right">  <span class="glyphicon glyphicon-plus" aria-hidden="true"> </span> </p> </a></li>
+
 					</ul>
 
 				</div>
@@ -102,6 +103,7 @@
 					<input type="number" name="num_rooms" id="num_rooms" class="form-control" value="" min="{5"} max="" step="" required="required" title=""><br>
 					<label>  Number of desks </label>
 					<input type="number" name="num_desk" id="num_desk" class="form-control" value="" min="{5"} max="" step="" required="required" title=""><br>
+					<button type="button" class="btn btn-default pull-right" ng-click="panel.selectTab(2)">Next</button>
 				</div>
 			</div>
 		</div>
@@ -123,9 +125,9 @@
 					<label for="email" >General email</label>
 					<input type="email" name="" id="email" class="form-control" value=""  title="">
 					<br>
-					<label for="website" >Website</label>
-					<input type="url" name="" id="website" class="form-control" value=""  title="">
-				
+					<label for="website" >Website</label> <br>
+					<input type="url" name="" id="website" class="form-control" value=""  title=""> <br>
+					<button type="button" class="btn btn-default pull-right" ng-click="panel.selectTab(3)">Next</button>
 				</div>
 			</div>
 		</div>		
@@ -148,8 +150,8 @@
 					<input type="number" name="" id="input" class="form-control" value="" min="{5"} max="" step="" required="required" title="">
 
 					<label for="name">Description</label>						
-					<textarea name="" id="input" class="form-control" rows="3" required="required"></textarea>
-
+					<textarea name="" id="input" class="form-control" rows="3" required="required"></textarea> <br>
+					<button type="button" class="btn btn-default pull-right" ng-click="panel.selectTab(4)">Next</button>
 
 				</div>
 
@@ -188,6 +190,8 @@
     					</span>
     					<input type="number" name="" id="input" class="form-control" value="" min="{5"} max="" step="" required="required" title="">
     				</div>
+
+    				<br> <button type="button" class="btn btn-default pull-right" ng-click="panel.selectTab(7)">Next</button>
 					
 				</div>
 			</div>
@@ -200,8 +204,10 @@
 					<h4 class="panel-title lead text-center" style="padding:35px"> Opening hours  </h4>
 				</div>
 				<div class="panel-body" >	
-
+					<br>
+				<button type="button" class="btn btn-default pull-right" ng-click="">Next</button>
 				</div>
+				
 			</div>
 		</div>
 
@@ -247,7 +253,7 @@
 							</tbody>
 						</table>
 						
-  						
+  						<button type="button" class="btn btn-default pull-right" ng-click="panel.selectTab(8)">Next</button>	
 
 					</div>
 

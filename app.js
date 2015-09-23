@@ -18,8 +18,7 @@ app.controller('timeController', function(){
 	this.setfromMeridian = function(){
 		this.temp=this.frommeridian;
 		this.frommeridian = this.previousfrommeridian;
-		if(0){
 		this.previousfrommeridian = this.temp;
-		}
+		
 	};
 });
