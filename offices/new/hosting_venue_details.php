@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="" ng-app="AppController">
 	<head>
@@ -19,6 +21,12 @@
 		
 		<script src = "../../Angular/js/angular.min.js"></script>
     	<script src="app.js"></script>
+    	<script type="text/javascript">
+			function getImage(){
+
+				$("#fileInput").click();
+			}
+		</script>
 
     	<style type="text/css">
     	.panel-heading{
@@ -77,16 +85,17 @@
 			</div>
 		</div>
 
-		<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+		<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" ng-controller= "dataController">
 			<div class="panel panel-info" ng-show="panel.isSelected(1)">
 				<div class="panel-heading">
 					<h3 class="panel-title lead text-center" style="padding:35px"> Give details about your space </h3>
 				</div>
-				<div class="panel-body" >										
+				<div class="panel-body" >	
+
 					<label> Description </label>
-					<textarea name="description" id="input" class="form-control" rows="4" required="required"></textarea><br>
-					<label> Venue type </label>
-					<select name="" id="type" class="form-control" required="required">
+					<textarea ng-model = "descr" name="description" id="input" class="form-control" rows="4" required="required"></textarea><br>
+					<label> Venue type</label>
+					<select ng-model = "type" name="" id="type" class="form-control" required="required">
 						<option value="1">Business Centre</option>
 						<option value="2">Corporate Office</option>
 						<option value="3">Coworking Office</option>
@@ -96,38 +105,38 @@
 					</select><br>
 					
 					<label> Number of floors </label>
-					<input type="number" name="num_floors" id="num_floors" class="form-control" value="" min="{5"} max="" step="" required title=""><br>
+					<input ng-model = "floors" type="number" name="num_floors" id="num_floors" class="form-control" value="" min="{5"} max="" step="" required title=""><br>
 					<label> Floor Area </label>
-					<input type="number" name="floor_area" id="floor_area" class="form-control" value="" min="{5"} max="" step="" title=""><br>
+					<input ng-model = "area" type="number" name="floor_area" id="floor_area" class="form-control" value="" min="{5"} max="" step="" title=""><br>
 					<label> Number of rooms </label>
-					<input type="number" name="num_rooms" id="num_rooms" class="form-control" value="" min="{5"} max="" step="" required="required" title=""><br>
+					<input ng-model = "rooms" type="number" name="num_rooms" id="num_rooms" class="form-control" value="" min="{5"} max="" step="" required="required" title=""><br>
 					<label>  Number of desks </label>
-					<input type="number" name="num_desk" id="num_desk" class="form-control" value="" min="{5"} max="" step="" required="required" title=""><br>
-					<button type="button" class="btn btn-default pull-right" ng-click="panel.selectTab(2)">Next</button>
+					<input ng-model = "desks" type="number" name="num_desk" id="num_desk" class="form-control" value="" min="{5"} max="" step="" required="required" title=""><br>
+					<button type="button" class="btn btn-default pull-right" ng-click="insertData(1);panel.selectTab(2)">Next</button>
 				</div>
 			</div>
 		</div>
-<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" ng-controller= "dataController as data">
 			<div class="panel panel-info" ng-show="panel.isSelected(2)">
 				<div class="panel-heading">
 					<h3 class="panel-title lead text-center" style="padding:35px"> Set your listing location </h3>
 				</div>
 				<div class="panel-body" >							
-					<label for="addr" >Address</label>
-					<input type="text" name="" id="addr" class="form-control" value="" required="required" >
+					<label for="addr" >Address</label> 
+					<input ng-model = "addr" type="text" name="" id="addr" class="form-control" value="" required="required" >
 					<br>
 					<label for="neighbourhood" >Neighbourhood</label>
-					<input type="text" name="neighbourhood" id="neighbourhood" class="form-control" value="" required="required" >
+					<input ng-model = "neighbours" type="text" name="neighbourhood" id="neighbourhood" class="form-control" value="" required="required" >
 					<br>
 					<label for="number" >Telephone number</label>
-					<input type="tel" name="" id="number" class="form-control" value="" required="required" title="">
+					<input ng-model = "tel" type="tel" name="" id="number" class="form-control" value="" required="required" title="">
 					<br>
 					<label for="email" >General email</label>
-					<input type="email" name="" id="email" class="form-control" value=""  title="">
+					<input ng-model = "email" type="email" name="" id="email" class="form-control" value=""  title="">
 					<br>
 					<label for="website" >Website</label> <br>
-					<input type="url" name="" id="website" class="form-control" value=""  title=""> <br>
-					<button type="button" class="btn btn-default pull-right" ng-click="panel.selectTab(3)">Next</button>
+					<input ng-model = "url" type="url" name="" id="website" class="form-control" value=""  title=""> <br>
+					<button type="button" class="btn btn-default pull-right" ng-click="insertData(2);panel.selectTab(3)">Next</button>
 				</div>
 			</div>
 		</div>		
@@ -140,24 +149,37 @@
 				</div>
 				<div class="panel-body" >				
 					<label for="name">Space type</label>	
-					<select name="" id="input" class="form-control" required="required">
+					<select ng-model = "spacetype" name="" id="input" class="form-control" required="required">
 						<option value=""></option>
 					</select>
 					<label for="name">Space name</label>						
-					<input type="text" name="space_name" id="name" class="form-control" value="" required="required"  title="">
+					<input type="text" ng-model = "spacename" name="space_name" id="name" class="form-control" value="" required="required"  title="">
 
 					<label for="name">Number of similar spaces</label>						
-					<input type="number" name="" id="input" class="form-control" value="" min="{5"} max="" step="" required="required" title="">
+					<input type="number" name="" id="input" class="form-control" ng-model = "numberofspace" value="" min="{5"} max="" step="" required="required" title="">
 
 					<label for="name">Description</label>						
-					<textarea name="" id="input" class="form-control" rows="3" required="required"></textarea> <br>
-					<button type="button" class="btn btn-default pull-right" ng-click="panel.selectTab(4)">Next</button>
+					<textarea name="" id="input" class="form-control" rows="3" required="required" ng-model = "spacedesc"></textarea> <br>
+					<button type="button" class="btn btn-default pull-right" ng-click="insertData(3);panel.selectTab(4)">Next</button>
 
 				</div>
 
 
 			</div>
 		</div>
+
+		<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" ng-show="panel.isSelected(4)">
+
+			<div style="height:0px;overflow:hidden">
+   				<input type="file" id="fileInput" name="fileInput" />
+			</div>
+			<button type="button" class="btn btn-default" onclick="getImage();">Add Photos</button>
+	
+
+		</div>		
+
+
+
 
 		<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
 			<div class="panel panel-info" ng-show="panel.isSelected(6)">
@@ -171,16 +193,16 @@
         					<i>INR</i>
     					</span>
     				
-						<input type="number" name="" id="input" class="form-control" value="" min="{5"} max="" step="" required="required" title="">
+						<input ng-model = "pricePerHour" type="number" name="" id="input" class="form-control" value="" min="{5"} max="" step="" required="required" title="">
 					</div>
 					<br>
-					<label for="name">Per day</label>	
+					<label for="name">Per Week</label>	
 					<div class="input-group">
     					<span class="input-group-addon">
         					<i>INR</i>
     					</span>
     				
-						<input type="number" name="" id="input" class="form-control" value="" min="{5"} max="" step="" required="required" title="">
+						<input type="number" name="" id="input" ng-model = "pricePerWeek" class="form-control" value="" min="{5"} max="" step="" required="required" title="">
 					</div>
 					<br>
 					<label for="name">Per month</label>	
@@ -188,10 +210,10 @@
     					<span class="input-group-addon">
         					<i>INR</i>
     					</span>
-    					<input type="number" name="" id="input" class="form-control" value="" min="{5"} max="" step="" required="required" title="">
+    					<input type="number" ng-model = "pricePerMonth" name="" id="input" class="form-control" value="" min="{5"} max="" step="" required="required" title="">
     				</div>
 
-    				<br> <button type="button" class="btn btn-default pull-right" ng-click="panel.selectTab(7)">Next</button>
+    				<br> <button type="button" class="btn btn-default pull-right" ng-click="insertData(6);panel.selectTab(7)">Next</button>
 					
 				</div>
 			</div>
@@ -253,7 +275,7 @@
 							</tbody>
 						</table>
 						
-  						<button type="button" class="btn btn-default pull-right" ng-click="panel.selectTab(8)">Next</button>	
+  						<button type="button" class="btn btn-default pull-right" ng-click="insertData(7);panel.selectTab(8)">Next</button>	
 
 					</div>
 

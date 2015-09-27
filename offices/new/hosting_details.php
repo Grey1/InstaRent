@@ -1,3 +1,12 @@
+<?php
+
+session_start();
+$_SESSION["userid"]=1;		
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="" ng-app="AppController">
 	<head>
@@ -30,6 +39,9 @@
 	</head>
 
 	<body>
+		
+
+
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 	<a class="navbar-brand" href="//localhost">InstaRent</a>
 	<ul class="nav navbar-nav navbar-right">
@@ -61,7 +73,7 @@
 	</div>
 </div>
 
-<form action="hosting.php" method="POST" role="form">
+<form action="insert.php" method="POST" role="form">
 	
 
 <div class="form-group">
@@ -143,14 +155,6 @@
 </div>
 </div> 
 </div>
-	
 </form>
-
-
-
-
-
-
-
 </body>
 </html>

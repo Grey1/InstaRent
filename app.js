@@ -3,22 +3,21 @@
 *
 * Description
 */
-var app = angular.module('store', [])
-app.controller('timeController', function(){
+var app = angular.module('regular', []);
+app.controller('formController',function($scope,$http){
 
-	this.frommeridian = "AM" ;
-	this.temp="";
-	this.previousfrommeridian = "PM";
-	this.text = "9:00";
-	
-	this.changeValue = function(value){
-		this.text = value;
-	};
+	$scope.hello={firstname:"Boaz"};
 
-	this.setfromMeridian = function(){
-		this.temp=this.frommeridian;
-		this.frommeridian = this.previousfrommeridian;
-		this.previousfrommeridian = this.temp;
-		
-	};
+	$scope.insertData=function(){
+		$http.post("insert.php",{
+
+			'fname':$scope.fname,'lname':$scope.lname,
+		}).success(function(data,status){
+			if(status == 200){
+				$scope.hello={firstname:"success"};
+			}
+		});
+
+	}
+
 });
