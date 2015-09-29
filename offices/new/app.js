@@ -14,8 +14,12 @@ app.controller('WordController', function(){
 app.controller("PanelController", function(){
 
 	this.tab=1;
+	
 	this.selectTab = function(settab){
 		this.tab = settab;
+		
+
+		
 	};
 
 	this.isSelected = function(checktab){
@@ -104,23 +108,24 @@ app.controller('dataController', function($scope,$http){
 });
 
 
-app.controller('timeController', function(){
 
-	this.frommeridian = "AM" ;
-	this.temp="";
-	this.previousfrommeridian = "PM";
-	this.text = "9:00";
+
+
+app.controller("HintController", function(){
+
+	this.hint=0;
 	
-	this.changeValue = function(value){
-		this.text = value;
-	};
+	this.selectHint = function(setHint){
+		this.hint = setHint;
+		
 
-	this.setfromMeridian = function(){
-		this.temp=this.frommeridian;
-		this.frommeridian = this.previousfrommeridian;
-		this.previousfrommeridian = this.temp;
 		
 	};
+
+	this.isHint = function(checkhint){
+		return checkhint===this.hint;
+	};
+
 });
 
 

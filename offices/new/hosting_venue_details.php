@@ -35,7 +35,7 @@
     	</style>
 
 	</head>
-<body>
+<body >
 
 <!-- Header -->
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -56,9 +56,9 @@
 	</ul>
 </nav>	
 
-<form action = "hosting.php" method ="post"></form>
 
-<div class="well">
+
+<div class="well" ng-controller="HintController as hint">
 	<div class="row" ng-controller="PanelController as panel">
 		<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
 			<div class="panel panel-default">
@@ -86,204 +86,144 @@
 		</div>
 
 		<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" ng-controller= "dataController">
-			<div class="panel panel-info" ng-show="panel.isSelected(1)">
+			<div class="panel panel-info">
 				<div class="panel-heading">
-					<h3 class="panel-title lead text-center" style="padding:35px"> Give details about your space </h3>
+					<h3 class="panel-title lead text-center" style="padding:35px" ng-model="header" ng-show="panel.isSelected(1)"> Give details about your space </h3>
+					<h3 class="panel-title lead text-center" style="padding:35px" ng-model="header" ng-show="panel.isSelected(2)"> Set your listing location </h3>
+					<h3 class="panel-title lead text-center" style="padding:35px" ng-model="header" ng-show="panel.isSelected(3)"> Spaces are physical areas that can be booked in your venue </h3>
+					<h3 class="panel-title lead text-center" style="padding:35px" ng-model="header" ng-show="panel.isSelected(6)"> Set a Price for your space </h3>
+					<h3 class="panel-title lead text-center" style="padding:35px" ng-model="header"ng-show="panel.isSelected(4)">  </h3>
+					<h3 class="panel-title lead text-center" style="padding:35px" ng-model="header" ng-show="panel.isSelected(5)"> </h3>
+					<h3 class="panel-title lead text-center" style="padding:35px" ng-model="header" ng-show="panel.isSelected(7)">  </h3>
+					<h3 class="panel-title lead text-center" style="padding:35px" ng-model="header" ng-show="panel.isSelected(8)">  </h3>
 				</div>
 				<div class="panel-body" >	
 
-					<label> Description </label>
-					<textarea ng-model = "descr" name="description" id="input" class="form-control" rows="4" required="required"></textarea><br>
-					<label> Venue type</label>
-					<select ng-model = "type" name="" id="type" class="form-control" required="required">
+					<label ng-show="panel.isSelected(1)"> Description </label>
+					<textarea ng-mouseover = "hint.selectHint(1)"  ng-model = "descr" name="description" id="input" class="form-control" rows="4" required="required" ng-show="panel.isSelected(1)"></textarea><br ng-show="panel.isSelected(1)">
+					<label ng-show="panel.isSelected(1)"> Venue type</label>
+					<select ng-mouseover = "hint.selectHint(2)" ng-show="panel.isSelected(1)"ng-model = "type" name="" id="type" class="form-control" required="required">
 						<option value="1">Business Centre</option>
 						<option value="2">Corporate Office</option>
 						<option value="3">Coworking Office</option>
 						<option value="4">Hotel</option>
 						<option value="5">Startup Office</option>
 						<option value="6">Studio</option>
-					</select><br>
+					</select><br ng-show="panel.isSelected(1)">
 					
-					<label> Number of floors </label>
-					<input ng-model = "floors" type="number" name="num_floors" id="num_floors" class="form-control" value="" min="{5"} max="" step="" required title=""><br>
-					<label> Floor Area </label>
-					<input ng-model = "area" type="number" name="floor_area" id="floor_area" class="form-control" value="" min="{5"} max="" step="" title=""><br>
-					<label> Number of rooms </label>
-					<input ng-model = "rooms" type="number" name="num_rooms" id="num_rooms" class="form-control" value="" min="{5"} max="" step="" required="required" title=""><br>
-					<label>  Number of desks </label>
-					<input ng-model = "desks" type="number" name="num_desk" id="num_desk" class="form-control" value="" min="{5"} max="" step="" required="required" title=""><br>
-					<button type="button" class="btn btn-default pull-right" ng-click="insertData(1);panel.selectTab(2)">Next</button>
-				</div>
-			</div>
-		</div>
-<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" ng-controller= "dataController as data">
-			<div class="panel panel-info" ng-show="panel.isSelected(2)">
-				<div class="panel-heading">
-					<h3 class="panel-title lead text-center" style="padding:35px"> Set your listing location </h3>
-				</div>
-				<div class="panel-body" >							
-					<label for="addr" >Address</label> 
-					<input ng-model = "addr" type="text" name="" id="addr" class="form-control" value="" required="required" >
-					<br>
-					<label for="neighbourhood" >Neighbourhood</label>
-					<input ng-model = "neighbours" type="text" name="neighbourhood" id="neighbourhood" class="form-control" value="" required="required" >
-					<br>
-					<label for="number" >Telephone number</label>
-					<input ng-model = "tel" type="tel" name="" id="number" class="form-control" value="" required="required" title="">
-					<br>
-					<label for="email" >General email</label>
-					<input ng-model = "email" type="email" name="" id="email" class="form-control" value=""  title="">
-					<br>
-					<label for="website" >Website</label> <br>
-					<input ng-model = "url" type="url" name="" id="website" class="form-control" value=""  title=""> <br>
-					<button type="button" class="btn btn-default pull-right" ng-click="insertData(2);panel.selectTab(3)">Next</button>
-				</div>
-			</div>
-		</div>		
-
-
-		<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-			<div class="panel panel-info" ng-show="panel.isSelected(3)">
-				<div class="panel-heading">
-					<h3 class="panel-title lead text-center" style="padding:35px"> Spaces are physical areas that can be booked in your venue</h3>
-				</div>
-				<div class="panel-body" >				
-					<label for="name">Space type</label>	
-					<select ng-model = "spacetype" name="" id="input" class="form-control" required="required">
+					<label ng-show="panel.isSelected(1)"> Number of floors </label>
+					<input ng-mouseover = "hint.selectHint(1)"ng-show="panel.isSelected(1)" ng-model = "floors" type="number" name="num_floors" id="num_floors" class="form-control" value="" min="{5"} max="" step="" required title=""><br ng-show="panel.isSelected(1)">
+					<label ng-show="panel.isSelected(1)"> Floor Area </label>
+					<input ng-mouseover = "hint.selectHint(1)"ng-show="panel.isSelected(1)"ng-model = "area" type="number" name="floor_area" id="floor_area" class="form-control" value="" min="{5"} max="" step="" title=""><br ng-show="panel.isSelected(1)">
+					<label ng-show="panel.isSelected(1)"> Number of rooms </label>
+					<input ng-mouseover = "hint.selectHint(1)"ng-show="panel.isSelected(1)"ng-model = "rooms" type="number" name="num_rooms" id="num_rooms" class="form-control" value="" min="{5"} max="" step="" required="required" title=""><br ng-show="panel.isSelected(1)">
+					<label ng-show="panel.isSelected(1)">  Number of desks </label>
+					<input ng-mouseover = "hint.selectHint(1)"ng-show="panel.isSelected(1)"ng-model = "desks" type="number" name="num_desk" id="num_desk" class="form-control" value="" min="{5"} max="" step="" required="required" title=""><br ng-show="panel.isSelected(1)">
+					
+					<label ng-show="panel.isSelected(2)" for="addr" >Address</label> 
+					<input ng-show="panel.isSelected(2)" ng-model = "addr" type="text" name="" id="addr" class="form-control" value="" required="required" >
+					<br ng-show="panel.isSelected(2)">
+					<label ng-show="panel.isSelected(2)"for="neighbourhood" >Neighbourhood</label>
+					<input ng-show="panel.isSelected(2)" ng-model = "neighbours" type="text" name="neighbourhood" id="neighbourhood" class="form-control" value="" required="required" >
+					<br ng-show="panel.isSelected(2)">
+					<label for="number" ng-show="panel.isSelected(2)">Telephone number</label>
+					<input ng-model = "tel" type="tel" name="" id="number" ng-show="panel.isSelected(2)"class="form-control" value="" required="required" title="">
+					<br ng-show="panel.isSelected(2)">
+					<label for="email" ng-show="panel.isSelected(2)">General email</label>
+					<input ng-show="panel.isSelected(2)"ng-model = "email" type="email" name="" id="email" class="form-control" value=""  title="">
+					<br ng-show="panel.isSelected(2)">
+					<label for="website"ng-show="panel.isSelected(2)" >Website</label> <br ng-show="panel.isSelected(2)">
+					<input ng-show="panel.isSelected(2)"ng-model = "url" type="url" name="" id="website" class="form-control" value=""  title=""> <br ng-show="panel.isSelected(2)">
+					<label ng-show="panel.isSelected(3)"for="name">Space type</label>	
+					<select ng-model = "spacetype" ng-show="panel.isSelected(3)" name="" id="input" class="form-control" required="required">
 						<option value=""></option>
 					</select>
-					<label for="name">Space name</label>						
-					<input type="text" ng-model = "spacename" name="space_name" id="name" class="form-control" value="" required="required"  title="">
+					<label ng-show="panel.isSelected(3)" for="name">Space name</label>						
+					<input ng-show="panel.isSelected(3)"type="text" ng-model = "spacename" name="space_name" id="name" class="form-control" value="" required="required"  title="">
 
-					<label for="name">Number of similar spaces</label>						
-					<input type="number" name="" id="input" class="form-control" ng-model = "numberofspace" value="" min="{5"} max="" step="" required="required" title="">
+					<label ng-show="panel.isSelected(3)" for="name">Number of similar spaces</label>						
+					<input ng-show="panel.isSelected(3)" type="number" name="" id="input" class="form-control" ng-model = "numberofspace" value="" min="{5"} max="" step="" required="required" title="">
 
-					<label for="name">Description</label>						
-					<textarea name="" id="input" class="form-control" rows="3" required="required" ng-model = "spacedesc"></textarea> <br>
-					<button type="button" class="btn btn-default pull-right" ng-click="insertData(3);panel.selectTab(4)">Next</button>
-
-				</div>
-
-
-			</div>
-		</div>
-
-		<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" ng-show="panel.isSelected(4)">
-
-			<div style="height:0px;overflow:hidden">
-   				<input type="file" id="fileInput" name="fileInput" />
-			</div>
-			<button type="button" class="btn btn-default" onclick="getImage();">Add Photos</button>
-	
-
-		</div>		
-
-
-
-
-		<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-			<div class="panel panel-info" ng-show="panel.isSelected(6)">
-				<div class="panel-heading">
-					<h4 class="panel-title lead text-center" style="padding:35px"> Set a Price for your space  </h4>
-				</div>
-				<div class="panel-body" >										
-					<label for="name">Per hour</label>	
-					<div class="input-group">
+					<label ng-show="panel.isSelected(3)"for="name">Description</label>						
+					<textarea ng-show="panel.isSelected(3)"name="" id="input" class="form-control" rows="3" required="required" ng-model = "spacedesc"></textarea> <br ng-show="panel.isSelected(3)">
+					<label ng-show="panel.isSelected(6)"for="name">Per hour</label>	
+					<div class="input-group" ng-show="panel.isSelected(6)">
     					<span class="input-group-addon">
         					<i>INR</i>
     					</span>
     				
 						<input ng-model = "pricePerHour" type="number" name="" id="input" class="form-control" value="" min="{5"} max="" step="" required="required" title="">
 					</div>
-					<br>
-					<label for="name">Per Week</label>	
-					<div class="input-group">
+					<br ng-show="panel.isSelected(6)">
+					<label for="name" ng-show="panel.isSelected(6)">Per Week</label>	
+					<div class="input-group" ng-show="panel.isSelected(6)">
     					<span class="input-group-addon">
         					<i>INR</i>
     					</span>
     				
-						<input type="number" name="" id="input" ng-model = "pricePerWeek" class="form-control" value="" min="{5"} max="" step="" required="required" title="">
+						<input ng-show="panel.isSelected(6)" type="number" name="" id="input" ng-model = "pricePerWeek" class="form-control" value="" min="{5"} max="" step="" required="required" title="">
 					</div>
-					<br>
-					<label for="name">Per month</label>	
-					<div class="input-group">
+					<br ng-show="panel.isSelected(6)">
+					<label for="name" ng-show="panel.isSelected(6)">Per month</label>	
+					<div ng-show="panel.isSelected(6)" class="input-group">
     					<span class="input-group-addon">
         					<i>INR</i>
     					</span>
     					<input type="number" ng-model = "pricePerMonth" name="" id="input" class="form-control" value="" min="{5"} max="" step="" required="required" title="">
-    				</div>
+    				</div> <br>
+    				<button type="button" class="btn btn-default pull-right" ng-show="panel.isSelected(1)"ng-click="insertData(1);panel.selectTab(2)">Next</button>
+    				<button type="button" class="btn btn-default pull-right" ng-show="panel.isSelected(2)"ng-click="insertData(2);panel.selectTab(3)">Next</button>
+    				<button type="button" class="btn btn-default pull-right" ng-show="panel.isSelected(3)"ng-click="insertData(3);panel.selectTab(4)">Next</button>
+    				<button type="button" class="btn btn-default pull-right" ng-show="panel.isSelected(4)"ng-click="insertData(4);panel.selectTab(5)">Next</button>
+    				<button type="button" class="btn btn-default pull-right" ng-show="panel.isSelected(5)"ng-click="insertData(5);panel.selectTab(6)">Next</button>
+    				<button type="button" class="btn btn-default pull-right" ng-show="panel.isSelected(6)"ng-click="insertData(6);panel.selectTab(7)">Next</button>
+    				<button type="button" class="btn btn-default pull-right" ng-show="panel.isSelected(7)"ng-click="insertData(7);panel.selectTab(8)">Next</button>
+    				<button type="button" class="btn btn-default pull-right" ng-show="panel.isSelected(8)"ng-click="insertData(8)">Next</button>
+    				
 
-    				<br> <button type="button" class="btn btn-default pull-right" ng-click="insertData(6);panel.selectTab(7)">Next</button>
-					
+
 				</div>
 			</div>
 		</div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+		<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
 			
-		<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-			<div class="panel panel-info" ng-show="panel.isSelected(8)">
-				<div class="panel-heading">
-					<h4 class="panel-title lead text-center" style="padding:35px"> Opening hours  </h4>
+
+			<div class="jumbotron">
+			<br><br><br><br><br><br>	
+			<div class="panel panel-default" ng-show="hint.isHint(1)">
+				<div class="panel-body">	
+					Help travelers imagine themselves in your listing by accurately describing all the areas in your space that they’ll be able to use.
+			
 				</div>
-				<div class="panel-body" >	
-					<br>
-				<button type="button" class="btn btn-default pull-right" ng-click="">Next</button>
-				</div>
-				
+			</div>	
 			</div>
-		</div>
 
 
-
-
-		<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+			<div class="jumbotron">
+			<br><br><br><br><br><br><br>	
+			<div class="panel panel-default" ng-show="hint.isHint(2)">
+				<div class="panel-body">	
+					<p >text1</p>
 			
-			
-		</div>
-		<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-			<div class="panel panel-info" ng-show="panel.isSelected(7)">
-				<div class="panel-heading" style ="height:100px">
-					<h4 class="panel-title lead text-center" style="padding:25px"> Working hours  </h4>
 				</div>
-				<div class="panel-body"  ng-controller ="timeController as time">										
-					
-						
-						<table class ="table" style="width:23%">
-							
-							<tbody >
-								<tr>
-									<td>&nbsp
-										<a href="#"> <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span> </a>
-									</td>
-									<td></td>
-									<td>
-										<a href="#"> <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span> </a>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<input type="time" name="" id="input" class="form-control" value="" required="required" title=""> 
-									</td>
-									<td> : </td>
-									<td>
-										<input type="time" name="" id="input" class="form-control" value="" required="required" title=""> 
-									</td>
-									<td > 
-										<button style = "width:50px" type="button" class="btn btn-default" ng-click="time.setfromMeridian()">{{time.frommeridian}}</button>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-						
-  						<button type="button" class="btn btn-default pull-right" ng-click="insertData(7);panel.selectTab(8)">Next</button>	
-
-					</div>
-
-							
-				</div>
+			</div>	
 			</div>
+			
+			
 		</div>
-		
-</form>
+
 	</div>
 </div>
