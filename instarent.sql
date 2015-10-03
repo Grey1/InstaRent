@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 18, 2015 at 07:34 PM
+-- Generation Time: Oct 03, 2015 at 10:14 AM
 -- Server version: 5.6.26
 -- PHP Version: 5.6.12
 
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `instarent`
 --
-CREATE DATABASE IF NOT EXISTS `instarent` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `instarent`;
 
 -- --------------------------------------------------------
 
@@ -42,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 CREATE TABLE IF NOT EXISTS `user_details` (
-  `user_detail_id` varchar(50) NOT NULL,
+  `user_detail_id` int(50) NOT NULL,
   `user_id` varchar(50) NOT NULL,
   `Gender` char(1) NOT NULL,
   `photo_path` longtext NOT NULL
@@ -55,11 +53,11 @@ CREATE TABLE IF NOT EXISTS `user_details` (
 --
 
 CREATE TABLE IF NOT EXISTS `venue` (
-  `venue_id` varchar(20) NOT NULL,
+  `venue_id` int(20) NOT NULL,
   `user_id` varchar(10) NOT NULL,
   `name` varchar(50) NOT NULL,
   `type` varchar(10) NOT NULL,
-  `city` varchar(10) NOT NULL,
+  `city` varchar(50) NOT NULL,
   `venue_desc` longtext NOT NULL,
   `logo_addr` longtext NOT NULL,
   `no_of_floors` int(11) NOT NULL,
@@ -67,8 +65,37 @@ CREATE TABLE IF NOT EXISTS `venue` (
   `no_of_rooms` int(11) NOT NULL,
   `no_of_desks` int(11) NOT NULL,
   `opening_time` time NOT NULL,
-  `closing_time` time NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `closing_time` time NOT NULL,
+  `addr` longtext NOT NULL,
+  `neighbourhood` varchar(50) NOT NULL,
+  `telephone` varchar(20) NOT NULL,
+  `email` text NOT NULL,
+  `website` varchar(100) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `venue`
+--
+
+INSERT INTO `venue` (`venue_id`, `user_id`, `name`, `type`, `city`, `venue_desc`, `logo_addr`, `no_of_floors`, `floor_area`, `no_of_rooms`, `no_of_desks`, `opening_time`, `closing_time`, `addr`, `neighbourhood`, `telephone`, `email`, `website`) VALUES
+(2, '', '', '2', '', 'arjun', '', 2, 2, 2, 0, '00:00:00', '00:00:00', '', '', '', '', ''),
+(3, '', '', '1', '', 'asmd,asd,a', '', 1, 4, 4, 0, '00:00:00', '00:00:00', '', '', '', '', ''),
+(4, '', '', '1', '', 'asmd,asd,a', '', 1, 4, 4, 0, '00:00:00', '00:00:00', '', '', '', '', ''),
+(5, '', '', '1', '', 'asmd,asd,a', '', 1, 4, 4, 0, '00:00:00', '00:00:00', '', '', '', '', ''),
+(6, '', '', '1', '', 'asmd,asd,a', '', 1, 4, 4, 0, '00:00:00', '00:00:00', '', '', '', '', ''),
+(7, '', '', '1', 'mumbai', 'asmd,asd,a', '', 1, 4, 4, 0, '00:00:00', '00:00:00', '', '', '', '', ''),
+(8, '', 'BESt venue', '1', 'mumbai', 'asmd,asd,a', '', 1, 4, 4, 0, '00:00:00', '00:00:00', '', '', '', '', ''),
+(9, '', '', '1', '', 'asmd,asd,a', '', 1, 4, 4, 0, '00:00:00', '00:00:00', '', '', '', '', ''),
+(10, '', 'sTART DATA', '2', 'JAIPUT', 'akskndm,asnd', '', 2, 4, 4, 0, '00:00:00', '00:00:00', '', '', '', '', ''),
+(11, '', 'virat', '', 'nue mumbai', '', '', 0, 0, 0, 0, '00:00:00', '00:00:00', '', '', '', '', ''),
+(12, '', 'testkjasdlkas', '', 'kanput', '', '', 0, 0, 0, 0, '00:00:00', '00:00:00', '', '', '', '', ''),
+(13, '', 'Mumbia ', '', 'sakdjaslk', '', '', 0, 0, 0, 0, '00:00:00', '00:00:00', '', '', '', '', ''),
+(14, '', 'dkl jslka', '', 'skaldj asl', '', '', 0, 0, 0, 0, '00:00:00', '00:00:00', '', '', '', '', ''),
+(15, '', 'New rental apartment', '1', 'Koparkhair', 'This is faboulous', '', 1, 1, 1, 0, '00:00:00', '00:00:00', '', '', '', '', ''),
+(16, '', 'Faboulous restaurant', '', 'koparkhair', '', '', 0, 0, 0, 0, '00:00:00', '00:00:00', '', '', '', '', ''),
+(17, '', 'test', '', 'mumbai', '', '', 0, 0, 0, 0, '00:00:00', '00:00:00', '', '', '', '', ''),
+(18, '', '', '', 'Multi', '', '', 0, 0, 0, 0, '00:00:00', '00:00:00', '', '', '', '', ''),
+(19, '', 'asdsada', '', 'dasda', '', '', 0, 0, 0, 0, '00:00:00', '00:00:00', '', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -77,8 +104,8 @@ CREATE TABLE IF NOT EXISTS `venue` (
 --
 
 CREATE TABLE IF NOT EXISTS `workspace` (
-  `workspace_id` varchar(20) NOT NULL,
-  `venue_id` varchar(20) NOT NULL,
+  `workspace_id` int(20) NOT NULL,
+  `venue_id` int(20) NOT NULL,
   `user_id` varchar(10) NOT NULL,
   `type` varchar(10) NOT NULL,
   `space_name` varchar(20) NOT NULL,
@@ -94,9 +121,9 @@ CREATE TABLE IF NOT EXISTS `workspace` (
 --
 
 CREATE TABLE IF NOT EXISTS `workspace_pricing` (
-  `workspace_id` varchar(20) NOT NULL,
-  `user_id` varchar(10) NOT NULL,
-  `venue_id` varchar(20) NOT NULL,
+  `workspace_id` int(20) NOT NULL,
+  `user_id` int(10) NOT NULL,
+  `venue_id` int(20) NOT NULL,
   `hourly_price` int(11) NOT NULL,
   `weekly_price` int(11) NOT NULL,
   `monthy_price` int(11) NOT NULL
@@ -123,7 +150,8 @@ ALTER TABLE `user_details`
 -- Indexes for table `venue`
 --
 ALTER TABLE `venue`
-  ADD PRIMARY KEY (`venue_id`);
+  ADD PRIMARY KEY (`venue_id`),
+  ADD UNIQUE KEY `venue_id` (`venue_id`);
 
 --
 -- Indexes for table `workspace`
@@ -137,6 +165,25 @@ ALTER TABLE `workspace`
 ALTER TABLE `workspace_pricing`
   ADD PRIMARY KEY (`workspace_id`);
 
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `user_details`
+--
+ALTER TABLE `user_details`
+  MODIFY `user_detail_id` int(50) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `venue`
+--
+ALTER TABLE `venue`
+  MODIFY `venue_id` int(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=20;
+--
+-- AUTO_INCREMENT for table `workspace`
+--
+ALTER TABLE `workspace`
+  MODIFY `workspace_id` int(20) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
