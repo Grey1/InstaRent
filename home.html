@@ -7,12 +7,20 @@
 		<title>Instarent</title>
 
 		<!-- Bootstrap CSS -->
-		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		
 		<link href="custom-div.css" rel="stylesheet">	
-				<script src="jquery.js"></script>
-				<script src="hide_modal.js"></script>
+		<script src="jquery.js"></script>
+		<script src="hide_modal.js"></script>
 		<!-- Bootstrap JavaScript -->
 		<script src="bootstrap/js/bootstrap.min.js"></script>
+		<link href="dashboard/plugins/bootstrap/bootstrap.css" rel="stylesheet">
+		<link href="dashboard/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet">
+		<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">		
+		<link href='http://fonts.googleapis.com/css?family=Righteous' rel='stylesheet' type='text/css'>
+		<link href="dashboard/css/style_v1.css" rel="stylesheet">
+		
+		
+		
 
 
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -28,7 +36,7 @@
 	</head>
 
 	<body>
-
+<!-- 
 
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 	<a class="navbar-brand" href="//localhost">InstaRent</a>
@@ -42,6 +50,48 @@
 		<li> &nbsp &nbsp &nbsp</li>
 	</ul>
 </nav>
+ -->
+<header class="navbar">
+	<div class="container-fluid expanded-panel">
+		<div class="row">
+			<div id="logo" class="col-xs-12 col-sm-2">
+				<a href="#">InstaRent</a>
+			</div>
+			<div id="top-panel" class="col-xs-12 col-sm-10">
+				<div class="row">
+					<div class="col-xs-8 col-sm-4">
+						
+					</div>
+					<div class="col-xs-4 col-sm-8 top-panel-right">
+						<ul class="nav navbar-nav pull-right panel-menu">
+							
+
+
+
+							<li>
+								<a href="#signup" data-toggle ="modal">Sign Up </a>
+							</li>
+							<li> &nbsp &nbsp &nbsp</li>
+							<li class="hidden-xs">
+								<a href="#login" data-toggle ="modal">Log In</a>
+								
+							</li>
+							<li> &nbsp &nbsp &nbsp</li>
+
+
+
+
+						</ul>
+							
+							
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
+
 
 
 <div id="bg">
@@ -58,41 +108,41 @@
 			<div class="modal-header">
 			</div>
 			<div class="modal-body">
-				<form action="" method="POST" role="form">
+				<form action="register.php" method="POST" role="form">
 					
 				<center><legend>Sign up using email</legend></center>
 					<div class="form-group">
 
 						<div class="input-group">
-    						<input type="text" class="form-control" id="fname" placeholder="First name" required="required">
+    						<input type="text" class="form-control" name="fname" placeholder="First name" required="required">
     						<span class="input-group-addon">
         					<i class="glyphicon glyphicon-user"></i>
     						</span>
 					</div>
 						<br>
 						<div class="input-group">
-    						<input type="text" required="required"class="form-control" id="sname" placeholder="Surname">
+    						<input type="text" required="required"class="form-control" name="sname" placeholder="Surname">
     						<span class="input-group-addon">
         					<i class="glyphicon glyphicon-user"></i>
     						</span>
 					</div>
 <br>
 						<div class="input-group">
-    						<input type="text" required="required" class="form-control" id="" placeholder="Email address">
+    						<input type="text" name = "email" required="required" class="form-control" id="" placeholder="Email address">
     						<span class="input-group-addon">
         					<i>@</i>
     						</span>
 						</div>
 <br>
 						<div class="input-group">
-    						<input type="text" required="required" class="form-control" id="" placeholder="Password">
+    						<input type="text" name = "password" required="required" class="form-control" id="" placeholder="Password">
     						<span class="input-group-addon">
         					<i class="glyphicon glyphicon-lock"></i>
     						</span>
 					</div>						
 						<div class="checkbox">
 							<label>
-								<input type="checkbox" value="">
+								<input type="checkbox" value=""/>
 								I'd like to receive coupons and inspiration
 							</label>
 						</div>
@@ -100,7 +150,7 @@
 				
 					
 				
-					<button type="submit" class="btn btn-primary">Sign up</button>
+					<button type="submit" name="signup" class="btn btn-primary">Sign up</button>
 				</form>
 				
 			</div>

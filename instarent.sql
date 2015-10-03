@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 03, 2015 at 10:14 AM
+-- Generation Time: Oct 03, 2015 at 03:37 PM
 -- Server version: 5.6.26
 -- PHP Version: 5.6.12
 
@@ -27,11 +27,24 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `user` (
-  `userid` varchar(10) NOT NULL,
-  `email` varchar(20) NOT NULL,
+  `userid` int(10) NOT NULL,
+  `email` varchar(50) NOT NULL,
   `password` varchar(20) NOT NULL,
+  `first_name` varchar(50) NOT NULL,
+  `surname` varchar(50) NOT NULL,
   `active` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`userid`, `email`, `password`, `first_name`, `surname`, `active`) VALUES
+(16, 'arjun@90.com', 'stevengerrard', 'arjun', 'nair', 1),
+(17, '', '', '', '', 1),
+(18, 'ainan', 'sadasda', 'zidane', 'zine', 1),
+(19, 'asdas', 'sadasdas', 'arjun', 'asda', 1),
+(20, 'arjun90.nair@gmail.com', 'test', 'jay', 'rodriguez', 1);
 
 -- --------------------------------------------------------
 
@@ -138,7 +151,8 @@ CREATE TABLE IF NOT EXISTS `workspace_pricing` (
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`userid`),
-  ADD UNIQUE KEY `email` (`email`);
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `userid` (`userid`);
 
 --
 -- Indexes for table `user_details`
@@ -169,6 +183,11 @@ ALTER TABLE `workspace_pricing`
 -- AUTO_INCREMENT for dumped tables
 --
 
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `userid` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT for table `user_details`
 --
