@@ -55,7 +55,7 @@ app.controller('dataController', function($scope,$http){
 	}
 		else if(num==3){
 		$http.post("insert.php",{
-			'num':num,'descr':$scope.descr,'type':$scope.type, 'floors':$scope.floors, 'area':$scope.area, 'rooms':$scope.rooms, 'desks':$scope.desks,
+			'num':num,'spacetype':$scope.spacetype,'spacename':$scope.spacename, 'no_similar_space':$scope.no_similar_space, 'descr':$scope.descr,
 		}).success(function(data,status){
 			if(status==200){
 				console.log("success")
@@ -85,7 +85,7 @@ app.controller('dataController', function($scope,$http){
 	}
 		else if(num==6){
 		$http.post("insert.php",{
-			'num':num,'descr':$scope.descr,'type':$scope.type, 'floors':$scope.floors, 'area':$scope.area, 'rooms':$scope.rooms, 'desks':$scope.desks,
+			'num':num,'pricePerHour':$scope.pricePerHour,'pricePerWeek':$scope.pricePerWeek, 'pricePerMonth':$scope.pricePerMonth, 
 		}).success(function(data,status){
 			if(status==200){
 				console.log("success")

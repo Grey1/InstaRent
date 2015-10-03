@@ -9,53 +9,66 @@
 		<title>Instarent</title>
 
 		<!-- Bootstrap CSS -->
-		<link href="../../bootstrap/css/bootstrap.min.css" rel="stylesheet">
-		<link href="../../custom-div.css" rel="stylesheet">	
-				<script src="../../jquery.js"></script>
+		<link href="../../dashboard/plugins/bootstrap/bootstrap.css" rel="stylesheet">
+		<link href="../../dashboard/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet">
+		<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">		
+		<link href="../../dashboard/css/style_v1.css" rel="stylesheet">
+		<link href="../../custom-div.css" rel="stylesheet">
+		
+		
+				
 				<script src="../../hide_modal.js"></script>
 		<!-- Bootstrap JavaScript -->
-		<script src="../../bootstrap/js/bootstrap.min.js"></script>
-		<script src="bootstrap/js/ui-bootstrap.min.js"></script>
-
 		
+		<script src="../../dashboard/plugins/jquery/jquery.min.js"></script>
+		<script src="../../dashboard/plugins/jquery-ui/jquery-ui.min.js"></script>
+		<script src="../../bootstrap/js/bootstrap.min.js"></script>
+		
+		<script src="../../dashboard/plugins/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
 		
 		<script src = "../../Angular/js/angular.min.js"></script>
     	<script src="app.js"></script>
-    	<script type="text/javascript">
-			function getImage(){
-
-				$("#fileInput").click();
-			}
-		</script>
-
+    	
+    
+	
     	<style type="text/css">
     	.panel-heading{
     		height: 100px;
     	}
     	</style>
+    	<script src="../../jquery.form.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $('#images').on('change',function(){
+        $('#multiple_upload_form').ajaxForm({
+            //display the uploaded images
+            target:'#images_preview',
+            
+            beforeSubmit:function(e){
+                $('.uploading').show();
+            },
+            success:function(e){
+                $('.uploading').hide();
+            },
+            error:function(e){
+            }
+        }).submit();
+    });
+});
+</script>
+
 
 	</head>
 <body >
 
 <!-- Header -->
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-	<a class="navbar-brand" href="//localhost">InstaRent</a>
-	<ul class="nav navbar-nav navbar-right">
-		<li>
-			<a href="#">Host a Space</a>
-		</li>
-		<li>
-			<a href="#" >Messages &nbsp <img src ="../../member/message.png" class="img-rounded">  </a>
+<?php
 
-		</li>
-		<li>
-			<a href="#" > <img src="../../member/button_round_blue.jpg" alt="" class="img-circle"> </a>
-		</li>
+include("../../header/headerafterlogin.html");
 
-		<li> &nbsp &nbsp &nbsp</li>
-	</ul>
-</nav>	
-
+?>
+<!-- Header -->
 
 
 <div class="well" ng-controller="HintController as hint">
@@ -88,7 +101,7 @@
 		<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" ng-controller= "dataController">
 			<div class="panel panel-info">
 				<div class="panel-heading">
-					<h3 class="panel-title lead text-center" style="padding:35px" ng-model="header" ng-show="panel.isSelected(1)"> Give details about your space </h3>
+				<h3 class="panel-title lead text-center" style="padding:35px" ng-model="header" ng-show="panel.isSelected(1)"> Give details about your space </h3>
 					<h3 class="panel-title lead text-center" style="padding:35px" ng-model="header" ng-show="panel.isSelected(2)"> Set your listing location </h3>
 					<h3 class="panel-title lead text-center" style="padding:35px" ng-model="header" ng-show="panel.isSelected(3)"> Spaces are physical areas that can be booked in your venue </h3>
 					<h3 class="panel-title lead text-center" style="padding:35px" ng-model="header" ng-show="panel.isSelected(6)"> Set a Price for your space </h3>
@@ -142,7 +155,7 @@
 					<input ng-show="panel.isSelected(3)"type="text" ng-model = "spacename" name="space_name" id="name" class="form-control" value="" required="required"  title="">
 
 					<label ng-show="panel.isSelected(3)" for="name">Number of similar spaces</label>						
-					<input ng-show="panel.isSelected(3)" type="number" name="" id="input" class="form-control" ng-model = "numberofspace" value="" min="{5"} max="" step="" required="required" title="">
+					<input ng-show="panel.isSelected(3)" type="number" name="no_similar_space" id="input" class="form-control" ng-model = "numberofspace" value="" min="{5"} max="" step="" required="required" title="">
 
 					<label ng-show="panel.isSelected(3)"for="name">Description</label>						
 					<textarea ng-show="panel.isSelected(3)"name="" id="input" class="form-control" rows="3" required="required" ng-model = "spacedesc"></textarea> <br ng-show="panel.isSelected(3)">
@@ -171,6 +184,25 @@
     					</span>
     					<input type="number" ng-model = "pricePerMonth" name="" id="input" class="form-control" value="" min="{5"} max="" step="" required="required" title="">
     				</div> <br>
+					<form  ng-show="panel.isSelected(4)" method="post" name="multiple_upload_form" id="multiple_upload_form" enctype="multipart/form-data" action="upload.php">
+					    <input type="hidden" name="image_form_submit" value="1"/>
+					    <label>Choose Image</label>
+					    <input type="file" name="images[]" id="images" multiple >
+					    <div class="uploading none">
+					        <label>&nbsp;</label>
+					        <img src="uploading.gif" alt="uploading......"/>
+					    </div>
+					    <div id="images_preview"></div>
+					</form>
+					<div class="form-group">
+						<label for="time_example" class="col-sm-4 control-label">Time</label>
+						<div class="col-sm-8">
+							<input type="text" id="time_example" class="form-control" placeholder="Time">
+						</div>
+					</div>
+
+
+
     				<button type="button" class="btn btn-default pull-right" ng-show="panel.isSelected(1)"ng-click="insertData(1);panel.selectTab(2)">Next</button>
     				<button type="button" class="btn btn-default pull-right" ng-show="panel.isSelected(2)"ng-click="insertData(2);panel.selectTab(3)">Next</button>
     				<button type="button" class="btn btn-default pull-right" ng-show="panel.isSelected(3)"ng-click="insertData(3);panel.selectTab(4)">Next</button>
@@ -201,18 +233,19 @@
 		<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
 			
 
-			<div class="jumbotron">
+			
 			<br><br><br><br><br><br>	
+			
 			<div class="panel panel-default" ng-show="hint.isHint(1)">
-				<div class="panel-body">	
+				<div class="panel-body hint">	
 					Help travelers imagine themselves in your listing by accurately describing all the areas in your space that they’ll be able to use.
 			
 				</div>
 			</div>	
-			</div>
+			
 
 
-			<div class="jumbotron">
+			
 			<br><br><br><br><br><br><br>	
 			<div class="panel panel-default" ng-show="hint.isHint(2)">
 				<div class="panel-body">	
@@ -220,10 +253,23 @@
 			
 				</div>
 			</div>	
-			</div>
+			
 			
 			
 		</div>
 
 	</div>
 </div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	// Load TimePicker plugin and callback all time and date pickers
+	LoadTimePickerScript(AllTimePickers);
+	
+	
+});
+</script>
+
+
+</body>
+</html>

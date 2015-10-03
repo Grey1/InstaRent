@@ -16,10 +16,17 @@ $_SESSION["userid"]=1;
 		<title>Instarent</title>
 
 		<!-- Bootstrap CSS -->
-		<link href="../../bootstrap/css/bootstrap.min.css" rel="stylesheet">
-		<link href="../../custom-div.css" rel="stylesheet">	
-				<script src="../../jquery.js"></script>
-				<script src="../../hide_modal.js"></script>
+		<link href="../../dashboard/plugins/bootstrap/bootstrap.css" rel="stylesheet">
+		<link href="../../dashboard/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet">
+		<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">		
+		<link href="../../dashboard/css/style_v1.css" rel="stylesheet">
+		<link href="../../custom-div.css" rel="stylesheet">
+		
+		<script src="../../jquery.js"></script>
+		<script src="../../hide_modal.js"></script>		
+
+		
+
 		<!-- Bootstrap JavaScript -->
 		<script src="../../bootstrap/js/bootstrap.min.js"></script>
 		<script src = "../../Angular/js/angular.min.js"></script>
@@ -41,29 +48,9 @@ $_SESSION["userid"]=1;
 	<body>
 		
 
-
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-	<a class="navbar-brand" href="//localhost">InstaRent</a>
-	<ul class="nav navbar-nav navbar-right">
-		<li>
-			<a href="#">Host a Space</a>
-		</li>
-		<li>
-			<a href="#" >Messages &nbsp <img src ="../../member/message.png" class="img-rounded">  </a>
-
-		</li>
-		<li>
-			<a href="#" > <img src="../../member/button_round_blue.jpg" alt="" class="img-circle"> </a>
-		</li>
-
-		<li> &nbsp &nbsp &nbsp</li>
-	</ul>
-</nav>
-
-	
-</div>
-
-
+<?php
+  		include("../../header/headerafterlogin.html")
+  	?>
 <!-- Space type -->
 <h3>
 

@@ -53,9 +53,17 @@ $query = mysql_query($sql, $conn);
 mysql_close($conn);
 
 }
-if($num==3){    
+if($num==3){
+
+$spacetype = mysql_real_escape_string($data->spacetype);
+$spacename = mysql_real_escape_string($data->spacename);
+$no_similar_space = mysql_real_escape_string($data->no_similar_space);
+$descr = mysql_real_escape_string($data->descr);
+
+
+
 $venue_id = $_SESSION["venueid"];
-$sql = "UPDATE venue SET venue_desc = '".$descr."' , type = '".$type."' ,no_of_floors='".$floors."' ,floor_area='".$area."' ,no_of_rooms='".$rooms."' ,no_of_desks='".$desks."' WHERE venue_id='".$venue_id."'";
+$sql = "INSERT INTO workspace(venue_id,user_id,type,space_name,space_desc) VALUES('".$venue_id."',10,'".$spacetype."','".$spacename."','".$no_similar_space."','".$descr."')"; 
 
 $query = mysql_query($sql, $conn);
 
@@ -80,9 +88,14 @@ $query = mysql_query($sql, $conn);
 mysql_close($conn);
 
 }
-if($num==6){    
+if($num==6){
+
+
+$pricePerHour = mysql_real_escape_string($data->pricePerHour);
+$pricePerWeek = mysql_real_escape_string($data->pricePerWeek);
+$pricePerMonth = mysql_real_escape_string($data->pricePerMonth);    
 $venue_id = $_SESSION["venueid"];
-$sql = "UPDATE venue SET venue_desc = '".$descr."' , type = '".$type."' ,no_of_floors='".$floors."' ,floor_area='".$area."' ,no_of_rooms='".$rooms."' ,no_of_desks='".$desks."' WHERE venue_id='".$venue_id."'";
+$sql = "INSERT INTO workspace_pricing(venue_id,user_id,weekly_price,monthly_price) VALUES('".$venue_id."',10,'".$pricePerHour."','".$pricePerWeek."','".$pricePerMonth."')"; 
 
 $query = mysql_query($sql, $conn);
 
