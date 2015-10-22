@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 	<head>
 		<meta charset="utf-8">
 		<title>InstaRent</title>
@@ -47,7 +47,7 @@
 		</div>
 	</div>
 </div>
-<header class="navbar">
+<header class="navbar" ng-controller="divController as divc">
 	<div class="container-fluid expanded-panel">
 		<div class="row">
 			<div id="logo" class="col-xs-12 col-sm-2">
@@ -80,18 +80,20 @@
 									<span class="badge">7</span>
 								</a>
 							</li>
-							<li class="dropdown">
+							<li class="dropdown" id="profile">
 								<a href="#" class="dropdown-toggle account" data-toggle="dropdown">
 									<div class="avatar">
 										<img src="img/avatar.jpg" class="img-circle" alt="avatar" />
 									</div>
 									<i class="fa fa-angle-down pull-right"></i>
-									<div class="user-mini pull-right">
+									<div class="user-mini pull-right" >
 										<span class="welcome">Welcome,</span>
 										<span>Jane Devoops</span>
+										
 									</div>
 								</a>
-								<ul class="dropdown-menu">
+								
+								<ul class="dropdown-menu" id ="profile-menu">
 									<li>
 										<a href="#">
 											<i class="fa fa-user"></i>
@@ -117,6 +119,7 @@
 										</a>
 									</li>
 								</ul>
+							
 							</li>
 						</ul>
 					</div>
@@ -148,6 +151,18 @@
 						<li><a class="ajax-link" href="ajax/tables_beauty.html">Beauty Tables</a></li>
 					</ul>
 				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle">
+						<i class="fa fa-table"></i>
+						 <span class="hidden-xs">Profile</span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a class="ajax-link" href="../member/member_profile.php">Edit Profile</a></li>
+					</ul>
+				</li>
+
+
+
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
 						<i class="fa fa-pencil-square-o"></i>
@@ -307,5 +322,15 @@
 <script src="plugins/tinymce/jquery.tinymce.min.js"></script>
 <!-- All functions for this theme + document.ready processing -->
 <script src="js/devoops.js"></script>
+
+<script src = "../Angular/js/angular.min.js"></script>
+<script src="../member/app.js"></script>
+
+
+
+
+
+
+
 </body>
 </html>

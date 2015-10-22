@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 03, 2015 at 03:37 PM
+-- Generation Time: Oct 22, 2015 at 07:28 AM
 -- Server version: 5.6.26
 -- PHP Version: 5.6.12
 
@@ -32,19 +32,18 @@ CREATE TABLE IF NOT EXISTS `user` (
   `password` varchar(20) NOT NULL,
   `first_name` varchar(50) NOT NULL,
   `surname` varchar(50) NOT NULL,
-  `active` int(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+  `active` int(1) NOT NULL,
+  `user_detail_id` int(50) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`userid`, `email`, `password`, `first_name`, `surname`, `active`) VALUES
-(16, 'arjun@90.com', 'stevengerrard', 'arjun', 'nair', 1),
-(17, '', '', '', '', 1),
-(18, 'ainan', 'sadasda', 'zidane', 'zine', 1),
-(19, 'asdas', 'sadasdas', 'arjun', 'asda', 1),
-(20, 'arjun90.nair@gmail.com', 'test', 'jay', 'rodriguez', 1);
+INSERT INTO `user` (`userid`, `email`, `password`, `first_name`, `surname`, `active`, `user_detail_id`) VALUES
+(54, 'h@h.com', 'test123', 'jammy', 'carragher', 1, 30),
+(55, 't5est@mas.com', 'test123', 'test123', 'test', 1, 31),
+(56, 'arjun90.nair@gmail.com', 'test123', 'arjun', 'niar', 1, 32);
 
 -- --------------------------------------------------------
 
@@ -54,10 +53,26 @@ INSERT INTO `user` (`userid`, `email`, `password`, `first_name`, `surname`, `act
 
 CREATE TABLE IF NOT EXISTS `user_details` (
   `user_detail_id` int(50) NOT NULL,
-  `user_id` varchar(50) NOT NULL,
-  `Gender` char(1) NOT NULL,
-  `photo_path` longtext NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `user_id` int(10) NOT NULL,
+  `gender` int(1) DEFAULT NULL,
+  `photo_path` longtext,
+  `birth_date` date DEFAULT NULL,
+  `contact` int(20) DEFAULT NULL,
+  `company_name` varchar(20) DEFAULT NULL,
+  `address1` varchar(100) DEFAULT NULL,
+  `address2` varchar(100) DEFAULT NULL,
+  `pincode` int(6) DEFAULT NULL,
+  `city` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `user_details`
+--
+
+INSERT INTO `user_details` (`user_detail_id`, `user_id`, `gender`, `photo_path`, `birth_date`, `contact`, `company_name`, `address1`, `address2`, `pincode`, `city`) VALUES
+(30, 54, 0, '', '0000-00-00', 0, '', '', '', 0, ''),
+(31, 55, 0, '', '0000-00-00', 0, '', '', '', 0, ''),
+(32, 56, 0, '', '0000-00-00', 0, '', '', '', 0, '');
 
 -- --------------------------------------------------------
 
@@ -82,33 +97,9 @@ CREATE TABLE IF NOT EXISTS `venue` (
   `addr` longtext NOT NULL,
   `neighbourhood` varchar(50) NOT NULL,
   `telephone` varchar(20) NOT NULL,
-  `email` text NOT NULL,
+  `email` varchar(80) NOT NULL,
   `website` varchar(100) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `venue`
---
-
-INSERT INTO `venue` (`venue_id`, `user_id`, `name`, `type`, `city`, `venue_desc`, `logo_addr`, `no_of_floors`, `floor_area`, `no_of_rooms`, `no_of_desks`, `opening_time`, `closing_time`, `addr`, `neighbourhood`, `telephone`, `email`, `website`) VALUES
-(2, '', '', '2', '', 'arjun', '', 2, 2, 2, 0, '00:00:00', '00:00:00', '', '', '', '', ''),
-(3, '', '', '1', '', 'asmd,asd,a', '', 1, 4, 4, 0, '00:00:00', '00:00:00', '', '', '', '', ''),
-(4, '', '', '1', '', 'asmd,asd,a', '', 1, 4, 4, 0, '00:00:00', '00:00:00', '', '', '', '', ''),
-(5, '', '', '1', '', 'asmd,asd,a', '', 1, 4, 4, 0, '00:00:00', '00:00:00', '', '', '', '', ''),
-(6, '', '', '1', '', 'asmd,asd,a', '', 1, 4, 4, 0, '00:00:00', '00:00:00', '', '', '', '', ''),
-(7, '', '', '1', 'mumbai', 'asmd,asd,a', '', 1, 4, 4, 0, '00:00:00', '00:00:00', '', '', '', '', ''),
-(8, '', 'BESt venue', '1', 'mumbai', 'asmd,asd,a', '', 1, 4, 4, 0, '00:00:00', '00:00:00', '', '', '', '', ''),
-(9, '', '', '1', '', 'asmd,asd,a', '', 1, 4, 4, 0, '00:00:00', '00:00:00', '', '', '', '', ''),
-(10, '', 'sTART DATA', '2', 'JAIPUT', 'akskndm,asnd', '', 2, 4, 4, 0, '00:00:00', '00:00:00', '', '', '', '', ''),
-(11, '', 'virat', '', 'nue mumbai', '', '', 0, 0, 0, 0, '00:00:00', '00:00:00', '', '', '', '', ''),
-(12, '', 'testkjasdlkas', '', 'kanput', '', '', 0, 0, 0, 0, '00:00:00', '00:00:00', '', '', '', '', ''),
-(13, '', 'Mumbia ', '', 'sakdjaslk', '', '', 0, 0, 0, 0, '00:00:00', '00:00:00', '', '', '', '', ''),
-(14, '', 'dkl jslka', '', 'skaldj asl', '', '', 0, 0, 0, 0, '00:00:00', '00:00:00', '', '', '', '', ''),
-(15, '', 'New rental apartment', '1', 'Koparkhair', 'This is faboulous', '', 1, 1, 1, 0, '00:00:00', '00:00:00', '', '', '', '', ''),
-(16, '', 'Faboulous restaurant', '', 'koparkhair', '', '', 0, 0, 0, 0, '00:00:00', '00:00:00', '', '', '', '', ''),
-(17, '', 'test', '', 'mumbai', '', '', 0, 0, 0, 0, '00:00:00', '00:00:00', '', '', '', '', ''),
-(18, '', '', '', 'Multi', '', '', 0, 0, 0, 0, '00:00:00', '00:00:00', '', '', '', '', ''),
-(19, '', 'asdsada', '', 'dasda', '', '', 0, 0, 0, 0, '00:00:00', '00:00:00', '', '', '', '', '');
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -152,13 +143,15 @@ CREATE TABLE IF NOT EXISTS `workspace_pricing` (
 ALTER TABLE `user`
   ADD PRIMARY KEY (`userid`),
   ADD UNIQUE KEY `email` (`email`),
-  ADD UNIQUE KEY `userid` (`userid`);
+  ADD UNIQUE KEY `userid` (`userid`),
+  ADD UNIQUE KEY `user_detail_id` (`user_detail_id`);
 
 --
 -- Indexes for table `user_details`
 --
 ALTER TABLE `user_details`
-  ADD PRIMARY KEY (`user_detail_id`);
+  ADD PRIMARY KEY (`user_detail_id`),
+  ADD UNIQUE KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `venue`
@@ -187,17 +180,17 @@ ALTER TABLE `workspace_pricing`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userid` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
+  MODIFY `userid` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=57;
 --
 -- AUTO_INCREMENT for table `user_details`
 --
 ALTER TABLE `user_details`
-  MODIFY `user_detail_id` int(50) NOT NULL AUTO_INCREMENT;
+  MODIFY `user_detail_id` int(50) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=33;
 --
 -- AUTO_INCREMENT for table `venue`
 --
 ALTER TABLE `venue`
-  MODIFY `venue_id` int(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=20;
+  MODIFY `venue_id` int(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=22;
 --
 -- AUTO_INCREMENT for table `workspace`
 --

@@ -3,6 +3,26 @@ body {
   color:#525252;
   background:#436E90;
 }
+li.active-link{
+  color:white;
+}
+
+#image-content{
+  background-image: url("../../Creative-Office-Space.jpg"); 
+  height: 580px;
+  width:100% ;
+  margin-top: -12px;
+
+  
+}
+
+.image-navbar{
+  position: absolute;
+  bottom:0;
+  margin-left:40%;
+  margin-bottom: 10%;
+}
+
 .body-expanded, .modal-open {
   overflow-y:hidden;
   margin-right: 15px;
@@ -16,6 +36,11 @@ body {
 }
 h1, .h1, h2, .h2, h3, .h3 {
   margin:0;
+}
+
+
+.row-form{
+  margin-top: 15px;
 }
 
 #logo {

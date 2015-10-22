@@ -1,7 +1,5 @@
 <?php
-
 session_start();
-$_SESSION["userid"]=1;		
 
 ?>
 
@@ -21,16 +19,19 @@ $_SESSION["userid"]=1;
 		<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">		
 		<link href="../../dashboard/css/style_v1.css" rel="stylesheet">
 		<link href="../../custom-div.css" rel="stylesheet">
+		<script src="../../dashboard/js/devoops.js"></script>
+		<script src="../../dashboard/js/jquery.js"></script>
 		
-		<script src="../../jquery.js"></script>
-		<script src="../../hide_modal.js"></script>		
+		<script src = "../../Angular/js/angular.min.js"></script>
+		
+		
+    	<script src="app.js"></script>
 
 		
 
 		<!-- Bootstrap JavaScript -->
 		<script src="../../bootstrap/js/bootstrap.min.js"></script>
-		<script src = "../../Angular/js/angular.min.js"></script>
-    	<script src="app.js"></script>
+		
 
 
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+
+
 ?>
 
 <!DOCTYPE html>
@@ -16,11 +18,11 @@ session_start();
 		<link href="../dashboard/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet">
 		<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">		
 		<link href="../dashboard/css/style_v1.css" rel="stylesheet">
-		<link href="../custom-div.css" rel="stylesheet">
+
 		
 		
 				
-				<script src="../hide_modal.js"></script>
+		<script src="../hide_modal.js"></script>
 		<!-- Bootstrap JavaScript -->
 				
 		<script src="../dashboard/plugins/jquery/jquery.min.js"></script>
@@ -160,7 +162,7 @@ session_start();
 										</a>
 									</li>
 									<li>
-										<a href="#">
+										<a href="logout.php">
 											<i class="fa fa-power-off"></i>
 											<span>Logout</span>
 										</a>
@@ -176,11 +178,8 @@ session_start();
 </header>
 
 
-<div id="bg">
-  <img src="../Creative-Office-Space.jpg" alt="">
-
-</div>
-
+<div id="image-content" class="img-responsive">
+</div> 	 
 
 
 

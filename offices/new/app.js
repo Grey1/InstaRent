@@ -1,4 +1,8 @@
+// Angular code begins
+
 var app = angular.module('AppController', [])
+
+// This controller wll count the number of words and display it on the office/new/hosting_details.php page
 app.controller('WordController', function(){
           
           this.WordLength = 0;
@@ -11,6 +15,7 @@ app.controller('WordController', function(){
           };
         });
 
+// This controller wll select the tab on selection on the office/new/hosting_venue_details.php page
 app.controller("PanelController", function(){
 
 	this.tab=1;
@@ -28,7 +33,7 @@ app.controller("PanelController", function(){
 
 });
 
-
+// This controller wll post the data in the office/new/hosting_venue_details.php page
 app.controller('dataController', function($scope,$http){
 		
 	$scope.insertData=function(num){
@@ -109,7 +114,7 @@ app.controller('dataController', function($scope,$http){
 
 
 
-
+// This controller wll give Hints to users on the office/new/hosting_venue_details.php page
 
 app.controller("HintController", function(){
 
@@ -127,6 +132,4 @@ app.controller("HintController", function(){
 	};
 
 });
-
-
 

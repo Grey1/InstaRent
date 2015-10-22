@@ -17,7 +17,7 @@
 		
 		
 				
-				<script src="../../hide_modal.js"></script>
+		
 		<!-- Bootstrap JavaScript -->
 		
 		<script src="../../dashboard/plugins/jquery/jquery.min.js"></script>
@@ -28,7 +28,7 @@
 
 		
 		<script src = "../../Angular/js/angular.min.js"></script>
-    	<script src="app.js"></script>
+    	<script src="../../dashboard/js/devoops.js"></script>
     	
     
 	
@@ -37,7 +37,7 @@
     		height: 100px;
     	}
     	</style>
-    	<script src="../../jquery.form.js"></script>
+    	<script src="../../dashboard/js/jquery.form.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
     $('#images').on('change',function(){
@@ -111,28 +111,28 @@ include("../../header/headerafterlogin.html");
 					<h3 class="panel-title lead text-center" style="padding:35px" ng-model="header" ng-show="panel.isSelected(8)">  </h3>
 				</div>
 				<div class="panel-body" >	
-
-					<label ng-show="panel.isSelected(1)"> Description </label>
-					<textarea ng-mouseover = "hint.selectHint(1)"  ng-model = "descr" name="description" id="input" class="form-control" rows="4" required="required" ng-show="panel.isSelected(1)"></textarea><br ng-show="panel.isSelected(1)">
-					<label ng-show="panel.isSelected(1)"> Venue type</label>
-					<select ng-mouseover = "hint.selectHint(2)" ng-show="panel.isSelected(1)"ng-model = "type" name="" id="type" class="form-control" required="required">
+					<div class = "description-panel" ng-show="panel.isSelected(1)">
+					<label> Description </label>
+					<textarea ng-mouseover = "hint.selectHint(1)"  ng-model = "descr" name="description" id="input" class="form-control" rows="4" required="required" ></textarea><br>
+					<label > Venue type</label>
+					<select ng-mouseover = "hint.selectHint(2)" ng-model = "type" name="" id="type" class="form-control" required="required">
 						<option value="1">Business Centre</option>
 						<option value="2">Corporate Office</option>
 						<option value="3">Coworking Office</option>
 						<option value="4">Hotel</option>
 						<option value="5">Startup Office</option>
 						<option value="6">Studio</option>
-					</select><br ng-show="panel.isSelected(1)">
+					</select><br>
 					
-					<label ng-show="panel.isSelected(1)"> Number of floors </label>
-					<input ng-mouseover = "hint.selectHint(1)"ng-show="panel.isSelected(1)" ng-model = "floors" type="number" name="num_floors" id="num_floors" class="form-control" value="" min="{5"} max="" step="" required title=""><br ng-show="panel.isSelected(1)">
-					<label ng-show="panel.isSelected(1)"> Floor Area </label>
-					<input ng-mouseover = "hint.selectHint(1)"ng-show="panel.isSelected(1)"ng-model = "area" type="number" name="floor_area" id="floor_area" class="form-control" value="" min="{5"} max="" step="" title=""><br ng-show="panel.isSelected(1)">
-					<label ng-show="panel.isSelected(1)"> Number of rooms </label>
-					<input ng-mouseover = "hint.selectHint(1)"ng-show="panel.isSelected(1)"ng-model = "rooms" type="number" name="num_rooms" id="num_rooms" class="form-control" value="" min="{5"} max="" step="" required="required" title=""><br ng-show="panel.isSelected(1)">
-					<label ng-show="panel.isSelected(1)">  Number of desks </label>
-					<input ng-mouseover = "hint.selectHint(1)"ng-show="panel.isSelected(1)"ng-model = "desks" type="number" name="num_desk" id="num_desk" class="form-control" value="" min="{5"} max="" step="" required="required" title=""><br ng-show="panel.isSelected(1)">
-					
+					<label > Number of floors </label>
+					<input ng-mouseover = "hint.selectHint(1)" ng-model = "floors" type="number" name="num_floors" id="num_floors" class="form-control" value="" min="{5"} max="" step="" required title=""><br >
+					<label > Floor Area </label>
+					<input ng-mouseover = "hint.selectHint(1)"ng-model = "area" type="number" name="floor_area" id="floor_area" class="form-control" value="" min="{5"} max="" step="" title=""><br >
+					<label > Number of rooms </label>
+					<input ng-mouseover = "hint.selectHint(1)"ng-model = "rooms" type="number" name="num_rooms" id="num_rooms" class="form-control" value="" min="{5"} max="" step="" required="required" title=""><br >
+					<label >  Number of desks </label>
+					<input ng-mouseover = "hint.selectHint(1)"ng-model = "desks" type="number" name="num_desk" id="num_desk" class="form-control" value="" min="{5"} max="" step="" required="required" title=""><br >
+					</div>
 					<label ng-show="panel.isSelected(2)" for="addr" >Address</label> 
 					<input ng-show="panel.isSelected(2)" ng-model = "addr" type="text" name="" id="addr" class="form-control" value="" required="required" >
 					<br ng-show="panel.isSelected(2)">
@@ -143,7 +143,7 @@ include("../../header/headerafterlogin.html");
 					<input ng-model = "tel" type="tel" name="" id="number" ng-show="panel.isSelected(2)"class="form-control" value="" required="required" title="">
 					<br ng-show="panel.isSelected(2)">
 					<label for="email" ng-show="panel.isSelected(2)">General email</label>
-					<input ng-show="panel.isSelected(2)"ng-model = "email" type="email" name="" id="email" class="form-control" value=""  title="">
+					<input ng-show="panel.isSelected(2)" ng-model = "email" type="email" name="email" id="email" class="form-control" value=""  title="">
 					<br ng-show="panel.isSelected(2)">
 					<label for="website"ng-show="panel.isSelected(2)" >Website</label> <br ng-show="panel.isSelected(2)">
 					<input ng-show="panel.isSelected(2)"ng-model = "url" type="url" name="" id="website" class="form-control" value=""  title=""> <br ng-show="panel.isSelected(2)">
@@ -184,6 +184,7 @@ include("../../header/headerafterlogin.html");
     					</span>
     					<input type="number" ng-model = "pricePerMonth" name="" id="input" class="form-control" value="" min="{5"} max="" step="" required="required" title="">
     				</div> <br>
+					
 					<form  ng-show="panel.isSelected(4)" method="post" name="multiple_upload_form" id="multiple_upload_form" enctype="multipart/form-data" action="upload.php">
 					    <input type="hidden" name="image_form_submit" value="1"/>
 					    <label>Choose Image</label>
@@ -194,6 +195,7 @@ include("../../header/headerafterlogin.html");
 					    </div>
 					    <div id="images_preview"></div>
 					</form>
+					
 					<div class="form-group">
 						<label for="time_example" class="col-sm-4 control-label">Time</label>
 						<div class="col-sm-8">

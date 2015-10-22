@@ -25,7 +25,7 @@ $descr = mysql_real_escape_string($data->descr);
   $floors = mysql_real_escape_string($data->floors);
   $area = mysql_real_escape_string($data->area);
   $rooms = mysql_real_escape_string($data->rooms);
-  $desks = mysql_real_escape_string($data->typedesks);
+  $desks = mysql_real_escape_string($data->desks);
 
 $venue_id = $_SESSION["venueid"];
 $sql = "UPDATE venue SET venue_desc = '".$descr."' , type = '".$type."' ,no_of_floors='".$floors."' ,floor_area='".$area."' ,no_of_rooms='".$rooms."' ,no_of_desks='".$desks."' WHERE venue_id='".$venue_id."'";

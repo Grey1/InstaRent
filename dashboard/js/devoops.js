@@ -42,6 +42,25 @@ function LoadOpenLayersScript(callback){
 		}
 	}
 }
+
+// Hide Login and registration modal 
+// homepage
+
+$(document).ready(function(){
+
+$("a").click(function(event){
+
+$("#login").modal('hide');
+
+});
+
+
+
+
+});
+
+
+
 //
 // Dynamically load  Leaflet Plugin
 // homepage: http://leafletjs.com
@@ -3493,5 +3512,6 @@ $(document).ready(function () {
 		$('#about').removeClass('about-h');
 	})
 });
+
 
 
