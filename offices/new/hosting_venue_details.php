@@ -19,17 +19,16 @@
 				
 		
 		<!-- Bootstrap JavaScript -->
-		
+		<script src="../../dashboard/js/devoops.js"></script>
 		<script src="../../dashboard/plugins/jquery/jquery.min.js"></script>
 		<script src="../../dashboard/plugins/jquery-ui/jquery-ui.min.js"></script>
 		<script src="../../bootstrap/js/bootstrap.min.js"></script>
 		
 		<script src="../../dashboard/plugins/justified-gallery/jquery.justifiedGallery.min.js"></script>
-
+		
 		
 		<script src = "../../Angular/js/angular.min.js"></script>
-    	<script src="../../dashboard/js/devoops.js"></script>
-    	
+    	<script src="app.js"></script>
     
 	
     	<style type="text/css">

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 22, 2015 at 07:28 AM
+-- Generation Time: Oct 24, 2015 at 12:13 PM
 -- Server version: 5.6.26
 -- PHP Version: 5.6.12
 
@@ -19,6 +19,30 @@ SET time_zone = "+00:00";
 --
 -- Database: `instarent`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `photos`
+--
+
+CREATE TABLE IF NOT EXISTS `photos` (
+  `photo_id` int(20) NOT NULL,
+  `photo_path` varchar(200) NOT NULL,
+  `photo_size` int(5) NOT NULL,
+  `photo_name` varchar(100) NOT NULL,
+  `type` varchar(20) NOT NULL,
+  `user_id` int(10) NOT NULL,
+  `venue_id` int(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `photos`
+--
+
+INSERT INTO `photos` (`photo_id`, `photo_path`, `photo_size`, `photo_name`, `type`, `user_id`, `venue_id`) VALUES
+(1, '\\img', 0, 'large.jpg', '', 18, 1),
+(2, '\\img', 0, 'avatar.jpg', '', 18, 2);
 
 -- --------------------------------------------------------
 
@@ -86,6 +110,7 @@ CREATE TABLE IF NOT EXISTS `venue` (
   `name` varchar(50) NOT NULL,
   `type` varchar(10) NOT NULL,
   `city` varchar(50) NOT NULL,
+  `state` varchar(15) NOT NULL,
   `venue_desc` longtext NOT NULL,
   `logo_addr` longtext NOT NULL,
   `no_of_floors` int(11) NOT NULL,
@@ -98,8 +123,17 @@ CREATE TABLE IF NOT EXISTS `venue` (
   `neighbourhood` varchar(50) NOT NULL,
   `telephone` varchar(20) NOT NULL,
   `email` varchar(80) NOT NULL,
-  `website` varchar(100) NOT NULL
+  `website` varchar(100) NOT NULL,
+  `workspace_id` int(20) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `venue`
+--
+
+INSERT INTO `venue` (`venue_id`, `user_id`, `name`, `type`, `city`, `state`, `venue_desc`, `logo_addr`, `no_of_floors`, `floor_area`, `no_of_rooms`, `no_of_desks`, `opening_time`, `closing_time`, `addr`, `neighbourhood`, `telephone`, `email`, `website`, `workspace_id`) VALUES
+(1, '18', 'venue1', '1', 'mumbai', 'maharashtra', 'This is the text', '', 0, 0, 0, 0, '00:00:00', '00:00:00', '', '', '', '', '', 1),
+(2, '18', 'venue2', '1', 'mumbai', 'maharashtra', 'This is the text', '', 0, 0, 0, 0, '00:00:00', '00:00:00', '', '', '', '', '', 2);
 
 -- --------------------------------------------------------
 
@@ -115,8 +149,17 @@ CREATE TABLE IF NOT EXISTS `workspace` (
   `space_name` varchar(20) NOT NULL,
   `capacity` int(11) NOT NULL,
   `space_desc` longtext NOT NULL,
-  `image_path` longtext NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `photo_id` int(20) NOT NULL,
+  `workspace_pricing_id` int(20) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `workspace`
+--
+
+INSERT INTO `workspace` (`workspace_id`, `venue_id`, `user_id`, `type`, `space_name`, `capacity`, `space_desc`, `photo_id`, `workspace_pricing_id`) VALUES
+(1, 1, '18', 'test', 'Wonderful', 100, 'jkasdh akjshdkjash dkjsah kjdha skjdh asj hdajs', 1, 1),
+(2, 1, '', 'test', 'Wonderful', 100, 'jkasdh akjshdkjash dkjsah kjdha skjdh asj hdajs', 2, 2);
 
 -- --------------------------------------------------------
 
@@ -125,17 +168,30 @@ CREATE TABLE IF NOT EXISTS `workspace` (
 --
 
 CREATE TABLE IF NOT EXISTS `workspace_pricing` (
+  `workspace_pricing_id` int(20) NOT NULL,
   `workspace_id` int(20) NOT NULL,
-  `user_id` int(10) NOT NULL,
-  `venue_id` int(20) NOT NULL,
   `hourly_price` int(11) NOT NULL,
   `weekly_price` int(11) NOT NULL,
-  `monthy_price` int(11) NOT NULL
+  `monthly_price` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `workspace_pricing`
+--
+
+INSERT INTO `workspace_pricing` (`workspace_pricing_id`, `workspace_id`, `hourly_price`, `weekly_price`, `monthly_price`) VALUES
+(1, 1, 10, 20, 30),
+(2, 2, 10, 20, 30);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `photos`
+--
+ALTER TABLE `photos`
+  ADD PRIMARY KEY (`photo_id`);
 
 --
 -- Indexes for table `user`
@@ -170,7 +226,7 @@ ALTER TABLE `workspace`
 -- Indexes for table `workspace_pricing`
 --
 ALTER TABLE `workspace_pricing`
-  ADD PRIMARY KEY (`workspace_id`);
+  ADD PRIMARY KEY (`workspace_pricing_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -195,7 +251,7 @@ ALTER TABLE `venue`
 -- AUTO_INCREMENT for table `workspace`
 --
 ALTER TABLE `workspace`
-  MODIFY `workspace_id` int(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `workspace_id` int(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -7,19 +7,30 @@ li.active-link{
   color:white;
 }
 
+
+.form-field{
+width:100%;
+margin-left: -4px;
+line-height: normal;
+display: block;
+height: 44px;
+padding-top: 10px;
+padding-bottom: 10px;
+font-size: 16px;
+}
+
 #image-content{
   background-image: url("../../Creative-Office-Space.jpg"); 
   height: 580px;
   width:100% ;
   margin-top: -12px;
 
-  
 }
 
 .image-navbar{
   position: absolute;
   bottom:0;
-  margin-left:40%;
+  margin-left:30%;
   margin-bottom: 10%;
 }
 

@@ -180,6 +180,14 @@ session_start();
 
 <div id="image-content" class="img-responsive">
 </div> 	 
+<div class="image-navbar">
+	<form class="navbar-form pull-right">
+		<input type="text" style="width:200px;">
+		<button type="submit" class="btn btn-default" style="height:28px;line-height:10px">Submit</button>
+	</form>
+	
+</div>
+
 
 
 
