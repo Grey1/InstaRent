@@ -112,40 +112,40 @@ include("../../header/headerafterlogin.html");
 				<div class="panel-body" >	
 					<div class = "description-panel" ng-show="panel.isSelected(1)">
 					<label> Description </label>
-					<textarea ng-mouseover = "hint.selectHint(1)"  ng-model = "descr" name="description" id="input" class="form-control" rows="4" required="required" ></textarea><br>
+					<textarea ng-mouseover = "hint.selectHint(1)"  ng-model = "descr" name="description" id="input" class="form-control" rows="4" required="required" ></textarea>
 					<label > Venue type</label>
-					<select ng-mouseover = "hint.selectHint(2)" ng-model = "type" name="" id="type" class="form-control" required="required">
+					<select ng-mouseover = "hint.selectHint(2)" ng-model = "type" name="type" id="type" class="form-control" required="required">
 						<option value="1">Business Centre</option>
 						<option value="2">Corporate Office</option>
 						<option value="3">Coworking Office</option>
 						<option value="4">Hotel</option>
 						<option value="5">Startup Office</option>
 						<option value="6">Studio</option>
-					</select><br>
+					</select>
 					
 					<label > Number of floors </label>
-					<input ng-mouseover = "hint.selectHint(1)" ng-model = "floors" type="number" name="num_floors" id="num_floors" class="form-control" value="" min="{5"} max="" step="" required title=""><br >
+					<input ng-mouseover = "hint.selectHint(1)" ng-model = "floors" type="number" name="num_floors" id="num_floors" class="form-control" value="" min="{5"} max="" step="" required title="">
 					<label > Floor Area </label>
-					<input ng-mouseover = "hint.selectHint(1)"ng-model = "area" type="number" name="floor_area" id="floor_area" class="form-control" value="" min="{5"} max="" step="" title=""><br >
+					<input ng-mouseover = "hint.selectHint(1)"ng-model = "area" type="number" name="floor_area" id="floor_area" class="form-control" value="" min="{5"} max="" step="" title="">
 					<label > Number of rooms </label>
-					<input ng-mouseover = "hint.selectHint(1)"ng-model = "rooms" type="number" name="num_rooms" id="num_rooms" class="form-control" value="" min="{5"} max="" step="" required="required" title=""><br >
+					<input ng-mouseover = "hint.selectHint(1)"ng-model = "rooms" type="number" name="num_rooms" id="num_rooms" class="form-control" value="" min="{5"} max="" step="" required="required" title="">
 					<label >  Number of desks </label>
-					<input ng-mouseover = "hint.selectHint(1)"ng-model = "desks" type="number" name="num_desk" id="num_desk" class="form-control" value="" min="{5"} max="" step="" required="required" title=""><br >
+					<input ng-mouseover = "hint.selectHint(1)"ng-model = "desks" type="number" name="num_desk" id="num_desk" class="form-control" value="" min="{5"} max="" step="" required="required" title="">
 					</div>
 					<label ng-show="panel.isSelected(2)" for="addr" >Address</label> 
 					<input ng-show="panel.isSelected(2)" ng-model = "addr" type="text" name="" id="addr" class="form-control" value="" required="required" >
-					<br ng-show="panel.isSelected(2)">
+					
 					<label ng-show="panel.isSelected(2)"for="neighbourhood" >Neighbourhood</label>
 					<input ng-show="panel.isSelected(2)" ng-model = "neighbours" type="text" name="neighbourhood" id="neighbourhood" class="form-control" value="" required="required" >
-					<br ng-show="panel.isSelected(2)">
+					
 					<label for="number" ng-show="panel.isSelected(2)">Telephone number</label>
 					<input ng-model = "tel" type="tel" name="" id="number" ng-show="panel.isSelected(2)"class="form-control" value="" required="required" title="">
-					<br ng-show="panel.isSelected(2)">
+					
 					<label for="email" ng-show="panel.isSelected(2)">General email</label>
 					<input ng-show="panel.isSelected(2)" ng-model = "email" type="email" name="email" id="email" class="form-control" value=""  title="">
-					<br ng-show="panel.isSelected(2)">
-					<label for="website"ng-show="panel.isSelected(2)" >Website</label> <br ng-show="panel.isSelected(2)">
-					<input ng-show="panel.isSelected(2)"ng-model = "url" type="url" name="" id="website" class="form-control" value=""  title=""> <br ng-show="panel.isSelected(2)">
+					
+					<label for="website"ng-show="panel.isSelected(2)" >Website</label> 
+					<input ng-show="panel.isSelected(2)"ng-model = "url" type="url" name="" id="website" class="form-control" value=""  title=""> 
 					<label ng-show="panel.isSelected(3)"for="name">Space type</label>	
 					<select ng-model = "spacetype" ng-show="panel.isSelected(3)" name="" id="input" class="form-control" required="required">
 						<option value=""></option>
@@ -157,7 +157,7 @@ include("../../header/headerafterlogin.html");
 					<input ng-show="panel.isSelected(3)" type="number" name="no_similar_space" id="input" class="form-control" ng-model = "numberofspace" value="" min="{5"} max="" step="" required="required" title="">
 
 					<label ng-show="panel.isSelected(3)"for="name">Description</label>						
-					<textarea ng-show="panel.isSelected(3)"name="" id="input" class="form-control" rows="3" required="required" ng-model = "spacedesc"></textarea> <br ng-show="panel.isSelected(3)">
+					<textarea ng-show="panel.isSelected(3)"name="" id="input" class="form-control" rows="3" required="required" ng-model = "spacedesc"></textarea> 
 					<label ng-show="panel.isSelected(6)"for="name">Per hour</label>	
 					<div class="input-group" ng-show="panel.isSelected(6)">
     					<span class="input-group-addon">
@@ -166,7 +166,7 @@ include("../../header/headerafterlogin.html");
     				
 						<input ng-model = "pricePerHour" type="number" name="" id="input" class="form-control" value="" min="{5"} max="" step="" required="required" title="">
 					</div>
-					<br ng-show="panel.isSelected(6)">
+					
 					<label for="name" ng-show="panel.isSelected(6)">Per Week</label>	
 					<div class="input-group" ng-show="panel.isSelected(6)">
     					<span class="input-group-addon">
@@ -175,14 +175,14 @@ include("../../header/headerafterlogin.html");
     				
 						<input ng-show="panel.isSelected(6)" type="number" name="" id="input" ng-model = "pricePerWeek" class="form-control" value="" min="{5"} max="" step="" required="required" title="">
 					</div>
-					<br ng-show="panel.isSelected(6)">
+					
 					<label for="name" ng-show="panel.isSelected(6)">Per month</label>	
 					<div ng-show="panel.isSelected(6)" class="input-group">
     					<span class="input-group-addon">
         					<i>INR</i>
     					</span>
     					<input type="number" ng-model = "pricePerMonth" name="" id="input" class="form-control" value="" min="{5"} max="" step="" required="required" title="">
-    				</div> <br>
+    				</div> 
 					
 					<form  ng-show="panel.isSelected(4)" method="post" name="multiple_upload_form" id="multiple_upload_form" enctype="multipart/form-data" action="upload.php">
 					    <input type="hidden" name="image_form_submit" value="1"/>
@@ -235,19 +235,19 @@ include("../../header/headerafterlogin.html");
 			
 
 			
-			<br><br><br><br><br><br>	
-			
+				
+			<br><br><br><br><br><br>
 			<div class="panel panel-default" ng-show="hint.isHint(1)">
-				<div class="panel-body hint">	
+				<div class="panel-body hint" >
 					Help travelers imagine themselves in your listing by accurately describing all the areas in your space that they’ll be able to use.
-			
+				
 				</div>
 			</div>	
 			
 
 
 			
-			<br><br><br><br><br><br><br>	
+				
 			<div class="panel panel-default" ng-show="hint.isHint(2)">
 				<div class="panel-body">	
 					<p >text1</p>

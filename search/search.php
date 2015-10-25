@@ -28,7 +28,7 @@ session_start();
         // $dbh = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 
         // a query get all the records from the users table
-        $sql = "SELECT name, workspace_id FROM venue where type = '".$event_type."' AND city = '".$city."' AND state = '".$state."' ";
+        $sql = "SELECT event_type, name, workspace_id FROM venue where event_type = '".$event_type."' AND city = '".$city."' AND state = '".$state."' ";
         
 
         // $sql1 = "SELECT photo_id from workspace where workspace_id = '".$workspace_id."' ";
@@ -46,7 +46,8 @@ session_start();
         while($row = mysql_fetch_assoc($query)){
 
 
-        ${"workspaceid_".$i}=$row;
+        ${"workspace_".$i}=$row;
+
         $i++;
         
         
@@ -55,13 +56,14 @@ session_start();
         $j=0;
         while($j<$i){
 
-            $sql = "SELECT workspace.workspace_id ,workspace.photo_id, workspace.space_desc, photos.photo_path,photos.photo_name FROM workspace INNER JOIN photos ON workspace.photo_id = photos.photo_id where workspace.workspace_id='".${"workspaceid_".$j}['workspace_id']."'";
+            $sql = "SELECT workspace.type, workspace.workspace_id ,workspace.photo_id, workspace.space_desc, workspace.space_name, photos.photo_path,photos.photo_name FROM workspace INNER JOIN photos ON workspace.photo_id = photos.photo_id where workspace.workspace_id='".${"workspace_".$j}['workspace_id']."'";
             $querydetails = mysql_query($sql);  
             ${"details_".$j} = mysql_fetch_assoc($querydetails);
-            $sql = "SELECT hourly_price, weekly_price, monthly_price from workspace_pricing where workspace_id='".${"workspaceid_".$j}['workspace_id']."'"; 
+            $sql = "SELECT hourly_price, weekly_price, monthly_price from workspace_pricing where workspace_id='".${"workspace_".$j}['workspace_id']."'"; 
             $query_pricing = mysql_query($sql); 
             ${"pricing_".$j} = mysql_fetch_assoc($query_pricing);
-            
+            ${"details_".$j}['name']=${"workspace_".$j}['name'];
+            ${"details_".$j}['event_type']=${"workspace_".$j}['event_type'];
             ${"workspacedata_".$j}=array_merge(${"details_".$j},${"pricing_".$j});
             $workspace_data[$j]= ${"workspacedata_".$j};
             $j++;

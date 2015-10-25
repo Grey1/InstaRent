@@ -1,4 +1,7 @@
-var app = angular.module('instarent', [])
+
+
+
+var app = angular.module('instarent', ['angularUtils.directives.dirPagination'])
 
 // app.controller('DisplayController', function(){
 //     this.displayed=1;
@@ -24,6 +27,24 @@ this.checkVal = function(val){
 return this.displayed===val;
 
 };
+
+//defining scope variables
+
+$scope.minPrice=0;
+$scope.maxPrice=2000;
+$scope.minDate = Date();
+
+
+//END -- defining scope variables
+
+$scope.greaterThan = function(item){
+    return ((item.weekly_price >= $scope.minPrice)&&(item.weekly_price<= $scope.maxPrice));
+}
+
+$scope.sendDataToDetailsPage = function(){
+    $('#form').submit();
+}
+
 
 
  $scope.getVenues = function() {

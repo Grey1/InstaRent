@@ -6,11 +6,11 @@
 
 		$scope.updateData=function(){
 
-			$http.post('insert.php'{
+			$http.post('insert.php',{
 				'fname':$scope.fname,'sname':$scope.sname,'gender':$scope.gender,'bday':$scope.bday, 
 				'email':$scope.email,'contact':$scope.contact,
 				'companyname':$scope.companyname,'addr1':$scope.addr1, 'addr2':$scope.addr2,
-				'city':$scope.city,'pincode':$scope.pincode,
+				'city':$scope.city,'pincode':$scope.pincode
 			}).success(function(data){
 				console.log("success");
 			})
@@ -18,4 +18,4 @@
 		}
 
 	}	
-	})
+	)

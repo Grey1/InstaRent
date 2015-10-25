@@ -1,7 +1,7 @@
 * {outline:none !important;}
 body {
   color:#525252;
-  background:#436E90;
+  background:#F0F0F0;
 }
 li.active-link{
   color:white;
@@ -70,6 +70,37 @@ line-height: 50px;
   -o-transition: 0.5s;
   transition: 0.5s;
 }
+#desc{
+margin-bottom: -10px;
+}
+.form-control{
+ margin-bottom: 5%; 
+}
+
+#pricing_item{
+ position: absolute;
+color: rgb(160, 160, 160);
+font-size: large;
+background-color: black;
+
+top: 0;
+
+}
+
+#spacetype a{
+font-size: 14px;
+color: #525252;
+font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
+display: block;
+}
+
+#desc a{
+color: #525252;
+font-family: "Righteous",cursive;
+display: block;
+} 
+
+
 #logo a:hover {
   background-position: right 25px;
   text-decoration: none;
