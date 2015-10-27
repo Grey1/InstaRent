@@ -19,43 +19,8 @@
 				
 		
 		<!-- Bootstrap JavaScript -->
-		<script src="../../dashboard/js/devoops.js"></script>
-		<script src="../../dashboard/plugins/jquery/jquery.min.js"></script>
-		<script src="../../dashboard/plugins/jquery-ui/jquery-ui.min.js"></script>
-		<script src="../../bootstrap/js/bootstrap.min.js"></script>
 		
-		<script src="../../dashboard/plugins/justified-gallery/jquery.justifiedGallery.min.js"></script>
-		
-		
-		<script src = "../../Angular/js/angular.min.js"></script>
-    	<script src="app.js"></script>
     
-	
-    	<style type="text/css">
-    	.panel-heading{
-    		height: 100px;
-    	}
-    	</style>
-    	<script src="../../dashboard/js/jquery.form.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){
-    $('#images').on('change',function(){
-        $('#multiple_upload_form').ajaxForm({
-            //display the uploaded images
-            target:'#images_preview',
-            
-            beforeSubmit:function(e){
-                $('.uploading').show();
-            },
-            success:function(e){
-                $('.uploading').hide();
-            },
-            error:function(e){
-            }
-        }).submit();
-    });
-});
-</script>
 
 
 	</head>
@@ -105,7 +70,7 @@ include("../../header/headerafterlogin.html");
 					<h3 class="panel-title lead text-center" style="padding:35px" ng-model="header" ng-show="panel.isSelected(3)"> Spaces are physical areas that can be booked in your venue </h3>
 					<h3 class="panel-title lead text-center" style="padding:35px" ng-model="header" ng-show="panel.isSelected(6)"> Set a Price for your space </h3>
 					<h3 class="panel-title lead text-center" style="padding:35px" ng-model="header"ng-show="panel.isSelected(4)">  </h3>
-					<h3 class="panel-title lead text-center" style="padding:35px" ng-model="header" ng-show="panel.isSelected(5)"> </h3>
+					<h3 class="panel-title lead text-center" style="padding:35px" ng-model="header" ng-show="panel.isSelected(5)"> Every space on Instarent is unique. Highlight what makes your listing welcoming so that it stands out to our users.</h3>
 					<h3 class="panel-title lead text-center" style="padding:35px" ng-model="header" ng-show="panel.isSelected(7)">  </h3>
 					<h3 class="panel-title lead text-center" style="padding:35px" ng-model="header" ng-show="panel.isSelected(8)">  </h3>
 				</div>
@@ -132,34 +97,43 @@ include("../../header/headerafterlogin.html");
 					<label >  Number of desks </label>
 					<input ng-mouseover = "hint.selectHint(1)"ng-model = "desks" type="number" name="num_desk" id="num_desk" class="form-control" value="" min="{5"} max="" step="" required="required" title="">
 					</div>
-					<label ng-show="panel.isSelected(2)" for="addr" >Address</label> 
-					<input ng-show="panel.isSelected(2)" ng-model = "addr" type="text" name="" id="addr" class="form-control" value="" required="required" >
+
+				<div class = "address-panel" ng-show="panel.isSelected(2)">
+					<label  for="addr" >Address</label> 
+					<input  ng-model = "addr" type="text" name="" id="addr" class="form-control" value="" required="required" >
 					
-					<label ng-show="panel.isSelected(2)"for="neighbourhood" >Neighbourhood</label>
-					<input ng-show="panel.isSelected(2)" ng-model = "neighbours" type="text" name="neighbourhood" id="neighbourhood" class="form-control" value="" required="required" >
+					<label for="neighbourhood" >Neighbourhood</label>
+					<input  ng-model = "neighbours" type="text" name="neighbourhood" id="neighbourhood" class="form-control" value="" required="required" >
 					
-					<label for="number" ng-show="panel.isSelected(2)">Telephone number</label>
-					<input ng-model = "tel" type="tel" name="" id="number" ng-show="panel.isSelected(2)"class="form-control" value="" required="required" title="">
+					<label for="number" >Telephone number</label>
+					<input ng-model = "tel" type="tel" name="" id="number" class="form-control" value="" required="required" title="">
 					
-					<label for="email" ng-show="panel.isSelected(2)">General email</label>
-					<input ng-show="panel.isSelected(2)" ng-model = "email" type="email" name="email" id="email" class="form-control" value=""  title="">
+					<label for="email" >General email</label>
+					<input  ng-model = "email" type="email" name="email" id="email" class="form-control" value=""  title="">
 					
-					<label for="website"ng-show="panel.isSelected(2)" >Website</label> 
-					<input ng-show="panel.isSelected(2)"ng-model = "url" type="url" name="" id="website" class="form-control" value=""  title=""> 
-					<label ng-show="panel.isSelected(3)"for="name">Space type</label>	
-					<select ng-model = "spacetype" ng-show="panel.isSelected(3)" name="" id="input" class="form-control" required="required">
+					<label for="website" >Website</label> 
+					<input ng-model = "url" type="url" name="" id="website" class="form-control" value=""  title=""> 
+				</div>
+
+
+				<div class = "spacetype-panel" ng-show="panel.isSelected(3)">
+					<label for="name">Space type</label>	
+					<select ng-model = "spacetype"  name="" id="input" class="form-control" required="required">
 						<option value=""></option>
 					</select>
-					<label ng-show="panel.isSelected(3)" for="name">Space name</label>						
-					<input ng-show="panel.isSelected(3)"type="text" ng-model = "spacename" name="space_name" id="name" class="form-control" value="" required="required"  title="">
+					<label  for="name">Space name</label>						
+					<input type="text" ng-model = "spacename" name="space_name" id="name" class="form-control" value="" required="required"  title="">
 
-					<label ng-show="panel.isSelected(3)" for="name">Number of similar spaces</label>						
-					<input ng-show="panel.isSelected(3)" type="number" name="no_similar_space" id="input" class="form-control" ng-model = "numberofspace" value="" min="{5"} max="" step="" required="required" title="">
+					<label  for="name">Number of similar spaces</label>						
+					<input  type="number" name="no_similar_space" id="input" class="form-control" ng-model = "numberofspace" value="" min="{5"} max="" step="" required="required" title="">
 
-					<label ng-show="panel.isSelected(3)"for="name">Description</label>						
-					<textarea ng-show="panel.isSelected(3)"name="" id="input" class="form-control" rows="3" required="required" ng-model = "spacedesc"></textarea> 
-					<label ng-show="panel.isSelected(6)"for="name">Per hour</label>	
-					<div class="input-group" ng-show="panel.isSelected(6)">
+					<label for="name">Description</label>						
+					<textarea name="" id="input" class="form-control" rows="3" required="required" ng-model = "spacedesc"></textarea> 
+				</div>
+					
+				<div class = "pricing-panel" ng-show="panel.isSelected(6)">
+					<label for="name">Per hour</label>	
+					<div class="input-group" >
     					<span class="input-group-addon">
         					<i>INR</i>
     					</span>
@@ -167,47 +141,107 @@ include("../../header/headerafterlogin.html");
 						<input ng-model = "pricePerHour" type="number" name="" id="input" class="form-control" value="" min="{5"} max="" step="" required="required" title="">
 					</div>
 					
-					<label for="name" ng-show="panel.isSelected(6)">Per Week</label>	
-					<div class="input-group" ng-show="panel.isSelected(6)">
+					<label for="name" >Per Week</label>	
+					<div class="input-group" >
     					<span class="input-group-addon">
         					<i>INR</i>
     					</span>
     				
-						<input ng-show="panel.isSelected(6)" type="number" name="" id="input" ng-model = "pricePerWeek" class="form-control" value="" min="{5"} max="" step="" required="required" title="">
+						<input  type="number" name="" id="input" ng-model = "pricePerWeek" class="form-control" value="" min="{5"} max="" step="" required="required" title="">
 					</div>
 					
-					<label for="name" ng-show="panel.isSelected(6)">Per month</label>	
-					<div ng-show="panel.isSelected(6)" class="input-group">
+					<label for="name" >Per month</label>	
+					<div  class="input-group">
     					<span class="input-group-addon">
         					<i>INR</i>
     					</span>
     					<input type="number" ng-model = "pricePerMonth" name="" id="input" class="form-control" value="" min="{5"} max="" step="" required="required" title="">
     				</div> 
-					
-					<form  ng-show="panel.isSelected(4)" method="post" name="multiple_upload_form" id="multiple_upload_form" enctype="multipart/form-data" action="upload.php">
-					    <input type="hidden" name="image_form_submit" value="1"/>
-					    <label>Choose Image</label>
-					    <input type="file" name="images[]" id="images" multiple >
-					    <div class="uploading none">
-					        <label>&nbsp;</label>
-					        <img src="uploading.gif" alt="uploading......"/>
-					    </div>
-					    <div id="images_preview"></div>
-					</form>
-					
-					<div class="form-group">
-						<label for="time_example" class="col-sm-4 control-label">Time</label>
-						<div class="col-sm-8">
-							<input type="text" id="time_example" class="form-control" placeholder="Time">
-						</div>
-					</div>
+				</div>
+
+
+			<form  ng-show="panel.isSelected(4)" method="post" name="multiple_upload_form" id="multiple_upload_form" enctype="multipart/form-data" action="upload.php">
+			    <input type="hidden" name="image_form_submit" value="1"/>
+			    <label class="fileContainer">Choose Image
+			    <input type="file" name="images[]" id="images" multiple accept=".jpg,.jpeg">
+
+			    </label>
+			    <div class="uploading none">
+			        <label>&nbsp;</label>
+			    </div>
+			    <div id="images_preview"></div>
+			</form>
+			
+			<div class="form-group" ng-show="panel.isSelected(7)">
+				<label for="time_example" class="col-sm-4 control-label">Time</label>
+				<div class="col-sm-8">
+					<input type="text" id="time_example" class="form-control" placeholder="Time">
+				</div>
+			</div>
+
+
+			<div class="form-group" ng-show="panel.isSelected(5)" style="display:inline">
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" value="1" ng-model="essentials"  ng-true-value="'YES'" ng-false-value="'NO'">
+						Essentials
+					</label>
+				</div>
+				<div class="checkbox" >
+					<label>
+						<input type="checkbox" value="2" ng-model="internet"  ng-true-value="'YES'" ng-false-value="'NO'">
+						Internet
+					</label>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" value="3" ng-model="wireless"  ng-true-value="'YES'" ng-false-value="'NO'">
+						Wireless Internet
+					</label>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" value="4" ng-model="parking"  ng-true-value="'YES'" ng-false-value="'NO'">
+						Free Parking
+					</label>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" value="5" ng-model="elevator"  ng-true-value="'YES'" ng-false-value="'NO'">
+						Elevator in Building
+					</label>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" value="6" ng-model="buzzer"  ng-true-value="'YES'" ng-false-value="'NO'">
+
+						Buzzer/wireless telecomm
+						
+					</label>
+				</div>
+
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" value="7" ng-model="doorman"  ng-true-value="'YES'" ng-false-value="'NO'">
+						Doorman
+					</label>
+				</div>
+
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" value="8" ng-model="kitchen"  ng-true-value="'YES'" ng-false-value="'NO'">
+						Kitchen
+					</label>
+				</div>
+				
+			</div>
 
 
 
     				<button type="button" class="btn btn-default pull-right" ng-show="panel.isSelected(1)"ng-click="insertData(1);panel.selectTab(2)">Next</button>
     				<button type="button" class="btn btn-default pull-right" ng-show="panel.isSelected(2)"ng-click="insertData(2);panel.selectTab(3)">Next</button>
     				<button type="button" class="btn btn-default pull-right" ng-show="panel.isSelected(3)"ng-click="insertData(3);panel.selectTab(4)">Next</button>
-    				<button type="button" class="btn btn-default pull-right" ng-show="panel.isSelected(4)"ng-click="insertData(4);panel.selectTab(5)">Next</button>
+    				<button type="button" class="btn btn-default pull-right" ng-show="panel.isSelected(4)"ng-click="panel.selectTab(5)">Next</button>
     				<button type="button" class="btn btn-default pull-right" ng-show="panel.isSelected(5)"ng-click="insertData(5);panel.selectTab(6)">Next</button>
     				<button type="button" class="btn btn-default pull-right" ng-show="panel.isSelected(6)"ng-click="insertData(6);panel.selectTab(7)">Next</button>
     				<button type="button" class="btn btn-default pull-right" ng-show="panel.isSelected(7)"ng-click="insertData(7);panel.selectTab(8)">Next</button>
@@ -262,15 +296,56 @@ include("../../header/headerafterlogin.html");
 	</div>
 </div>
 
-<script type="text/javascript">
-$(document).ready(function() {
-	// Load TimePicker plugin and callback all time and date pickers
-	LoadTimePickerScript(AllTimePickers);
-	
-	
-});
-</script>
 
+
+
+
+
+<script src="../../dashboard/plugins/jquery/jquery.min.js"></script>
+<script src="../../dashboard/plugins/jquery-ui/jquery-ui.min.js"></script>
+<script src="../../bootstrap/js/bootstrap.min.js"></script>
+<script src="../../dashboard/plugins/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src = "../../Angular/js/angular.min.js"></script>
+<script src="app.js"></script>
+	
+    	<style type="text/css">
+    	.panel-heading{
+    		height: 100px;
+    	}
+    	</style>
+    	<script src="../../dashboard/js/jquery.form.js"></script>
+
+<script type="text/javascript">
+
+function deleteDiv(num){
+	var index_id = 'index_id'+num;
+	document.getElementById(document.getElementById(index_id).value).remove();
+
+};
+
+
+$(document).ready(function(){
+    $('#images').on('change',function(){
+        $('#multiple_upload_form').ajaxForm({
+            //display the uploaded images
+            target:document.getElementById('images_preview'),
+            
+            beforeSubmit:function(e){
+                $('.uploading').show();
+            },
+            success:function(response){
+                
+                
+
+            },
+            error:function(e){
+            }
+        }).submit();
+    });
+})
+
+</script>
 
 </body>
 </html>
+

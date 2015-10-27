@@ -15,6 +15,9 @@ var app = angular.module('instarent', ['angularUtils.directives.dirPagination'])
 
 app.controller('VenueController', function($scope,$http, $window){
 
+
+
+
 this.displayed=1;
 
 this.setVal = function(val){

@@ -17,7 +17,6 @@ mysql_select_db("instarent",$conn);
 
 
   $sql = "SELECT * from workspace INNER JOIN venue ON workspace.workspace_id = venue.workspace_id 
-  INNER JOIN photos ON workspace.photo_id = photos.photo_id
   where workspace.workspace_id='".$workspaceid."'  ";
   $query = mysql_query($sql,$conn);
 
@@ -113,7 +112,7 @@ print_r($data);
         <div class="row">
 
             <div class="col-md-8">
-                <img class="img-responsive" src=<?php echo $data['photo_path'].'/'.'avatar.jpg'?> alt="">
+                <img class="img-responsive" src=<?php echo $data['photo_path'].'/'.$data['photo_name']  ?> alt="">
             </div>
 
             <div class="col-md-4">

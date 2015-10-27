@@ -10,6 +10,11 @@
 // homepage: http://arshaw.com/fullcalendar
 // require moment.js
 //
+
+
+
+
+
 function LoadCalendarScript(callback){
 	function LoadFullCalendarScript(){
 		if(!$.fn.fullCalendar){
@@ -43,23 +48,6 @@ function LoadOpenLayersScript(callback){
 	}
 }
 
-// Hide Login and registration modal 
-// homepage
-
-$(document).ready(function(){
-
-$("a").click(function(event){
-
-$("#login").modal('hide');
-
-});
-
-
-
-
-});
-
-
 
 //
 // Dynamically load  Leaflet Plugin
@@ -89,6 +77,10 @@ function LoadTimePickerScript(callback){
 		}
 	}
 }
+
+
+
+
 //
 //  Dynamically load Bootstrap Validator Plugin
 //  homepage: https://github.com/nghuuphuoc/bootstrapvalidator
@@ -3368,6 +3360,11 @@ function DrawFullCalendar(){
 //////////////////////////////////////////////////////
 //////////////////////////////////////////////////////
 $(document).ready(function () {
+
+
+
+
+
 	$('body').on('click', '.show-sidebar', function (e) {
 		e.preventDefault();
 		$('div#main').toggleClass('sidebar-show');
