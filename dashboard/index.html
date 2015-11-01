@@ -47,7 +47,7 @@
 		</div>
 	</div>
 </div>
-<header class="navbar" ng-controller="divController as divc">
+<header class="navbar" >
 	<div class="container-fluid expanded-panel">
 		<div class="row">
 			<div id="logo" class="col-xs-12 col-sm-2">
@@ -113,7 +113,7 @@
 										</a>
 									</li>
 									<li>
-										<a href="#">
+										<a href="../logout.php">
 											<i class="fa fa-power-off"></i>
 											<span>Logout</span>
 										</a>
@@ -140,12 +140,12 @@
 						<span class="hidden-xs">Dashboard</span>
 					</a>
 				</li>
-				<li class="dropdown">
+				<li class="dropdown" style="display:none">
 					<a href="#" class="dropdown-toggle">
 						<i class="fa fa-table"></i>
 						 <span class="hidden-xs">Tables</span>
 					</a>
-					<ul class="dropdown-menu">
+					<ul class="dropdown-menu" style="display:none">
 						<li><a class="ajax-link" href="ajax/tables_simple.html">Simple Tables</a></li>
 						<li><a class="ajax-link" href="ajax/tables_datatables.html">Data Tables</a></li>
 						<li><a class="ajax-link" href="ajax/tables_beauty.html">Beauty Tables</a></li>
@@ -163,7 +163,7 @@
 
 
 
-				<li class="dropdown">
+				<li class="dropdown" style="display:none">
 					<a href="#" class="dropdown-toggle">
 						<i class="fa fa-pencil-square-o"></i>
 						 <span class="hidden-xs">Forms</span>
@@ -174,12 +174,12 @@
 						<li><a class="ajax-link" href="ajax/forms_file_uploader.html">File Uploader</a></li>
 					</ul>
 				</li>
-				<li class="dropdown">
+				<li class="dropdown"style="display:none">
 					<a href="#" class="dropdown-toggle">
 						<i class="fa fa-desktop"></i>
 						 <span class="hidden-xs">UI Elements</span>
 					</a>
-					<ul class="dropdown-menu">
+					<ul class="dropdown-menu"style="display:none">
 						<li><a class="ajax-link" href="ajax/ui_grid.html">Grid</a></li>
 						<li><a class="ajax-link" href="ajax/ui_buttons.html">Buttons</a></li>
 						<li><a class="ajax-link" href="ajax/ui_progressbars.html">Progress Bars</a></li>
@@ -192,7 +192,7 @@
 						<i class="fa fa-list"></i>
 						 <span class="hidden-xs">Pages</span>
 					</a>
-					<ul class="dropdown-menu">
+					<ul class="dropdown-menu"style="display:none">
 						<li><a href="ajax/page_login_v1.html">Login</a></li>
 						<li><a href="ajax/page_register_v1.html">Register</a></li>
 						<li><a id="locked-screen" class="submenu" href="ajax/page_locked.html">Locked Screen</a></li>
@@ -207,40 +207,40 @@
 						<li><a href="ajax/page_500_v1.html">Error 500</a></li>
 					</ul>
 				</li>
-				<li class="dropdown">
+				<li class="dropdown"style="display:none">
 					<a href="#" class="dropdown-toggle">
 						<i class="fa fa-map-marker"></i>
 						<span class="hidden-xs">Maps</span>
 					</a>
-					<ul class="dropdown-menu">
+					<ul class="dropdown-menu"style="display:none">
 						<li><a class="ajax-link" href="ajax/maps.html">OpenStreetMap</a></li>
 						<li><a class="ajax-link" href="ajax/map_fullscreen.html">Fullscreen map</a></li>
 						<li><a class="ajax-link" href="ajax/map_leaflet.html">Leaflet</a></li>
 					</ul>
 				</li>
-				<li class="dropdown">
+				<li class="dropdown"style="display:none">
 					<a href="#" class="dropdown-toggle">
 						<i class="fa fa-picture-o"></i>
 						 <span class="hidden-xs">Gallery</span>
 					</a>
-					<ul class="dropdown-menu">
+					<ul class="dropdown-menu"style="display:none">
 						<li><a class="ajax-link" href="ajax/gallery_simple.html">Simple Gallery</a></li>
 						<li><a class="ajax-link" href="ajax/gallery_flickr.html">Flickr Gallery</a></li>
 					</ul>
 				</li>
-				<li>
+				<li style="display:none">
 					 <a class="ajax-link" href="ajax/typography.html">
 						 <i class="fa fa-font"></i>
 						 <span class="hidden-xs">Typography</span>
 					</a>
 				</li>
-				 <li>
+				 <li style="display:none">
 					<a class="ajax-link" href="ajax/calendar.html">
 						 <i class="fa fa-calendar"></i>
 						 <span class="hidden-xs">Calendar</span>
 					</a>
 				 </li>
-				<li class="dropdown">
+				<li class="dropdown" style="display:none">
 					<a href="#" class="dropdown-toggle">
 						<i class="fa fa-picture-o"></i>
 						 <span class="hidden-xs">Multilevel menu</span>

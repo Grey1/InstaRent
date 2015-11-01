@@ -46,6 +46,7 @@ app.controller('dataController', function($scope,$http){
 	$scope.kitchen = "NO";
 
 
+
 	$scope.insertData=function(num){
 		if(num==1){
 		$http.post("insert.php",{
@@ -60,13 +61,14 @@ app.controller('dataController', function($scope,$http){
 	}
 	else if(num==5){
 
+
 		$http.post("insert.php",{
 			'num':num,'essentials':$scope.essentials,'internet':$scope.internet,'wireless':$scope.wireless,
 			'parking':$scope.parking,'elevator':$scope.elevator,'buzzer':$scope.buzzer,'doorman':$scope.doorman,
 			'kitchen':$scope.kitchen,
 		}).success(function(data,status){
 			if(status==200){
-				console.log("success")
+				console.log(data);
 			}
 
 		});
@@ -83,7 +85,8 @@ app.controller('dataController', function($scope,$http){
 	}
 		else if(num==3){
 		$http.post("insert.php",{
-			'num':num,'spacetype':$scope.spacetype,'spacename':$scope.spacename, 'no_similar_space':$scope.no_similar_space, 'descr':$scope.descr,
+			'num':num,'spacetype':$scope.spacetype,'spacename':$scope.spacename, 
+			'no_similar_space':$scope.no_similar_space, 'descr':$scope.spacedesc,
 		}).success(function(data,status){
 			if(status==200){
 				console.log("success")
@@ -151,5 +154,5 @@ app.controller("HintController", function(){
 });
 
 
-app.controller("")
+
 

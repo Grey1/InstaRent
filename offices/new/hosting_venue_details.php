@@ -1,4 +1,31 @@
+<?php 
+session_start();
 
+if(isset($_SERVER['HTTP_REFERER'])){
+	if($_SERVER['HTTP_REFERER']=="http://localhost:1234/profile/user_profile.php"){
+		$venue_id = $_GET['venue_id'];
+		$_SESSION["venueid"] = $venue_id;
+		$servername = "localhost";
+		$username = "root";
+		$password = "";
+		$dbname="instarent";		
+		$conn = mysql_connect($servername, $username,$password);
+		if (!$conn) {
+		    die('Could not connect: ' . mysql_error());
+		}
+
+		mysql_select_db($dbname,$conn);
+
+		$sql = "SELECT * from venue INNER JOIN workspace ON venue.venue_id = workspace.venue_id 
+		INNER JOIN amenities ON venue.venue_id=amenities.venue_id INNER JOIN workspace_pricing 
+		ON venue.venue_id = workspace_pricing.venue_id where venue.venue_id = '".$venue_id."'";
+		$query = mysql_query($sql);
+		$data = mysql_fetch_assoc($query);
+
+
+}
+
+?>
 
 <!DOCTYPE html>
 <html lang="" ng-app="AppController">
@@ -19,7 +46,11 @@
 				
 		
 		<!-- Bootstrap JavaScript -->
-		
+<script src="../../dashboard/js/jquery.js"></script>
+<script src="../../dashboard/plugins/jquery-ui/jquery-ui.min.js"></script>
+<script src="../../bootstrap/js/bootstrap.min.js"></script>
+<script src = "../../Angular/js/angular.min.js"></script>
+<script src="app.js"></script>		
     
 
 
@@ -32,6 +63,7 @@
 include("../../header/headerafterlogin.html");
 
 ?>
+
 <!-- Header -->
 
 
@@ -52,24 +84,52 @@ include("../../header/headerafterlogin.html");
   						 <p claas="pull-right" style="color:#C0C0C0" > Hosting </p>
   						<li role="presentation" ng-class = "{current:panel.isSelected(6)}" ><a href ng-click="panel.selectTab(6)" style="color:#808080">Pricing <p class="pull-right">  <span class="glyphicon glyphicon-plus" aria-hidden="true"> </span> </p> </a></li>
   						<li role="presentation" ng-class = "{current:panel.isSelected(7)}" ><a href ng-click="panel.selectTab(7)" style="color:#808080">Calendar <p class="pull-right">  <span class="glyphicon glyphicon-plus" aria-hidden="true"> </span> </p> </a></li>
-  						<li role="presentation" ng-class = "{current:panel.isSelected(8)}"><a href ng-click="panel.selectTab(8)" style="color:#808080">Reservation <p class="pull-right">  <span class="glyphicon glyphicon-plus" aria-hidden="true"> </span> </p> </a></li>
+  						<li style="display:none;"role="presentation" ng-class = "{current:panel.isSelected(8)}"><a href ng-click="panel.selectTab(8)" style="color:#808080">Reservation <p class="pull-right">  <span class="glyphicon glyphicon-plus" aria-hidden="true"> </span> </p> </a></li>
 
 					</ul>
 
 				</div>
-				<div class="jumbotron " style="padding:20px"> Complete <i class="lead"><strong> 7 steps</strong></i> &nbsp for hosting your space
+				<div class="jumbotron " style="padding:20px"> Complete <i class="lead"><strong> 6 steps</strong></i> &nbsp for hosting your space
 				</div>
 			</div>
 		</div>
 
 		<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" ng-controller= "dataController">
+			
+			<p style="display:none"> {{descr= '<?php echo $data["venue_desc"]; ?>'}}
+			{{type= '<?php echo $data["event_type"]; ?>'}} 
+			{{floors= <?php echo $data["no_of_floors"]; ?>}}
+			{{area= <?php echo $data["floor_area"]; ?>}}
+			{{rooms= <?php echo $data["no_of_rooms"]; ?>}}
+			{{desks= <?php echo $data["no_of_desks"]; ?>}}
+			{{neighbours= '<?php echo $data["neighbourhood"]; ?>'}}
+			{{tel= '<?php echo $data["telephone"]; ?>'}}
+			{{email= '<?php echo $data["email"]; ?>'}}
+			{{url= '<?php echo $data["website"]; ?>'}}
+			{{addr= '<?php echo $data["addr"]; ?>'}}
+			{{spacetype= '<?php echo $data["type"]; ?>'}}
+			{{spacename= '<?php echo $data["space_name"]; ?>'}}
+			{{no_similar_space= '<?php echo $data["similar_workspace"]; ?>'}}
+			{{spacedesc= '<?php echo $data["space_desc"]; ?>'}}
+			{{essentials = '<?php echo $data["essentials"]; ?>'}}
+			{{internet = '<?php echo $data["essentials"]; ?>'}}
+			{{wireless = '<?php echo $data["internet"]; ?>'}}
+			{{parking = '<?php echo $data["parking"]; ?>'}}
+			{{elevator = '<?php echo $data["elevator"]; ?>'}}
+			{{buzzer = '<?php echo $data["buzzer"]; ?>'}}
+			{{doorman = '<?php echo $data["doorman"]; ?>'}}
+			{{kitchen = '<?php echo $data["kitchen"]; ?>'}}
+			{{pricePerHour = '<?php echo $data["hourly_price"]; ?>'}}
+			{{pricePerWeek = '<?php echo $data["weekly_price"]; ?>'}}
+			{{pricePerMonth = '<?php echo $data["monthly_price"]; ?>'}}
+			</p>
 			<div class="panel panel-info">
 				<div class="panel-heading">
 				<h3 class="panel-title lead text-center" style="padding:35px" ng-model="header" ng-show="panel.isSelected(1)"> Give details about your space </h3>
 					<h3 class="panel-title lead text-center" style="padding:35px" ng-model="header" ng-show="panel.isSelected(2)"> Set your listing location </h3>
 					<h3 class="panel-title lead text-center" style="padding:35px" ng-model="header" ng-show="panel.isSelected(3)"> Spaces are physical areas that can be booked in your venue </h3>
 					<h3 class="panel-title lead text-center" style="padding:35px" ng-model="header" ng-show="panel.isSelected(6)"> Set a Price for your space </h3>
-					<h3 class="panel-title lead text-center" style="padding:35px" ng-model="header"ng-show="panel.isSelected(4)">  </h3>
+					<h3 class="panel-title lead text-center" style="padding:35px" ng-model="header"ng-show="panel.isSelected(4)"> Add Unique Photos of your space </h3>
 					<h3 class="panel-title lead text-center" style="padding:35px" ng-model="header" ng-show="panel.isSelected(5)"> Every space on Instarent is unique. Highlight what makes your listing welcoming so that it stands out to our users.</h3>
 					<h3 class="panel-title lead text-center" style="padding:35px" ng-model="header" ng-show="panel.isSelected(7)">  </h3>
 					<h3 class="panel-title lead text-center" style="padding:35px" ng-model="header" ng-show="panel.isSelected(8)">  </h3>
@@ -77,9 +137,12 @@ include("../../header/headerafterlogin.html");
 				<div class="panel-body" >	
 					<div class = "description-panel" ng-show="panel.isSelected(1)">
 					<label> Description </label>
-					<textarea ng-mouseover = "hint.selectHint(1)"  ng-model = "descr" name="description" id="input" class="form-control" rows="4" required="required" ></textarea>
+					<textarea ng-mouseover = "hint.selectHint(1)" 
+					 ng-model = "descr" name="description" id="input" 
+					 class="form-control" rows="4" required="required" ></textarea>
 					<label > Venue type</label>
-					<select ng-mouseover = "hint.selectHint(2)" ng-model = "type" name="type" id="type" class="form-control" required="required">
+					<select ng-mouseover = "hint.selectHint(2)" 
+					ng-model = "type" name="type" id="type" class="form-control" required="required">
 						<option value="1">Business Centre</option>
 						<option value="2">Corporate Office</option>
 						<option value="3">Coworking Office</option>
@@ -87,15 +150,26 @@ include("../../header/headerafterlogin.html");
 						<option value="5">Startup Office</option>
 						<option value="6">Studio</option>
 					</select>
+					<!-- Declaring Scope -->
 					
+					
+
 					<label > Number of floors </label>
-					<input ng-mouseover = "hint.selectHint(1)" ng-model = "floors" type="number" name="num_floors" id="num_floors" class="form-control" value="" min="{5"} max="" step="" required title="">
+					<input ng-mouseover = "hint.selectHint(1)" min=1 max= 100 ng-model = "floors" 
+					type="number" name="num_floors" id="num_floors" class="form-control" 
+					value="" min="{5"} max="" step="" required title="">
 					<label > Floor Area </label>
-					<input ng-mouseover = "hint.selectHint(1)"ng-model = "area" type="number" name="floor_area" id="floor_area" class="form-control" value="" min="{5"} max="" step="" title="">
+					<input ng-mouseover = "hint.selectHint(1)"ng-model = "area" 
+					min=1 type="number" name="floor_area" id="floor_area" class="form-control" 
+					value="" min="{5"} max="" step="" title="">
 					<label > Number of rooms </label>
-					<input ng-mouseover = "hint.selectHint(1)"ng-model = "rooms" type="number" name="num_rooms" id="num_rooms" class="form-control" value="" min="{5"} max="" step="" required="required" title="">
+					<input ng-mouseover = "hint.selectHint(1)" min=1  ng-model = "rooms" 
+					type="number" name="num_rooms" id="num_rooms" class="form-control" 
+					value="" min="{5"} max="" step="" required="required" title="">
 					<label >  Number of desks </label>
-					<input ng-mouseover = "hint.selectHint(1)"ng-model = "desks" type="number" name="num_desk" id="num_desk" class="form-control" value="" min="{5"} max="" step="" required="required" title="">
+					<input ng-mouseover = "hint.selectHint(1)" min=1  ng-model = "desks" 
+					type="number" name="num_desk" id="num_desk" class="form-control" 
+					value="" min="{5"} max="" step="" required="required" title="">
 					</div>
 
 				<div class = "address-panel" ng-show="panel.isSelected(2)">
@@ -119,16 +193,29 @@ include("../../header/headerafterlogin.html");
 				<div class = "spacetype-panel" ng-show="panel.isSelected(3)">
 					<label for="name">Space type</label>	
 					<select ng-model = "spacetype"  name="" id="input" class="form-control" required="required">
-						<option value=""></option>
+
+						<option value="0">Please Select </option>
+						<option value="1">Flat</option>
+						<option value="2">Garden Office</option>
+						<option value="3">Boat</option>
+						<option value="4">Classroom</option>
+						<option value="5">Garage</option>
+						<option value="6">Office</option>
+						<option value="7">Outside Space</option>
+						<option value="8">Therapy Room</option>
+						<option value="9">Meeting Room</option>
+						<option value="10">Other</option>
 					</select>
 					<label  for="name">Space name</label>						
 					<input type="text" ng-model = "spacename" name="space_name" id="name" class="form-control" value="" required="required"  title="">
 
 					<label  for="name">Number of similar spaces</label>						
-					<input  type="number" name="no_similar_space" id="input" class="form-control" ng-model = "numberofspace" value="" min="{5"} max="" step="" required="required" title="">
+					<input  type="number" name="no_similar_space" id="input" class="form-control" 
+					ng-model = "no_similar_space" value="" min="{5"} max="" step="" required="required" title="">
 
 					<label for="name">Description</label>						
-					<textarea name="" id="input" class="form-control" rows="3" required="required" ng-model = "spacedesc"></textarea> 
+					<textarea name="" id="input" class="form-control" rows="3" required="required" 
+					ng-model = "spacedesc"></textarea> 
 				</div>
 					
 				<div class = "pricing-panel" ng-show="panel.isSelected(6)">
@@ -138,7 +225,7 @@ include("../../header/headerafterlogin.html");
         					<i>INR</i>
     					</span>
     				
-						<input ng-model = "pricePerHour" type="number" name="" id="input" class="form-control" value="" min="{5"} max="" step="" required="required" title="">
+						<input ng-model = "pricePerHour" min=0 type="number" name="" id="input" class="form-control" value="" min="{5"} max="" step="" required="required" title="">
 					</div>
 					
 					<label for="name" >Per Week</label>	
@@ -155,7 +242,7 @@ include("../../header/headerafterlogin.html");
     					<span class="input-group-addon">
         					<i>INR</i>
     					</span>
-    					<input type="number" ng-model = "pricePerMonth" name="" id="input" class="form-control" value="" min="{5"} max="" step="" required="required" title="">
+    					<input type="number" min=0 ng-model = "pricePerMonth" name="" id="input" class="form-control" value="" min="{5"} max="" step="" required="required" title="">
     				</div> 
 				</div>
 
@@ -169,14 +256,65 @@ include("../../header/headerafterlogin.html");
 			    <div class="uploading none">
 			        <label>&nbsp;</label>
 			    </div>
-			    <div id="images_preview"></div>
+			    <div id="images_preview">
+			    	<?php if($_SERVER['HTTP_REFERER']=="http://localhost:1234/profile/user_profile.php"){ 
+			    		$index = 1;
+			    		
+			    		while($index<11){
+			    			${"image_".$index}=$data['image_'.$index];
+			    			if(${"image_".$index}!=""){
+			    		?>
+			    		<div id = "<?php echo $index ?>"
+			    	 style="position:relative; max-width: 250px; margin-top:5%; margin-right:5%; display:inline-flex">
+			    		<img id =  "'img_'<?php echo $index; ?>" src="<?php echo ${"image_".$index} ?>" 
+			    		class="img-rounded img-responsive" alt="Image" style="max-height:150px;cursor:pointer;">
+                <a class="btn" data-toggle="modal" href="#" data-target="#delete<?php echo $index ?>"> 
+                    <span class ="glyphicon glyphicon-trash" aria-hidden="true" ></span></a>           
+                <input type="text" name="" id="inputhidden<?php echo $index ?>" class="form-control" value="<?php echo ${"image_".$index}; ?>" ng-model="photoname<?php echo $index ?>" style="display:none">
+                
+
+        </div>
+        <div class="modal fade" id="delete<?php echo $index; ?>" style="">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title"> Delete Photo</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p> Are you sure you wish to delete this photo? It's a nice one! <p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" id = "deleteimage" onclick="deleteDiv(<?php echo $index; ?>)">Delete</button>
+                        <input type="hidden" name="" id="index_id<?php echo $index; ?>" class="form-control" value="<?php echo $index; ?>">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+			  <?php  	}$index++; }}?>
+
+			    </div>
 			</form>
 			
 			<div class="form-group" ng-show="panel.isSelected(7)">
-				<label for="time_example" class="col-sm-4 control-label">Time</label>
-				<div class="col-sm-8">
-					<input type="text" id="time_example" class="form-control" placeholder="Time">
+				<label for="fromtime" class="col-sm-4 control-label">From Time</label>
+				<div class="col-sm-8" style="margin-bottom:10px">
+					<input type="text" id="fromtime" class="form-control" placeholder="From Time">
 				</div>
+
+				<label for="totime" class="col-sm-4 control-label">To Time</label>
+				<div class="col-sm-8" style="margin-bottom:10px">
+					<input type="text" id="totime" class="form-control" placeholder="To Time">
+				</div >
+
+				<label for="availabledays" class="col-sm-4 control-label">Available days per week</label>
+				<div class="col-sm-8" style="margin-bottom:10px">
+					<input type="text" id="availabledays" class="form-control" placeholder="Available days">
+				</div>
+
+				
 			</div>
 
 
@@ -244,8 +382,8 @@ include("../../header/headerafterlogin.html");
     				<button type="button" class="btn btn-default pull-right" ng-show="panel.isSelected(4)"ng-click="panel.selectTab(5)">Next</button>
     				<button type="button" class="btn btn-default pull-right" ng-show="panel.isSelected(5)"ng-click="insertData(5);panel.selectTab(6)">Next</button>
     				<button type="button" class="btn btn-default pull-right" ng-show="panel.isSelected(6)"ng-click="insertData(6);panel.selectTab(7)">Next</button>
-    				<button type="button" class="btn btn-default pull-right" ng-show="panel.isSelected(7)"ng-click="insertData(7);panel.selectTab(8)">Next</button>
-    				<button type="button" class="btn btn-default pull-right" ng-show="panel.isSelected(8)"ng-click="insertData(8)">Next</button>
+    				<!-- <button type="button" class="btn btn-default pull-right" ng-show="panel.isSelected(7)"ng-click="insertData(7);panel.selectTab(8)">Next</button>
+    				<button type="button" class="btn btn-default pull-right" ng-show="panel.isSelected(8)"ng-click="insertData(8)">Next</button> -->
     				
 
 
@@ -281,7 +419,7 @@ include("../../header/headerafterlogin.html");
 
 
 			
-				
+			<br><br><br><br><br><br><br><br>
 			<div class="panel panel-default" ng-show="hint.isHint(2)">
 				<div class="panel-body">	
 					<p >text1</p>
@@ -301,12 +439,7 @@ include("../../header/headerafterlogin.html");
 
 
 
-<script src="../../dashboard/plugins/jquery/jquery.min.js"></script>
-<script src="../../dashboard/plugins/jquery-ui/jquery-ui.min.js"></script>
-<script src="../../bootstrap/js/bootstrap.min.js"></script>
-<script src="../../dashboard/plugins/justified-gallery/jquery.justifiedGallery.min.js"></script>
-<script src = "../../Angular/js/angular.min.js"></script>
-<script src="app.js"></script>
+
 	
     	<style type="text/css">
     	.panel-heading{
@@ -348,4 +481,4 @@ $(document).ready(function(){
 
 </body>
 </html>
-
+<?php } ?>

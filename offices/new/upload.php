@@ -62,9 +62,9 @@ if (!$conn) {
 }
 
 mysql_select_db($dbname,$conn);
-$venue_id = 2;
+
 $column_name = "image_".$index;
-$sql = "UPDATE workspace SET ".$column_name." = '".$image_src."' WHERE venue_id='".$venue_id."'" ;
+$sql = "UPDATE workspace SET ".$column_name." = '".$image_src."' WHERE venue_id='".$_SESSION["venueid"]."'" ;
 
 $query = mysql_query($sql, $conn);
 }

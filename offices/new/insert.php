@@ -35,7 +35,7 @@ $query = mysql_query($sql, $conn);
 mysql_close($conn);
 
 }
-if($num==2){    
+else if($num==2){    
   $addr = mysql_real_escape_string($data->addr);
   $neighbours = mysql_real_escape_string($data->neighbours);
   $tel = mysql_real_escape_string($data->tel);
@@ -53,7 +53,7 @@ $query = mysql_query($sql, $conn);
 mysql_close($conn);
 
 }
-if($num==3){
+else if($num==3){
 
 $spacetype = mysql_real_escape_string($data->spacetype);
 $spacename = mysql_real_escape_string($data->spacename);
@@ -63,14 +63,16 @@ $descr = mysql_real_escape_string($data->descr);
 
 
 $venue_id = $_SESSION["venueid"];
-$sql = "INSERT INTO workspace(venue_id,user_id,type,space_name,space_desc) VALUES('".$venue_id."',10,'".$spacetype."','".$spacename."','".$no_similar_space."','".$descr."')"; 
+$sql = "UPDATE workspace SET type = '".$spacetype."',space_name = '".$spacename."', 
+similar_workspace='".$no_similar_space."',space_desc='".$descr."' 
+WHERE venue_id = '".$venue_id."'"; 
 
 $query = mysql_query($sql, $conn);
 
 mysql_close($conn);
 
 }
-if($num==4){  
+else if($num==4){  
 
 $image_1 = mysql_real_escape_string($data->photoname1);
 $image_2 = mysql_real_escape_string($data->photoname2);
@@ -86,7 +88,7 @@ $query = mysql_query($sql, $conn);
 mysql_close($conn);
 
 }
-if($num==5){   
+else if($num==5){   
 
 $essentials =  mysql_real_escape_string($data->essentials);
 $internet =  mysql_real_escape_string($data->internet);
@@ -97,27 +99,31 @@ $buzzer =  mysql_real_escape_string($data->buzzer);
 $doorman =  mysql_real_escape_string($data->doorman);
 $kitchen =  mysql_real_escape_string($data->kitchen);
 
+
 $venue_id = $_SESSION["venueid"];
 $sql = "UPDATE amenities SET wifi='".$wireless."', internet ='".$internet."', kitchen ='".$kitchen."', 
-doorman ='".$doorman."', telecom ='".$telecom."', elevator ='".$elevator."', parking ='".$parking."', essentials ='".$parking."') 
+doorman ='".$doorman."', buzzer ='".$buzzer."', elevator ='".$elevator."', parking ='".$parking."', 
+essentials ='".$essentials."'
 WHERE venue_id='".$venue_id."' ";
 $query = mysql_query($sql, $conn);
 mysql_close($conn);
+echo $_SESSION["venueid"];
 }
 
-if($num==6){
+else if($num==6){
 $pricePerHour = mysql_real_escape_string($data->pricePerHour);
 $pricePerWeek = mysql_real_escape_string($data->pricePerWeek);
 $pricePerMonth = mysql_real_escape_string($data->pricePerMonth);    
 $venue_id = $_SESSION["venueid"];
-$sql = "UPDATE workspace_pricing SET weekly_price='".$pricePerWeek."',monthly_price='".$pricePerMonth."',hourly_price='".$pricePerHour."' "; 
+$sql = "UPDATE workspace_pricing SET weekly_price='".$pricePerWeek."',
+monthly_price='".$pricePerMonth."',hourly_price='".$pricePerHour."' WHERE venue_id = '".$venue_id."'"; 
 
 $query = mysql_query($sql, $conn);
 
 mysql_close($conn);
 
 }
-if($num==7){    
+else if($num==7){    
 $venue_id = $_SESSION["venueid"];
 $sql = "UPDATE venue SET venue_desc = '".$descr."' , type = '".$type."' ,no_of_floors='".$floors."' ,floor_area='".$area."' ,no_of_rooms='".$rooms."' ,no_of_desks='".$desks."' WHERE venue_id='".$venue_id."'";
 
@@ -137,7 +143,7 @@ mysql_close($conn);
 if(isset($_POST['submit'])){
   $name = $_POST['venue'];
   $city = $_POST['city'];
-  $sql = "INSERT INTO venue (name,city)VALUES ('".$name."','".$city."')";
+  $sql = "INSERT INTO venue (name,city,user_id)VALUES ('".$name."','".$city."','".$_SESSION['currentuserid']."')";
   $query = (mysql_query($sql,$conn));
   $sql = "SELECT venue_id from venue";
   $query = mysql_query($sql,$conn);
@@ -147,12 +153,19 @@ if(isset($_POST['submit'])){
   }
    	$_SESSION["venueid"]=max($data);
 
-    $sql_workspace = "INSERT INTO workspace (venue_id)VALUES ('".$_SESSION["venueid"]."')";
+    $sql_workspace = "INSERT INTO workspace (venue_id,user_id)VALUES ('".$_SESSION["venueid"]."','".$_SESSION['currentuserid']."')";
     $sql_workspace_pricing="INSERT INTO workspace_pricing (venue_id)VALUES ('".$_SESSION["venueid"]."')";
     $sql_workspace_amenities = "INSERT INTO amenities (venue_id)VALUES ('".$_SESSION["venueid"]."')";
-    mysql_query($sql_workspace,$conn);
-    mysql_query($sql_workspace_pricing,$conn);
-    mysql_query($sql_workspace_amenities,$conn);
+    $sql_get_workspace_id  = "SELECT workspace_id from workspace where venue_id = '".$_SESSION["venueid"]."'";
+    $query = mysql_query($sql_get_workspace_id);
+    while($row=mysql_fetch_assoc($query))
+    {$data[]=$row;}
+    $workspace_id = max($data);
+    $sql_update_venue_workspace = "UPDATE venue SET workspace_id = '".$workspace_id."' where venue_id = '".$_SESSION["venueid"]."'";
+    mysql_query($sql_update_venue_workspace);
+    mysql_query($sql_workspace);
+    mysql_query($sql_workspace_pricing);
+    mysql_query($sql_workspace_amenities);
 
     
 

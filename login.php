@@ -6,10 +6,10 @@ $servername = "localhost";
 $username = "root";
 $password = "";
 
+$data = json_decode(file_get_contents("php://input"));
 
-
-$email = $_POST['email'];
-$password = $_POST['password'];
+$email =  mysql_real_escape_string($data->email);
+$password =  mysql_real_escape_string($data->password);
 
 $con = mysql_connect($servername,$username);
 if(!$con){
@@ -17,14 +17,16 @@ if(!$con){
 }
 
 mysql_select_db("instarent",$con);
-$sql = "SELECT userid from user where email = '".$email."' && password='".$password."'";
+$sql = "SELECT userid, usertype from user where email = '".$email."' && password='".$password."'";
 $query = mysql_query($sql, $con);
 
-while($row=mysql_fetch_assoc($query)){
+$row=mysql_fetch_assoc($query);
 	 $currentuserid= $row['userid'];
-}
+   $currentusertype = $row['usertype'];
 
-if($currentuserid){
+
+
+if($currentuserid!=""){
 
 $_SESSION["currentuserid"]=$currentuserid;
 
@@ -35,15 +37,20 @@ $_SESSION["currentuserid"]=$currentuserid;
       $current_firstname = $row['first_name'];
       $current_surname=$row['surname'];
       $_SESSION["fullname"]=$current_firstname.' '.$current_surname;
-
     }
     
   }
-header("location:member/member_home.php");
+
+}
+
+$user_details['userid'] = $currentuserid;
+$user_details['usertype'] = $currentusertype;
+
+echo json_encode($user_details);
 
 mysql_close($con);
 
-}
+
 
 
 

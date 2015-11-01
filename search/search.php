@@ -9,12 +9,13 @@ session_start();
 		$dbname="instarent";		
 
 		$data = json_decode(file_get_contents("php://input"));
-
-		$state = mysql_real_escape_string($data->state);
+    
 		
-		$event_type = mysql_real_escape_string($data->event_type);
 
-		$city = mysql_real_escape_string($data->city);
+
+        $state = mysql_real_escape_string($data->state);
+		$event_type = mysql_real_escape_string($data->event_type);
+        $city = mysql_real_escape_string($data->city);
 
 		$conn = mysql_connect($servername, $username,$password);
 		if (!$conn) {
@@ -23,32 +24,14 @@ session_start();
 
 		mysql_select_db($dbname,$conn);
         
-        $x=strlen($event_type);
-        $y=strlen($state);
-        $z=strlen($city);
-        // connect to the database
-        // $dbh = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-
-        // a query get all the records from the users table
-        if($x and $y and $z)
-            $sql = "SELECT event_type, name, workspace_id FROM venue where event_type = '".$event_type."' AND city = '".$city."' AND state = '".$state."' ";
-        else if(!$x and !$y and !$z){
-            $sql = "SELECT event_type, name, workspace_id FROM venue where 1=1";
-        }
-
-
-        // $sql1 = "SELECT photo_id from workspace where workspace_id = '".$workspace_id."' ";
-
-        // use prepared statements, even if not strictly required is good practice
-        // $stmt = $dbh->prepare($sql);
-
-        // execute the query
-        // $stmt->execute();
-        $query = mysql_query($sql);
         
-        // fetch the results into an array
-        // $result = $stmt->fetchAll( PDO::FETCH_ASSOC );
+    $sql = "SELECT * FROM venue where event_type = '".$event_type."' AND city = '".$city."' AND state = '".$state."' ";
+
+        $query = mysql_query($sql);
         $i = 0;
+        if(!is_resource($query)){
+            die('Can\'t connect : ' . mysql_error());
+        }
         while($row = mysql_fetch_assoc($query)){
 
 
@@ -62,16 +45,29 @@ session_start();
         $j=0;
         while($j<$i){
 
-            $sql = "SELECT * FROM workspace where workspace_id='".${"workspace_".$j}['workspace_id']."'";
+            $sql = "SELECT * FROM workspace INNER JOIN spacetype ON workspace.type = spacetype.spacetype_id where workspace_id='".${"workspace_".$j}['workspace_id']."'";
             $querydetails = mysql_query($sql);  
+            if(!is_resource($querydetails)){
+            die('Can\'t connect : ' . mysql_error());
+            }
+
             ${"details_".$j} = mysql_fetch_assoc($querydetails);
-            $sql = "SELECT hourly_price, weekly_price, monthly_price from workspace_pricing where workspace_id='".${"workspace_".$j}['workspace_id']."'"; 
+            $sql = "SELECT hourly_price, weekly_price, monthly_price from workspace_pricing where venue_id='".${"workspace_".$j}['workspace_id']."'"; 
             $query_pricing = mysql_query($sql); 
+            if(!is_resource($query_pricing)){
+            die('Can\'t connect : ' . mysql_error());
+            }
+            $sql="SELECT * FROM amenities where workspace_id ='".${"workspace_".$j}['workspace_id']."' ";
+            $query_amenities = mysql_query($sql);
+            ${"amenity_".$j}[]= mysql_fetch_assoc($query_amenities);
+
             ${"pricing_".$j} = mysql_fetch_assoc($query_pricing);
             ${"details_".$j}['name']=${"workspace_".$j}['name'];
             ${"details_".$j}['event_type']=${"workspace_".$j}['event_type'];
-            ${"workspacedata_".$j}=array_merge(${"details_".$j},${"pricing_".$j});
+            
+            ${"workspacedata_".$j}=array_merge(${"details_".$j},${"pricing_".$j},${"amenity_".$j});
             $workspace_data[$j]= ${"workspacedata_".$j};
+            
             $j++;
         }
         
@@ -79,9 +75,11 @@ session_start();
         
 
         // // convert to json
+        if(isset($workspace_data)){
           $json = json_encode( $workspace_data );
 
         
         // // // echo the json string
         echo $json;
+    }
 ?>

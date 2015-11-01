@@ -70,7 +70,7 @@ while ($row = mysql_fetch_array($query)) {
 					  </div>
 			
 			
-					  <div class="panel-body" ng-controller="dataController">
+					  <div class="panel-body" ng-controller="DataController as datacontroller">
 			
 					  	<div class="row row-form">
 					  		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
@@ -79,7 +79,7 @@ while ($row = mysql_fetch_array($query)) {
 					  		</div>
 					  	<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
 					  		<input type="text" name="fname" id="input" class="form-control " 
-					  		value=<?php echo $first_name ;?> required="required" pattern="" title="" ng-model='fname'>
+					  		value="<?php echo $first_name ;?>" required="required" pattern="" title="" ng-model='fname'>
 					  	</div>
 					  		
 					  	</div>
@@ -91,7 +91,7 @@ while ($row = mysql_fetch_array($query)) {
 					  		</div>
 					  	<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
 					  		<input type="text" name="surname" id="input" class="form-control " 
-					  		ng-model='sname' value=<?php echo $surname ;?> required="required" pattern="" title="">
+					  		ng-model='sname' value="<?php echo $surname ;?>" required="required" pattern="" title="">
 					  	</div>
 					  		
 					  	</div>
@@ -123,7 +123,7 @@ while ($row = mysql_fetch_array($query)) {
 					  		</div>
 					  	<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
 					  		<input type="date" name="date" id="inputDate" ng-model='bday' class="form-control" 
-					  		value=<?php echo $birth_date ;?> required="required" title="">
+					  		value="<?php echo $birth_date ;?>" required="required" title="">
 					  	</div>
 
 					  	</div>
@@ -136,7 +136,7 @@ while ($row = mysql_fetch_array($query)) {
 					  		<label for="input-id" class= "pull-right">Email</label>		
 					  		</div>
 					  	<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
-					  		<input type="text" name="" id="input" class="form-control " value=<?php echo $email ;?> required="required" pattern="" title="" ng-model="email">
+					  		<input type="text" name="" id="input" class="form-control " value="<?php echo $email ;?>" required="required" pattern="" title="" ng-model="email">
 					  	</div>
 					  		
 					  	</div>
@@ -150,7 +150,7 @@ while ($row = mysql_fetch_array($query)) {
 					  		</div>
 					  	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 					  		<input type="tel" name="telephone" id="input" class="form-control" ng-model='contact' 
-					  		required="required" title="" value= <?php $contact!=0 ?$contact: ""; ?> >
+					  		required="required" title="" value= "<?php $contact!=0 ?$contact: ""; ?> ">
 					  	</div>
 					  		
 					  	</div>
@@ -170,9 +170,9 @@ while ($row = mysql_fetch_array($query)) {
 						  		<input type="text" name="address1" required="required"  title="" placeholder="Building name" ng-model='addr1' id="address1" class="form-control" value=<?php echo $address1 ;?> >
 						  		<input type="text" name="address2" required="required"  title="" placeholder="Street address" ng-model='addr2' id="address2" class="form-control" value=<?php echo $address2 ;?> >
 						  		<input type="text" name="city" required="required"  title="" placeholder="City, State" id="city" ng-model='city'class="form-control" 
-						  		value=<?php echo $city ;?> >
+						  		value="<?php echo $city ;?>" >
 						  		<input type="text" name="pincode" ng-model='pincode' id="pincode" required="required" title="" placeholder="Pincode" class="form-control" 
-						  		value=<?php $pincode!=0? $pincode: "" ;?> >
+						  		value="<?php $pincode!=0? $pincode: "" ;?>" >
 					  		</div>
 
 					  				<a href="#" style="display:none"> <p><em>Edit</em></p> </a>
@@ -184,12 +184,12 @@ while ($row = mysql_fetch_array($query)) {
 					  	
 
 
-					  	<button type="submit" class="btn btn-primary" ng-click="updateData()" style="margin-left:17%; margin-top:2%">Save</button>
+					  	<button type="submit" class="btn btn-primary" ng-click="datacontroller.updateData()" style="margin-left:17%; margin-top:2%">Save</button>
 
 					  	</div>
 
 					  </div>
 				
-		
+
 			</div>
 				

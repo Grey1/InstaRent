@@ -67,48 +67,23 @@ session_start();
 <div class="form-group">
 	
 <div class="well">
-<div class="container">
-<div class="row">
-	<div class="col-md-12">
-		<label>Venue Type</label>
-	</div>
-</div>
-<div class="row">
-	<div class ="col-md-12">
-		<div class="btn-group btn-group-md" data-toggle="buttons" >
- 		 	<label class="btn btn-default" >
-    			<input type="radio" name="options" value = "event" required autocomplete="off" > Event
-  			</label>
-  			<label class="btn btn-default">
-    			<input type="radio" name="options" value ="office" id="office" autocomplete="off"> Office
-  			</label>
-  			<label class="btn btn-default">
-    			<input type="radio" name="options" value = "desk" id = "desk" autocomplete="off"> Desk
-  			</label>
-  		<!--	<label class="btn btn-default">
-    			<input type="radio" name="options" id="other" autocomplete="off">
-    			<select name="spacetype" id="spacetype" class="form-control" required="required">
-    				<option value="">Other</option>
-    			</select>
-  			</label> -->
-  			
-</div>
-	</div>
-</div>
+<div class="container-fluid">
+
 <br> <br>
-<!--second Row -->
+<!--First Row -->
 
 <div class="row" ng-controller="WordController as wordController">
 <div   class="col-lg-3" >
 <label>Venue Name</label>
 </div>  
-
+<div style="display:inline	;">
 <p ng-model="wordController.WordLength" >
 	<mark> {{35-wordController.WordLength}} </mark>	
 	characters left</p>
+</div>
 <div class = col-lg-5>
 <input type="text" name="venue" id="inputVenue" class="form-control" value=""  placeholder="Be clear and descriptive." ng-model="wordController.Text"  
-	ng-change="wordController.UpdateWordLength()" ng-trim="false" maxlength=35 >
+	ng-change="wordController.UpdateWordLength()" ng-trim="false" maxlength=35 required>
 </div>
 	</div>
 

@@ -42,6 +42,6 @@ WHERE user_id = '".$_SESSION['currentuserid']."' ";
 $query = mysql_query($sql,$con);
 $query = mysql_query($sql1,$con);
 
-
+echo "string";
 
 ?>

@@ -1,0 +1,28 @@
+.modal{    
+    top:30%;
+} 
+
+.modal-footer{
+	text-align: left;
+}
+
+#top-menu .current a
+{
+    background-color:#d9edf7 !important;
+    color:#808080 !important;
+}
+
+
+.img-circle {
+    
+    width:30px;
+    height:30px;
+}
+
+
+.panel-title{
+height:120px;
+}
+
+body { padding-top: 62px; }
+

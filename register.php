@@ -21,10 +21,10 @@ if(isset($_POST['signup'])){
 
 // Inserting Data into user table
 
-$_fname = $_POST['fname'];
+$_fname = $_POST['uFname'];
 $_sname = $_POST['sname'];
-$_email = $_POST['email'];
-$_password = $_POST['password'];
+$_email = $_POST['uEmail'];
+$_password = $_POST['uPassword'];
 $sql = "INSERT INTO user (email,password,first_name, surname, active) VALUES ('".$_email."','".$_password."','".$_fname."','".$_sname."',1)";
 $query = mysql_query($sql, $conn);
 

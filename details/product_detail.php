@@ -6,22 +6,26 @@ $servername = "localhost";
 $username = "root";
 $password = "";
 
-$workspaceid = $_POST['workspace_id'];
+
+$workspaceid = $_GET['workspace_id'];
 
 $conn = mysql_connect($servername,$username);
 if(!$conn){
-	die('Could not connect'.mysql_error());
+    die('Could not connect'.mysql_error());
 }
 
 mysql_select_db("instarent",$conn);
 
 
-  $sql = "SELECT * from workspace INNER JOIN venue ON workspace.workspace_id = venue.workspace_id 
-  where workspace.workspace_id='".$workspaceid."'  ";
-  $query = mysql_query($sql,$conn);
+$sql = "SELECT * from workspace INNER JOIN venue ON workspace.workspace_id = venue.workspace_id 
+INNER JOIN amenities ON workspace.workspace_id = amenities.workspace_id 
+INNER JOIN workspace_pricing ON workspace.workspace_id = workspace_pricing.workspace_id
+where workspace.workspace_id='".$workspaceid."' ";
+  
+$query = mysql_query($sql,$conn);
 
 
-   	
+    
   while($row = mysql_fetch_assoc($query)){
     $data=$row;
   }
@@ -34,7 +38,7 @@ print_r($data);
 
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="instarent">
 
 <head>
 
@@ -61,7 +65,15 @@ print_r($data);
 
 </head>
 
-<body>
+<body ng-controller ="BookingController">
+<p style = "display:none">
+    {{user_id = <?php echo $data['user_id'] ;?>}}
+    {{workspace_id = <?php echo $data['workspace_id'] ;?>}}
+
+
+
+</p>
+
 
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -101,7 +113,7 @@ print_r($data);
         <!-- Portfolio Item Heading -->
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">   <?php echo $data['space_name'] ?>;
+                <h1 class="page-header">Portfolio Item
                     <small>Item Subheading</small>
                 </h1>
             </div>
@@ -111,12 +123,14 @@ print_r($data);
         <!-- Portfolio Item Row -->
         <div class="row">
 
-            <div class="col-md-8">
-                <img class="img-responsive" src=<?php echo $data['photo_path'].'/'.$data['photo_name']  ?> alt="">
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                <img class="img-responsive" src="<?php echo "../offices/new/".$data['image_1'];?>" alt="">
             </div>
-
-            <div class="col-md-4">
-                <h3>Project Description</h3>
+        </div>
+        <div class="row">
+            
+        <div class="col-md-4 col-md-offset-8 ">
+ <!--                <h3>Project Description</h3>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae. Sed dui lorem, adipiscing in adipiscing et, interdum nec metus. Mauris ultricies, justo eu convallis placerat, felis enim.</p>
                 <h3>Project Details</h3>
                 <ul>
@@ -125,9 +139,24 @@ print_r($data);
                     <li>Consectetur</li>
                     <li>Adipiscing Elit</li>
                 </ul>
-            </div>
+  -->           
 
+            
+            
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                        <h2 class="panel-title"> 
+                            Booking Information
+                         </h2>
+                  </div>
+                  <div class="panel-body">
+                    <button type="button" class="btn btn-primary" ng-click="book()">button</button>
+                  </div>
+                  
+            </div>
         </div>
+
+        
         <!-- /.row -->
 
         <!-- Related Projects Row -->
@@ -139,25 +168,27 @@ print_r($data);
 
             <div class="col-sm-3 col-xs-6">
                 <a href="#">
-                    <img class="img-responsive portfolio-item" src="http://placehold.it/500x300" alt="">
+                    <img class="img-responsive portfolio-item" src="<?php echo "../offices/new/".$data['image_2'];?>" alt="">
                 </a>
             </div>
 
             <div class="col-sm-3 col-xs-6">
                 <a href="#">
-                    <img class="img-responsive portfolio-item" src="http://placehold.it/500x300" alt="">
+                    <img class="img-responsive portfolio-item" src="<?php echo "../offices/new/".$data['image_3'];?>" alt="">
                 </a>
             </div>
 
             <div class="col-sm-3 col-xs-6">
                 <a href="#">
-                    <img class="img-responsive portfolio-item" src="http://placehold.it/500x300" alt="">
+                    <img class="img-responsive portfolio-item" src="<?php echo "../offices/new/".$data['image_4'];?>" alt="">
                 </a>
             </div>
 
             <div class="col-sm-3 col-xs-6">
-                <a href="#">
-                    <img class="img-responsive portfolio-item" src="http://placehold.it/500x300" alt="">
+                <a href="#" class="lastImage">
+                    <img class="img-responsive portfolio-item" src="<?php echo "../offices/new/".$data['image_4'];?>" alt="">
+                </a>
+                <a href="#" class="moreImages">
                 </a>
             </div>
 
@@ -183,10 +214,12 @@ print_r($data);
     <script src="../dashboard/js/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="../bootstrap/js/bootstrap.min.js"></script>
+
+    <script src = "../Angular/js/angular.min.js"></script>
+    <script src= "book.js" ></script>
+    <script src="../bootstrap/js/bootstrap.min.js"></script>    
 
 </body>
 
 </html>
-
 
