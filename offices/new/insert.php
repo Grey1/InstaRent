@@ -12,8 +12,7 @@ if (!$conn) {
 mysql_select_db($dbname,$conn);
 
 
-
-
+if(!isset($_POST['submit'])){
 	$data = json_decode(file_get_contents("php://input"));
 	$num = mysql_real_escape_string($data->num);
 	
@@ -103,34 +102,48 @@ $kitchen =  mysql_real_escape_string($data->kitchen);
 $venue_id = $_SESSION["venueid"];
 $sql = "UPDATE amenities SET wifi='".$wireless."', internet ='".$internet."', kitchen ='".$kitchen."', 
 doorman ='".$doorman."', buzzer ='".$buzzer."', elevator ='".$elevator."', parking ='".$parking."', 
-essentials ='".$essentials."'
+essentials ='".$essentials."', workspace_id= '".$venue_id."'
 WHERE venue_id='".$venue_id."' ";
 $query = mysql_query($sql, $conn);
 mysql_close($conn);
-echo $_SESSION["venueid"];
+
 }
 
 else if($num==6){
-$pricePerHour = mysql_real_escape_string($data->pricePerHour);
+$pricePerHour = $data->pricePerHour;
 $pricePerWeek = mysql_real_escape_string($data->pricePerWeek);
 $pricePerMonth = mysql_real_escape_string($data->pricePerMonth);    
 $venue_id = $_SESSION["venueid"];
 $sql = "UPDATE workspace_pricing SET weekly_price='".$pricePerWeek."',
-monthly_price='".$pricePerMonth."',hourly_price='".$pricePerHour."' WHERE venue_id = '".$venue_id."'"; 
+monthly_price='".$pricePerMonth."',hourly_price='".$pricePerHour."',workspace_id='".$venue_id."' 
+WHERE venue_id = '".$venue_id."'"; 
 
-$query = mysql_query($sql, $conn);
-
+$query = mysql_query($sql);
+echo $venue_id;
 mysql_close($conn);
 
 }
 else if($num==7){    
 $venue_id = $_SESSION["venueid"];
-$sql = "UPDATE venue SET venue_desc = '".$descr."' , type = '".$type."' ,no_of_floors='".$floors."' ,floor_area='".$area."' ,no_of_rooms='".$rooms."' ,no_of_desks='".$desks."' WHERE venue_id='".$venue_id."'";
+
+$fromtime = mysql_real_escape_string($data->fromtime);
+$totime = mysql_real_escape_string($data->totime);
+$availabledays = mysql_real_escape_string($data->availabledays);    
+
+$sql = "UPDATE venue SET opening_time = '".$descr."' , opening_time = '".$type."','available_days'='".$availabledays."'  WHERE venue_id='".$venue_id."'";
 
 $query = mysql_query($sql, $conn);
 
 mysql_close($conn);
 
+}
+else if($num==0){
+  $venue_id = $_SESSION["venueid"];
+$sql = "UPDATE workspace SET listedbyuser = 1  WHERE venue_id='".$venue_id."'";  
+$query = mysql_query($sql, $conn);
+mysql_close($conn);
+
+}
 }
 
 
@@ -140,9 +153,9 @@ mysql_close($conn);
 
 
 
-if(isset($_POST['submit'])){
+else if (isset($_POST['submit'])){
   $name = $_POST['venue'];
-  $city = $_POST['city'];
+  $city = $_POST['location'];
   $sql = "INSERT INTO venue (name,city,user_id)VALUES ('".$name."','".$city."','".$_SESSION['currentuserid']."')";
   $query = (mysql_query($sql,$conn));
   $sql = "SELECT venue_id from venue";

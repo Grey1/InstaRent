@@ -12,6 +12,14 @@ body {
     width: 100%;
 }
 
+
+
+.propertyvalue{
+	font-weight: bold;
+	margin-right: 35px;
+
+}
+
 .ratings {
     padding-right: 10px;
     padding-left: 10px;

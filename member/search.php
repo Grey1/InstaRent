@@ -13,7 +13,7 @@ session_start();
 		
 
 
-        $state = mysql_real_escape_string($data->state);
+        
 		$event_type = mysql_real_escape_string($data->event_type);
         $city = mysql_real_escape_string($data->city);
 
@@ -25,7 +25,7 @@ session_start();
 		mysql_select_db($dbname,$conn);
         
         
-    $sql = "SELECT * FROM venue where event_type = '".$event_type."' AND city = '".$city."' AND state = '".$state."' ";
+    $sql = "SELECT * FROM venue where event_type = '".$event_type."' AND city = '".$city."' ";
 
         $query = mysql_query($sql);
         $i = 0;
@@ -45,7 +45,8 @@ session_start();
         $j=0;
         while($j<$i){
 
-            $sql = "SELECT * FROM workspace INNER JOIN spacetype ON workspace.type = spacetype.spacetype_id where workspace_id='".${"workspace_".$j}['workspace_id']."'";
+            $sql = "SELECT * FROM workspace INNER JOIN spacetype 
+            ON workspace.type = spacetype.spacetype_id where workspace_id='".${"workspace_".$j}['workspace_id']."'";
             $querydetails = mysql_query($sql);  
             if(!is_resource($querydetails)){
             die('Can\'t connect : ' . mysql_error());
@@ -57,7 +58,7 @@ session_start();
             if(!is_resource($query_pricing)){
             die('Can\'t connect : ' . mysql_error());
             }
-            $sql="SELECT * FROM amenities where workspace_id ='".${"workspace_".$j}['workspace_id']."' ";
+            $sql="SELECT * FROM amenities where venue_id ='".${"workspace_".$j}['workspace_id']."' ";
             $query_amenities = mysql_query($sql);
             ${"amenity_".$j}[]= mysql_fetch_assoc($query_amenities);
 

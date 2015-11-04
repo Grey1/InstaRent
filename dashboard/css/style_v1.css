@@ -1,4 +1,54 @@
 * {outline:none !important;}
+
+/*animation begin*/
+    .animate-enter {
+      -webkit-transition: 1s linear all; /* Chrome */
+      transition: 1s linear all;
+      opacity: 0;
+    }
+     
+    .animate-enter.animate-enter-active {
+      opacity: 1;
+    }
+    .buttonhidden{
+      display: none;
+    }
+
+  .typeahead-demo .custom-popup-wrapper {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    background-color: #f9f9f9;
+  }
+
+  .typeahead-demo .custom-popup-wrapper > .message {
+    padding: 10px 20px;
+    border-bottom: 1px solid #ddd;
+    color: #868686;
+  }
+
+  .typeahead-demo .custom-popup-wrapper > .dropdown-menu {
+    position: static;
+    float: none;
+    display: block;
+    min-width: 160px;
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+
+/*animation end*/
+
+.venue-start-row{
+  width: 80%;
+  margin: 0 auto;
+}
+
+
 body {
   color:#525252;
   background:#F0F0F0;
@@ -86,7 +136,7 @@ font-size: 16px;
 
 
 #image-content{
-
+background-image: url("Creative-Office-Space.jpg");
   height: 580px;
   width:100% ;
   margin-top: -12px;
@@ -257,7 +307,7 @@ a.show-sidebar:hover {
 }
 .nav.main-menu > li > a:hover, .nav.main-menu > li > a:focus, .nav.main-menu > li.active > a, .nav.main-menu .open > a, .nav.main-menu .open > a:hover, .nav.main-menu .open > a:focus, .dropdown-menu > li > a:focus, .dropdown-menu > li > a:hover, .dropdown-menu > li.active > a,
 .nav.msg-menu > li > a:hover, .nav.msg-menu > li > a:focus, .nav.msg-menu > li.active > a, .nav.msg-menu .open > a, .nav.msg-menu .open > a:hover, .nav.msg-menu .open > a:focus {
-  background:rgba(0, 0, 0, 0.1);
+  
   color:#f0f0f0;
 }
 .nav.main-menu a.active, .nav.msg-menu a.active {

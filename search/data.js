@@ -1,7 +1,7 @@
 
 
 
-var app = angular.module('instarent', ['angularUtils.directives.dirPagination']);
+var app = angular.module('instarent', ['angularUtils.directives.dirPagination','ui.bootstrap']);
 
 // app.controller('DisplayController', function(){
 //     this.displayed=1;
@@ -21,20 +21,25 @@ this.login = function(){
     $http.post('login.php',{
         'email':$scope.email,'password':$scope.password,
     }).success(function(data,status){
-        console.log(data);
         var userid = data.userid;
         var usertype = data.usertype;
         
         if(userid==null && usertype == null){
+        
+
             $scope.isAUser=1;
             $scope.email="";
             $scope.password="";
         }
-        else if ( userid!=null && usertype=="") {
+        else if ( userid!=null && usertype==="user") {
+
+        
             $scope.isAUser= 0;
             $window.location.href="/member/member_home.php";
         }
         else if(usertype == "admin"){
+        
+
             $scope.isAUser= 0;
             $window.location.href="/member/member_home.php";   
         }
@@ -52,16 +57,34 @@ this.login = function(){
 
 app.controller('VenueController', function($scope,$http, $window){
 
+
+
+$scope.getLocation = function(val) {
+    return $http.get('//maps.googleapis.com/maps/api/geocode/json', {
+      params: {
+        address: val,
+        sensor: false
+      }
+    }).then(function(response){
+      return response.data.results.map(function(item){
+        return item.formatted_address;
+      });
+    });
+  };
+
+
+
 this.displayed=1;
 
 this.setVal = function(val){
-    if($scope.state!="" && $scope.event_type!="" && $scope.city!="")
+
+    if($scope.event_type!="" && $scope.city!="")
     {this.displayed=val;}
 
 }
 
 this.checkVal = function(val){
-    if($scope.state!="" && $scope.event_type!="" && $scope.city!="")
+    if( $scope.event_type!="" && $scope.city!="")
 
 {
     return this.displayed===val;
@@ -73,39 +96,107 @@ else return 1===val;
 
 $scope.minPrice=0;
 $scope.maxPrice=2000;
-$scope.minDate = Date();
-$scope.state=""
+$scope.from_date="";
+
 $scope.event_type=""
 $scope.city=""
 
 
 //END -- defining scope variables
+$scope.verified = function(item){
+    return item.verifiedbyadmin == 1;
+}
+
 
 $scope.greaterThan = function(item){
     return ((item.weekly_price >= $scope.minPrice)&&(item.weekly_price<= $scope.maxPrice));
+}
+
+$scope.dateChecker = function(item){
+
+
+if($scope.bookings!=undefined && $scope.from_date!=undefined && $scope.to_date!=undefined){
+
+for (var i = ($scope.bookings).length - 1; i >= 0; i--) {
+    
+    if($scope.bookings[i].workspace_id == item.workspace_id){
+        
+        
+       
+        if(((new Date($scope.bookings[i].from_date) < $scope.from_date)||
+        (new Date($scope.bookings[i].from_date) > $scope.to_date)) && 
+            ((new Date($scope.bookings[i].to_date) < $scope.from_date) || 
+                (new Date($scope.bookings[i].to_date) > $scope.to_date))
+            ){
+        
+            
+    }
+    else{
+
+        return false;
+    }
+
+
+    }
+
+}
+if(i<0){  
+
+    return true }
+}
+else return true;
+
+
+
+
+
+
+    // return (
+    //     ((new Date($scope.bookings[i].from_date) < $scope.from_date)||
+    //     (new Date($scope.bookings[i].from_date) > $scope.to_date)) && 
+    //         ((new Date($scope.bookings[i].to_date) < $scope.from_date) || (new Date($scope.bookings[i].to_date) > $scope.to_date))
+    //         )   ;
 }
 
 
 
  $scope.getVenues = function() {
     // this is where the JSON from api.php is consumed
+    
 
-    if($scope.state!="" && $scope.event_type!="" && $scope.city!="")
+    if($scope.event_type!="" && $scope.city!="")
 {
     $http.post("search/search.php",{
-        'state':$scope.state,'event_type':$scope.event_type,'city':$scope.city,
+        'event_type':$scope.event_type,'city':$scope.city,
     }).success(function(data,status) {
             // here the data from the api is assigned to a variable named venues
             
-
             if(status==200){
                 
                 $scope.venues = data;
-                console.log($scope.venues);
-                 
+                console.log($scope.venues); 
+                $scope.getBookings();
             }
             
         });}
+}
+
+$scope.getBookings =function(){
+    $scope.workspace = [];
+    for (var i = 0; i < ($scope.venues).length ; i++) {
+        $scope.workspace.push($scope.venues[i].workspace_id) ;
+    };
+
+    $http.post('search/getBookings.php',{
+        'workspace':$scope.workspace,
+    }).success(function(data){
+        console.log(data);
+        $scope.bookings = data;
+
+        
+        
+
+    })
 }
 
 
@@ -132,11 +223,40 @@ $scope.spaceFilter = function(venues) {
         return venues;
     }
 
-
-
-
-
-
-	
 })
+
+$(function() {
+            
+            $("#from").datepicker({
+                minDate:0,
+                dateFormat: "yy-mm-dd",
+                onSelect: function() {
+                    var scope = angular.element(document.body).scope();
+                    scope.from_date = new Date($('#from').val());
+                    scope.$apply();
+            $("#to").datepicker(
+                    "change",
+                    { minDate: new Date($('#from').val()) }
+            );
+        }
+    });
+    $("#to").datepicker({
+        minDate:0,
+        dateFormat:"yy-mm-dd",
+        onSelect: function() {
+            var scope = angular.element(document.body).scope();
+            scope.to_date = new Date($('#to').val());
+            scope.$apply();
+            $("#from").datepicker(
+                    "change",
+                    { maxDate: new Date($('#to').val()) }
+            );
+        }
+    });
+    
+        });
+
+
+
+
 

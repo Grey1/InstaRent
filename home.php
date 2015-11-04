@@ -1,5 +1,10 @@
 <?php
 session_start();
+if(isset($_SESSION['currentuserid'])){
+	header("location:member/member_home.php");
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -18,9 +23,10 @@ session_start();
 		<script src="dashboard/js/devoops.js"></script>
 		<script src="dashboard/js/jquery.js"></script>
 
-
+	  	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 		<script src = "Angular/js/angular.min.js"></script>
-
+		<script src = "dashboard/js/angular-animate.js"></script>
+		<script src = "dashboard/js/ui-bootstrap.min.js"></script>
 
 
 
@@ -37,33 +43,11 @@ session_start();
 		<link href='http://fonts.googleapis.com/css?family=Righteous' rel='stylesheet' type='text/css'>
 		<link href="dashboard/css/style_v1.css" rel="stylesheet">
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-	  	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
 
 	  	<!-- Jquery date picket script -->
 	  	<script>
-		  $(function() {
-			
-		  	$("#from").datepicker({
-		  		minDate:0,
-		  		onSelect: function() {
-            $("#to").datepicker(
-                    "change",
-                    { minDate: new Date($('#from').val()) }
-            );
-        }
-    });
-    $("#to").datepicker({
-    	minDate:0,
-        onSelect: function() {
-            $("#from").datepicker(
-                    "change",
-                    { maxDate: new Date($('#to').val()) }
-            );
-        }
-    });
-	
-  		});
-
+					  
 		</script>
 		
 		
@@ -98,78 +82,75 @@ session_start();
 </nav>
  -->
 <div class="container-fluid">
+
+<div class="row" style="vertical-align:0">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	
- <div class="row" style="vertical-align:0">
- 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
- 	
 
 <header class="navbar">
-	<div class="container-fluid expanded-panel">
-		<div class="row">
-			<div id="logo" class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-				<a href="#">InstaRent</a>
-			</div>
-
-			<div id="top-panel" class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-			<div class="col-xs-10 col-md-10 col-lg-10 col-sm-10">
-			<form class="navbar-form navbar-left" role="search" 
-			ng-show="venue.checkVal(0)" style="margin-bottom:2px">
-						
-		
-		<input type="text" name="state" id="state"
-		 class="form-control form-field" value="" required="required" 
-		 title="" placeholder = "Select state" ng-model='state' style="margin-top:-7px">
-		<input type="text" name="city" id="city" 
-		class="form-control form-field" value="" required="required" 
-		title="" placeholder = "Select city" ng-model='city' style="margin-top:-7px">
-		<select name="event_type" id="input" class="form-control form-field" required="required" 
-		ng-model='event_type' style="margin-top:-7px">
-			<option value="1">Business Centre</option>
-			<option value="2">Corporate Office</option>
-			<option value="3">Coworking Office</option>
-			<option value="4">Hotel</option>
-			<option value="5">Startup Office</option>
-			<option value="6">Studio</option>
-		</select>
-
-		<button type="submit" id="search" class="btn btn-primary" style="height:44px;line-height:10px;margin-top:-1%" ng-click="getVenues();venue.setVal(0)" >Search</button>
-
-		</form>
+<div class="container-fluid expanded-panel">
+	<div class="row">
+		<div id="logo" class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+			<a href="#">InstaRent</a>
 		</div>
-		
+
+		<div id="top-panel" class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+		<div class="col-xs-10 col-md-10 col-lg-10 col-sm-10">
+		<form class="navbar-form navbar-left" role="search" 
+		ng-show="venue.checkVal(0)" style="margin-bottom:2px">
 					
-					<div class="col-xs-2  col-sm-2 col-md-2 col-lg-2  pull-right top-panel-right">
-						<ul class="nav navbar-nav pull-right panel-menu">
-							
 
+	<input type="text" name="city" id="city" 
+	class="form-control form-field" value="" required="required" 
+	title="" placeholder = "Select city" ng-model='city' style="margin-top:-7px">
+	<select name="event_type" id="input" class="form-control form-field" required="required" 
+	ng-model='event_type' style="margin-top:-7px">
+		<option value="1">Business Centre</option>
+		<option value="2">Corporate Office</option>
+		<option value="3">Coworking Office</option>
+		<option value="4">Hotel</option>
+		<option value="5">Startup Office</option>
+		<option value="6">Studio</option>
+	</select>
 
+	<button type="submit" id="search" class="btn btn-primary" style="height:44px;line-height:10px;margin-top:-1%" ng-click="getVenues();venue.setVal(0)" >Search</button>
 
-							<li>
-								<a href="#signup" data-toggle ="modal">Sign Up </a>
-							</li>
-							<li> &nbsp &nbsp &nbsp</li>
-							<li class="hidden-xs">
-								<a href="#login" data-toggle ="modal">Log In</a>
-								
-							</li>
-							<li> &nbsp &nbsp &nbsp</li>
-
-
-
-
-						</ul>
-							
-							
-						</ul>
-					</div>
+	</form>
+	</div>
+	
 				
-			</div>
+				<div class="col-xs-2  col-sm-2 col-md-2 col-lg-2  pull-right top-panel-right">
+					<ul class="nav navbar-nav pull-right panel-menu">
+						
+
+
+
+						<li>
+							<a href="#signup" data-toggle ="modal">Sign Up </a>
+						</li>
+						<li> &nbsp &nbsp &nbsp</li>
+						<li class="hidden-xs">
+							<a href="#login" data-toggle ="modal">Log In</a>
+							
+						</li>
+						<li> &nbsp &nbsp &nbsp</li>
+
+
+
+
+					</ul>
+						
+						
+					</ul>
+				</div>
+			
 		</div>
 	</div>
-</header>
- </div>
 </div>
- </div>
+</header>
+</div>
+</div>
+</div>
 
 
 
@@ -178,13 +159,23 @@ session_start();
 <div id="image-content"   ng-show="venue.checkVal(1)" > 
 </div> 	 
 
-<div class="image-navbar" ng-show="venue.checkVal(1)">
+<div class="image-navbar animate-show" ng-show="venue.checkVal(1)">
 
 
 	<form class="navbar-form pull-left">
+			    
+	    <input type="text" ng-model='city' name = "location" placeholder="Location " 
+	    uib-typeahead="address for address in getLocation($viewValue)" 
+	    typeahead-loading="loadingLocations" typeahead-no-results="noResults" name="city" 
+	    class="form-control form-field">
+	    <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh" ></i>
+	    <div ng-show="noResults">
+	      <i class="glyphicon glyphicon-remove"></i> No Results Found
+	    </div>
+
 		
-		<input type="text" name="state" id="state" class="form-control form-field" value="" required="required" title="" placeholder = "Select state" ng-model='state' >
-		<input type="text" name="city" id="city" class="form-control form-field" value="" required="required" title="" placeholder = "Select city" ng-model='city'>
+		
+		
 		<select name="event_type" id="input" class="form-control form-field" required="required" 
 		ng-model='event_type'>
 		<option value="1">Business Centre</option>
@@ -195,7 +186,8 @@ session_start();
 			<option value="6">Studio</option>
 		</select>
 
-		<button type="submit" id="search_1" class="btn btn-primary" style="height:44px;line-height:10px;margin-top:1px" ng-click="getVenues();venue.setVal(0)" >Search</button>
+		<button type="submit" id="search_1" class="btn btn-primary" 
+		style="height:44px;line-height:10px;margin-top:1px" ng-click="getVenues();venue.setVal(0)" >Search</button>
 
 
 	</form>
@@ -216,11 +208,11 @@ session_start();
 	</tbody>
 </table> -->
 
-<div class="container-fluid" ng-show="venue.checkVal(0)">
+<div class="container-fluid animate-show" ng-show="venue.checkVal(0)">
 	
 <div class="row">
 	<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-		<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" dir-paginate="item in venues|filter:greaterThan|filter:spaceFilter|itemsPerPage:20">
+		<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" dir-paginate="item in venues|filter:verified|filter:dateChecker|filter:greaterThan|filter:spaceFilter|itemsPerPage:20" ng-animate=" 'animate' ">
 
 
 			<div ng-attr-name="main_photo_{{item.workspace_id}}">
@@ -264,8 +256,9 @@ session_start();
 
 					<!-- Date Range -->
 					<span class="label label-default">Date range</span>
-					<input type="text" class="form-control" id="from" name="from"/>
-					<input type="text" class="form-control" id="to" name="to"/>
+
+					<input type="date" class="form-control" id="from" ng-model = " from_date" name="from">
+					<input type="date" class="form-control" id="to" name="to" ng-model = " to_date" >
 					
 					<span class="label label-default">Space Type</span>
 
@@ -369,7 +362,7 @@ session_start();
 </dir-pagination-controls>
 
 </div>
-<div class="container" style="margin-bottom:10%;margin-top:10%" ng-show="venue.checkVal(1)">
+<div class="container animate-show" style="margin-bottom:10%;margin-top:10%" ng-show="venue.checkVal(1)">
 <div class="row">
 	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 		<p> To change the overall look of your document, choose new Theme elements on the Page Layout tab. To change the looks available in the Quick Style gallery, use the Change Current Quick Style Set command. Both the Themes gallery and the Quick Styles gallery provide reset commands so that you can always restore the look of your document to the original contained in your current template.
@@ -381,7 +374,7 @@ session_start();
 </div>
 </div>
 
-<div class="container" style="margin-bottom:10%" ng-show="venue.checkVal(1)">
+<div class="container animate-show" style="margin-bottom:10%" ng-show="venue.checkVal(1)">
 <div class="row">
 	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 		
@@ -516,7 +509,7 @@ session_start();
 					</div>						
 
 <div ng-show="login.$submitted || login.uPassword.$touched"> 
-    <span ng-show="login.uPassword.$error.pattern" class="label label-danger">This is not a valid Password.</span>
+    <span  ng-show="login.uPassword.$error.pattern" class="label label-danger">This is not a valid Password.</span>
     <span ng-show="logincontroller.checkIsAUser()" class="label label-danger">Invalid email or password </span>
 
 </div>

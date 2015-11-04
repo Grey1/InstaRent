@@ -6,10 +6,67 @@
 var app= angular.module('instarent', ['angularUtils.directives.dirPagination','ui.bootstrap']);
 app.controller('ProfileController', function($http,$scope,$uibModal,$interval){
 
+
+$scope.fname = fname;
+$scope.surname = surname;
+$scope.email = email;
+$scope.password = password;
+$scope.gender = gender;
+$scope.contact = contact;
+$scope.bday = bday;
+$scope.company = company;
+
 $scope.allowAddReview = true;
 $scope.ableToGiveReview = true;
+$scope.ableToConfirm = true;
+$scope.allowConfirmation = true;
+$scope.allbookingidreviewed = [];
+$scope.allbookingidconfirmed = [];
+$scope.showConfirmMessage = false;
+
+$scope.save = function(){
+	$http.post("save.php",{
+		'fname':$scope.fname, 'surname':$scope.surname,'email':$scope.email, 'password':$scope.password,
+		'company':$scope.company, 'gender':$scope.gender,  'contact':$scope.contact, 'bday':$scope.bday
+	}).success(function(data){
+		
+
+			$scope.showConfirmMessage = true;
+			console.log($scope.showConfirmMessage);
+		
+	})
+};
+
+$scope.reset = function(){
+	$scope.fname = $scope.ofname;
+	$scope.surname = $scope.osurname;
+	$scope.email = $scope.oemail;
+	$scope.password = $scope.opassword;
+	$scope.company = $scope.ocompany;
+	$scope.gender = $scope.ogender;
+	$scope.contact = $scope.ocontact;
+	$scope.bday = $scope.obday;
+}
+
+$scope.confirm = function(bookingidtoconfirm){
+$http.post('confirmbooking.php',{
+	'bookingid':bookingidtoconfirm, 'reject':0,
+}).success(function(data){
+		console.log(data);
+		$scope.bookingidconfirmed=data;
+		$scope.allbookingidconfirmed.push(data);
+		
+})
+};
 
 
+$scope.reject = function(bookingidtoconfirm){
+$http.post('confirmbooking.php',{
+	'bookingid':bookingidtoconfirm, 'reject':1,
+}).success(function(data){
+	$scope.getCurrentBookings();	
+})
+};
 
   $scope.open = function (pastbookingbyme) {
 
@@ -28,12 +85,26 @@ $scope.ableToGiveReview = true;
 
     modalInstance.result.then(function (bookingidreviewed) {
       $scope.bookingidreviewed = bookingidreviewed;
+      $scope.allbookingidreviewed.push(bookingidreviewed);
     });
 
   };
 
+
+$scope.checkToConfirm = function(bookingid){
+
+	var i = $.inArray(bookingid,$scope.allbookingidconfirmed);
+	console.log("i",i);
+	i=(-1)?$scope.ableToConfirm = false:$scope.ableToConfirm = true;
+	return $scope.ableToConfirm;
+}
+
+
+
 $scope.checkToAddReview = function(bookingid){
-	bookingid===$scope.bookingidreviewed ?$scope.ableToGiveReview = false:$scope.ableToGiveReview = true;
+	var i = $.inArray(bookingid,$scope.allbookingidreviewed);
+	
+	i>(-1)?$scope.ableToGiveReview = false:$scope.ableToGiveReview = true;
 	return $scope.ableToGiveReview;
 }
 
@@ -42,6 +113,12 @@ $scope.checkReviewStatus = function(bookingid){
 	console.log(bookingid,$scope.bookingidreviewed);
 	bookingid===$scope.bookingidreviewed ?$scope.allowAddReview = false:$scope.allowAddReview = true;
 	return $scope.allowAddReview;
+
+}
+
+$scope.checkConfirmStatus = function(bookingid){
+	bookingid===$scope.bookingidconfirmed ?$scope.allowConfirmation = false:$scope.allowConfirmation = true;
+	return $scope.allowConfirmation;
 
 }
 
@@ -92,7 +169,7 @@ $scope.getPastBookingsByMe=function(){
 		}
 		else{
 			$scope.displayNone = 0;
-			
+
 		}
 
 	})

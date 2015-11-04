@@ -56,13 +56,13 @@ app.controller('VenueController', function($scope,$http, $window){
 this.displayed=1;
 
 this.setVal = function(val){
-    if($scope.state!="" && $scope.event_type!="" && $scope.city!="")
+    if($scope.event_type!="" && $scope.city!="")
     {this.displayed=val;}
 
 }
 
 this.checkVal = function(val){
-    if($scope.state!="" && $scope.event_type!="" && $scope.city!="")
+    if($scope.event_type!="" && $scope.city!="")
 
 {
     return this.displayed===val;
@@ -75,7 +75,7 @@ else return 1===val;
 $scope.minPrice=0;
 $scope.maxPrice=2000;
 $scope.minDate = Date();
-$scope.state=""
+
 $scope.event_type=""
 $scope.city=""
 
@@ -91,7 +91,7 @@ $scope.greaterThan = function(item){
  $scope.getVenues = function() {
     // this is where the JSON from api.php is consumed
 
-    if($scope.state!="" && $scope.event_type!="" && $scope.city!="")
+    if($scope.event_type!="" && $scope.city!="")
 {
     $http.post("search.php",{
         'state':$scope.state,'event_type':$scope.event_type,'city':$scope.city,

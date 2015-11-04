@@ -1,5 +1,14 @@
 <?php
 session_start();
+
+
+if(isset($_SERVER['HTTP_REFERER'])){
+ 	if($_SERVER['HTTP_REFERER'] != "http://localhost:1234/" ){
+ 		header("location:". $_SERVER['HTTP_REFERER']);
+ 	}
+ }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="" ng-app="instarent">
@@ -17,7 +26,7 @@ session_start();
 		<script src = "../Angular/js/angular.min.js"></script>
     	<script src="data.js"></script>
 		<script src ="../dashboard/js/dirPagination.js"></script>
-
+		<script src = "../dashboard/js/angular-animate.js"></script>
 
 		<!-- Bootstrap JavaScript -->
 		<script src="../bootstrap/js/bootstrap.min.js"></script>
@@ -26,7 +35,7 @@ session_start();
 		<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">		
 		<link href='http://fonts.googleapis.com/css?family=Righteous' rel='stylesheet' type='text/css'>
 		<link href="../dashboard/css/style_v1.css" rel="stylesheet">
-		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+		<link rel="stylesheet" href="../dashboard/css/jquery-ui.css">
 	  	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
 	  	<!-- Jquery date picket script -->
@@ -136,10 +145,10 @@ session_start();
 			
 							<ul class="nav navbar-nav pull-right panel-menu">
 							<li class="hidden-xs">
-								<a href="#" class="modal-link">
+								<a href="../offices/new/hosting_details.php" class="modal-link">
 									<div class="host"> Host  
 									<i class="fa fa-building"></i>
-									<span class="badge">7</span>
+									<span class="badge"></span>
 									</div>
 								</a>
 							</li>
@@ -153,19 +162,13 @@ session_start();
 							<li class="hidden-xs">
 								<a href="#" class="modal-link">
 									<i class="fa fa-bell"></i>
-									<span class="badge">7</span>
+									<span class="badge"></span>
 								</a>
 							</li>
 
 
 
 							
-							<li class="hidden-xs">
-								<a href="../ajax/page_messages.html" class="ajax-link">
-									<i class="fa fa-envelope"></i>
-									<span class="badge">7</span>
-								</a>
-							</li>
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle account" data-toggle="dropdown">
 									<div class="avatar">
@@ -174,12 +177,12 @@ session_start();
 									<i class="fa fa-angle-down pull-right"></i>
 									<div class="user-mini pull-right">
 										<span class="welcome">Welcome,</span>
-										<span><?php echo $_SESSION["fullname"]  ?></span>
+										<span><?php if (isset($_SESSION["fullname"])) echo $_SESSION["fullname"] ;else echo "";  ?></span>
 									</div>
 								</a>
 								<ul class="dropdown-menu">
 									<li>
-										<a href="#">
+										<a href="../profile/user_profile.php">
 											<i class="fa fa-user"></i>
 											<span>Profile</span>
 										</a>

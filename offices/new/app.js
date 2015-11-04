@@ -1,11 +1,40 @@
 // Angular code begins
 
-var app = angular.module('AppController', [])
+var app = angular.module('AppController', ['ui.bootstrap']);
+
+
+app.controller('TypeaheadCtrl', function($scope, $http) {
+$scope.selected = undefined;
+$scope.getLocation = function(val) {
+    return $http.get('//maps.googleapis.com/maps/api/geocode/json', {
+      params: {
+        address: val,
+        sensor: false
+      }
+    }).then(function(response){
+      return response.data.results.map(function(item){
+        return item.formatted_address;
+      });
+    });
+  };
+}
+)
 
 // This controller wll count the number of words and display it on the office/new/hosting_details.php page
 
-app.controller('WordController', function(){
-          
+
+// This controller wll select the tab on selection on the office/new/hosting_venue_details.php page
+
+
+// This controller wll post the data in the office/new/hosting_venue_details.php page
+app.controller('dataController', function($scope,$http){
+console.log($scope.parking);
+$scope.numberofsteps = 6;
+	
+
+
+
+
           this.WordLength = 0;
           this.Text = "";
           
@@ -14,10 +43,7 @@ app.controller('WordController', function(){
           {
             this.WordLength = this.Text.length;
           };
-        });
 
-// This controller wll select the tab on selection on the office/new/hosting_venue_details.php page
-app.controller("PanelController", function(){
 
 	this.tab=1;
 	
@@ -32,19 +58,15 @@ app.controller("PanelController", function(){
 		return checktab===this.tab;
 	};
 
-});
-
-// This controller wll post the data in the office/new/hosting_venue_details.php page
-app.controller('dataController', function($scope,$http){
-	$scope.essentials = "NO";
-	$scope.internet = "NO";
-	$scope.wireless = "NO";
-	$scope.parking = "NO";
-	$scope.elevator = "NO";
-	$scope.buzzer = "NO";
-	$scope.doorman = "NO";
-	$scope.kitchen = "NO";
-
+	$scope.listspace = function(){
+		$http.post('insert.php',{
+			'num':0,
+		}).success(function(data){
+			if (data=="success"){
+				$scope.showConfirmationOfListing = true;
+			}
+		})
+	}
 
 
 	$scope.insertData=function(num){
@@ -78,7 +100,7 @@ app.controller('dataController', function($scope,$http){
 			'num':num,'addr':$scope.addr,'neighbours':$scope.neighbours, 'tel':$scope.tel, 'email':$scope.email, 'url':$scope.url,
 		}).success(function(data,status){
 			if(status==200){
-				console.log("success")
+				console.log("success");
 			}
 
 		});
@@ -89,7 +111,7 @@ app.controller('dataController', function($scope,$http){
 			'no_similar_space':$scope.no_similar_space, 'descr':$scope.spacedesc,
 		}).success(function(data,status){
 			if(status==200){
-				console.log("success")
+				console.log("success");
 			}
 
 		});
@@ -113,17 +135,17 @@ app.controller('dataController', function($scope,$http){
 			'num':num,'pricePerHour':$scope.pricePerHour,'pricePerWeek':$scope.pricePerWeek, 'pricePerMonth':$scope.pricePerMonth, 
 		}).success(function(data,status){
 			if(status==200){
-				console.log("success")
+				console.log("success");
 			}
 
 		});
 	}
 		else if(num==7){
 		$http.post("insert.php",{
-			'num':num,'descr':$scope.descr,'type':$scope.type, 'floors':$scope.floors, 'area':$scope.area, 'rooms':$scope.rooms, 'desks':$scope.desks,
+			'num':num,'fromtime':$scope.fromtime,'totime':$scope.totime, 'availabledays':$scope.availabledays,
 		}).success(function(data,status){
 			if(status==200){
-				console.log("success")
+				console.log("success");
 			}
 
 		});

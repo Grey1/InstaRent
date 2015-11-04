@@ -14,16 +14,17 @@ mysql_select_db($dbname,$conn);
 $data = json_decode(file_get_contents("php://input"));
 $booking  = mysql_real_escape_string($data->booking);
 
+
 $date = date("Y/m/d");
 
 if($booking=='1'){
-$sql = "SELECT * from booking where host_id = '".$_SESSION['currentuserid']."' && from_date >= '".$date."'";
+$sql = "SELECT * from booking where host_id = '".$_SESSION['currentuserid']."' && from_date >= '".$date."' && rejected_by_host=0";
 }
 else if($booking=='2'){
-	$sql = "SELECT * from booking where host_id = '".$_SESSION['currentuserid']."' && to_date < '".$date."'";
+	$sql = "SELECT * from booking where host_id = '".$_SESSION['currentuserid']."' && to_date < '".$date."' && rejected_by_host=0";
 }
 else if($booking=='3'){
-	$sql = "SELECT * from booking where user_id = '".$_SESSION['currentuserid']."' && from_date >= '".$date."'";	
+	$sql = "SELECT * from booking where user_id = '".$_SESSION['currentuserid']."' && from_date >= '".$date."' && rejected_by_host=0";	
 }
 else if($booking=='4'){
 	$sql = "SELECT booking.booking_id,booking.user_id,booking.host_id,booking.confirmation_from_host,
