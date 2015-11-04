@@ -16,6 +16,26 @@ if(!$conn){
 
 mysql_select_db("instarent",$conn);
 
+// if(isset($_SESSION['currentuserid'])){
+// $sql_booking = "SELECT * from booking where workspace_id = '".$workspaceid."'";
+// $query_booking = mysql_query($sql_booking);
+// while ($row = mysql_fetch_assoc($query_booking)) {
+//     # code...
+//     $data_booking[] = $row;
+// }
+
+// foreach ($data_booking as $key => $value) {
+//     # code...
+//     for ($i = 0; $i <count($data_booking) ; $i++) {
+//         $unavailable_dates[] = $data_booking[]
+//     }
+// }
+
+// }
+
+
+
+
 
 $sql = "SELECT * from workspace INNER JOIN venue ON workspace.workspace_id = venue.workspace_id 
 INNER JOIN amenities ON workspace.workspace_id = amenities.venue_id 
@@ -25,27 +45,10 @@ where workspace.workspace_id='".$workspaceid."' ";
 
 
 $sql_review = "SELECT * from reviews where workspace_id='".$workspaceid."'  ORDER BY createdOn DESC";
-
-
-
-  
-$query = mysql_query($sql,$conn);
 $query_reviews = mysql_query($sql_review);
-
-    
-  while($row = mysql_fetch_assoc($query)){
-    $data=$row;
-  }
-
-$sql_user_data = "SELECT * from user where  userid = '".$data['user_id']."'";
-$user_data = mysql_fetch_assoc(mysql_query($sql_user_data));
-
 while($row = mysql_fetch_assoc($query_reviews)){
     $data_reviews_old[]=$row;
   }
-
-$query_userdetail = mysql_query($sql);
-$userdetail = mysql_fetch_assoc($query_userdetail);
 
 if(isset($data_reviews_old)){
   for ($i=0; $i <count($data_reviews_old) ; $i++) { 
@@ -58,11 +61,23 @@ if(isset($data_reviews_old)){
     $data_reviews_old[$i]['username'] = $username['first_name']." ".$username['surname'];
     $data_reviews_old[$i]['photo_path'] = $username['photo_path'];
   }
+  $data_reviews = json_encode($data_reviews_old);
 }
+
+  
+$query = mysql_query($sql,$conn);
+  while($row = mysql_fetch_assoc($query)){
+    $data=$row;
+  }
+
+$sql_user_data = "SELECT * from user where  userid = '".$data['user_id']."'";
+$user_data = mysql_fetch_assoc(mysql_query($sql_user_data));
+$query_userdetail = mysql_query($sql);
+$userdetail = mysql_fetch_assoc($query_userdetail);
 
 // print_r($userdetail);
 
-$data_reviews = json_encode($data_reviews_old);
+
 // print_r($data_reviews);
 
 // print_r($user_data);
@@ -259,8 +274,13 @@ else{
         var monthly_price =  <?php echo $data['monthly_price']  ?>;
         var weekly_price =  <?php echo $data['weekly_price']  ?>;
 
-
+        <?php if(isset($data_reviews)) { ?>
         var reviews = <?php echo($data_reviews)  ?>;
+        <?php }
+        else { ?>
+            var reviews = "";
+            <?php }?>
+
         <?php if (isset($_SESSION['currentuserid'])) {
             
         ?>
@@ -452,9 +472,9 @@ else {?>
         <img style="margin:2px;max-height:200px; max-width:200px"class="img-responsive img-rounded" 
         src = "../offices/new/<?php echo $data['image_4']?>" >
         <?php }?>
-        <?php if ($data['image_4']!="" and $data['imag_5']!="") { ?>
+        <?php if ($data['image_5']!="" and $data['imag_5']!="") { ?>
         <img style="margin:2px;max-height:200px; max-width:200px;"class="img-responsive img-rounded" 
-        src = "../offices/new/<?php echo $data['image_4']?>" >
+        src = "../offices/new/<?php echo $data['image_5']?>" >
         <a href="#" style="position:absolute; bottom:0;right:0;"><h1 class="text-center" style="color:#fff">See All Photos</h1></a>
         <?php }?>
         
@@ -471,7 +491,9 @@ else {?>
                     </div>
 
                     <hr>
-                    <?php foreach ($data_reviews_old as $key => $value) {
+                    <?php 
+                    if(isset($data_reviews_old)){
+                    foreach ($data_reviews_old as $key => $value) {
                         # code...
                         
                             # code...
@@ -501,7 +523,9 @@ else {?>
 
                     <hr>
                     <?php 
-                }?>
+                }} else { ?>
+                <p class="text-info">No Reviews Yet </p>
+                <?php } ?>
                 </div>
 
             </div>
