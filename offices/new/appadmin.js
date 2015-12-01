@@ -1,4 +1,4 @@
-// Angular code begins
+
 
 var app = angular.module('AppController', ['ui.bootstrap']);
 
@@ -72,38 +72,6 @@ $scope.numberofsteps = 6;
 			
 		})
 	}
-
-
-$scope.fromtime = fromtime;
-$scope.totime=totime;
-$scope.availabledays = availabledays;	
-$scope.descr= descr;
-$scope.area= area;
-$scope.type = event_type;
-$scope.floors = floors;
-$scope.rooms = rooms;
-$scope.desks = desks;
-$scope.neighbours = neighbours
-$scope.tel = tel;
-$scope.email = email;
-$scope.url=url;
-$scope.addr=addr;
-$scope.spacetype=spacetype;
-$scope.spacename=spacename;
-$scope.no_similar_space=no_similar_space;
-$scope.spacedesc=spacedesc;
-$scope.essentials=essentials;
-$scope.internet=internet;
-$scope.wireless=wireless;
-$scope.parking=parking;
-$scope.elevator=elevator;
-$scope.buzzer=buzzer;
-$scope.doorman=doorman;
-$scope.kitchen=kitchen;
-$scope.pricePerHour=pricePerHour;
-$scope.pricePerWeek=pricePerWeek;
-$scope.pricePerMonth=pricePerMonth;
-
 
 	$scope.insertData=function(num){
 		if(num==1){

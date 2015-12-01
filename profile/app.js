@@ -4,7 +4,7 @@
 * Description
 */
 var app= angular.module('instarent', ['angularUtils.directives.dirPagination','ui.bootstrap']);
-app.controller('ProfileController', function($http,$scope,$uibModal,$interval){
+app.controller('ProfileController', function($http,$scope,$uibModal,$interval,$window){
 
 
 $scope.fname = fname;
@@ -15,7 +15,7 @@ $scope.gender = gender;
 $scope.contact = contact;
 $scope.bday = bday;
 $scope.company = company;
-
+$scope.about = about;
 $scope.allowAddReview = true;
 $scope.ableToGiveReview = true;
 $scope.ableToConfirm = true;
@@ -24,10 +24,24 @@ $scope.allbookingidreviewed = [];
 $scope.allbookingidconfirmed = [];
 $scope.showConfirmMessage = false;
 
+$scope.viewreview = function(venueid){
+	$http.post('getReview.php',{
+		'venueid':venueid,
+	}).success(function(reviewdata){
+		$scope.allreviews = reviewdata;
+		console.log(reviewdata);
+		if($scope.allreviews!="0")
+			$scope.openreviewmodal($scope.allreviews);
+		else
+			alert("No reviews to display");
+	})	
+};
+
 $scope.save = function(){
 	$http.post("save.php",{
 		'fname':$scope.fname, 'surname':$scope.surname,'email':$scope.email, 'password':$scope.password,
-		'company':$scope.company, 'gender':$scope.gender,  'contact':$scope.contact, 'bday':$scope.bday
+		'company':$scope.company, 'gender':$scope.gender,  'contact':$scope.contact, 'bday':$scope.bday,
+		'about':$scope.about,
 	}).success(function(data){
 		
 
@@ -46,6 +60,7 @@ $scope.reset = function(){
 	$scope.gender = $scope.ogender;
 	$scope.contact = $scope.ocontact;
 	$scope.bday = $scope.obday;
+	$scope.about = $scope.oabout;
 }
 
 $scope.confirm = function(bookingidtoconfirm){
@@ -83,12 +98,30 @@ $http.post('confirmbooking.php',{
     });
 
 
+
+
     modalInstance.result.then(function (bookingidreviewed) {
       $scope.bookingidreviewed = bookingidreviewed;
       $scope.allbookingidreviewed.push(bookingidreviewed);
     });
 
   };
+
+  $scope.openreviewmodal = function(allreviews){
+	var modalInstance = $uibModal.open({
+      scope:$scope,
+      templateUrl: 'reviewmodal.html',
+      size: 'md',
+      controller: 'DisplayReviewController as displayreviewCtrl',
+      resolve:{
+      	allreviews:function(){
+			return allreviews;      		
+      	}
+      }
+    });
+
+    	
+    };
 
 
 $scope.checkToConfirm = function(bookingid){
@@ -195,6 +228,7 @@ $scope.getCurrentBookings = function(){
 
 
 $scope.getPastBookings = function(){
+	
 	$http.post('getBookings.php',{
 		'booking':2,
 	}).success(function(data){
@@ -217,9 +251,13 @@ $scope.deleteVenue  = function(venue_id){
 		'venue_id':venue_id,
 	}).success(function(data){
 		console.log(data);
-		if(data==venue_id){
+		if(data==1){
 			console.log("success");
-			$scope.getSpaceListings();}
+			$scope.getSpaceListings();
+		}
+		else{
+			alert("Booking Exist for this venue. Cannot be deleted");
+		}
 		
 	})
 };
@@ -273,6 +311,25 @@ $scope.cancel = function () {
 
   	})
   }
+	
+})
+
+app.controller('DisplayReviewController', function($scope,$uibModalInstance,allreviews,$http){
+
+$scope.allreviews = allreviews;
+$scope.rate = "";
+
+$scope.ok = function () {
+    $uibModalInstance.close();
+
+  };
+
+$scope.cancel = function () {
+    $uibModalInstance.dismiss('cancel');
+  };  
+
+
+  
 	
 })
 

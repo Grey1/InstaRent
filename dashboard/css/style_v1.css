@@ -6,6 +6,10 @@
       transition: 1s linear all;
       opacity: 0;
     }
+
+    .glyphicon-ok{
+      color:green;
+    }
      
     .animate-enter.animate-enter-active {
       opacity: 1;

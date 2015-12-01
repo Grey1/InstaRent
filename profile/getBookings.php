@@ -18,20 +18,25 @@ $booking  = mysql_real_escape_string($data->booking);
 $date = date("Y/m/d");
 
 if($booking=='1'){
-$sql = "SELECT * from booking where host_id = '".$_SESSION['currentuserid']."' && from_date >= '".$date."' && rejected_by_host=0";
+$sql = "SELECT * from booking where host_id = '".$_SESSION['currentuserid']."' 
+&& from_date >= '".$date."' && rejected_by_host=0";
 }
 else if($booking=='2'){
-	$sql = "SELECT * from booking where host_id = '".$_SESSION['currentuserid']."' && to_date < '".$date."' && rejected_by_host=0";
+	$sql = "SELECT * from booking where host_id = '".$_SESSION['currentuserid']."' && to_date < '".$date."' 
+	&& rejected_by_host=0 && confirmation_from_host=1";
 }
 else if($booking=='3'){
-	$sql = "SELECT * from booking where user_id = '".$_SESSION['currentuserid']."' && from_date >= '".$date."' && rejected_by_host=0";	
+	$sql = "SELECT * from booking where user_id = '".$_SESSION['currentuserid']."' && from_date >= '".$date."' 
+	&& rejected_by_host=0";	
 }
 else if($booking=='4'){
 	$sql = "SELECT booking.booking_id,booking.user_id,booking.host_id,booking.confirmation_from_host,
 	booking.from_time,booking.to_time,booking.to_date,booking.from_date,booking.payment_status,booking.workspace_id,
 	booking.total_amount,booking.booking_status,reviews.review_id
 	 from booking LEFT JOIN reviews ON booking.booking_id = reviews.booking_id
-	 where booking.user_id = '".$_SESSION['currentuserid']."' && booking.to_date < '".$date."'";	
+	 where booking.user_id = '".$_SESSION['currentuserid']."' && booking.to_date < '".$date."'
+	 && booking.rejected_by_host=0 && booking.confirmation_from_host=1
+	 ";	
 }
 
 
@@ -74,14 +79,17 @@ $sql = "SELECT * from workspace where workspace_id = '".$bookings[$j]['workspace
 $query = mysql_query($sql);
 $workspace_details = mysql_fetch_assoc($query);
 
-
+if( is_array($bookings[$j])){
 ${"bookings".$j} = array_merge($host_details,$bookings[$j],$workspace_details);
 $booking_data[$j] = ${"bookings".$j};
 $j++;
 }
 }
+}
 if(isset($booking_data)){
 echo (json_encode($booking_data));
 }
+
+
 
 ?>

@@ -1,13 +1,13 @@
 <?php
 session_start();
 
-
+if(!isset($_SESSION['currentuserid'])){
 if(isset($_SERVER['HTTP_REFERER'])){
  	if($_SERVER['HTTP_REFERER'] != "http://localhost:1234/" ){
  		header("location:". $_SERVER['HTTP_REFERER']);
  	}
  }
-
+}
 
 ?>
 <!DOCTYPE html>
@@ -27,7 +27,7 @@ if(isset($_SERVER['HTTP_REFERER'])){
     	<script src="data.js"></script>
 		<script src ="../dashboard/js/dirPagination.js"></script>
 		<script src = "../dashboard/js/angular-animate.js"></script>
-
+		<script src = "../dashboard/js/ui-bootstrap.min.js"></script>
 		<!-- Bootstrap JavaScript -->
 		<script src="../bootstrap/js/bootstrap.min.js"></script>
 		<link href="../dashboard/plugins/bootstrap/bootstrap.css" rel="stylesheet">
@@ -110,22 +110,27 @@ if(isset($_SERVER['HTTP_REFERER'])){
 <header class="navbar">
 	<div class="container-fluid expanded-panel">
 		<div class="row">
-			<div id="logo" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+			<div id="logo" class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
 				<a href="#">InstaRent</a>
 			</div>
 
-			<div id="top-panel" class="col-xs-11 col-sm-11 col-md-11 col-lg-11">
+			<div id="top-panel" class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
 			<div class="col-xs-7 col-md-7 col-lg-7 col-sm-7">
 			<form class="navbar-form navbar-left" role="search" 
 			ng-show="venue.checkVal(0)" style="margin-bottom:2px">
+
 						
-		
-		<input type="text" name="state" id="state"
-		 class="form-control form-field" value="" required="required" 
-		 title="" placeholder = "Select state" ng-model='state' style="margin-top:-7px">
-		<input type="text" name="city" id="city" 
-		class="form-control form-field" value="" required="required" 
-		title="" placeholder = "Select city" ng-model='city' style="margin-top:-7px">
+			    <input type="text" ng-model='city' name = "location" placeholder="Location " 
+	    uib-typeahead="address for address in getLocation($viewValue)" 
+	    typeahead-loading="loadingLocations" typeahead-no-results="noResults" name="city" 
+	    class="form-control form-field" style="	margin-bottom: 21px;
+	margin-top: -7px;">
+	    <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh" ></i>
+	    <div ng-show="noResults">
+	      <i class="glyphicon glyphicon-remove"></i> No Results Found
+	    </div>
+
+
 		<select name="event_type" id="input" class="form-control form-field" required="required" 
 		ng-model='event_type' style="margin-top:-7px">
 			<option value="1">Business Centre</option>
@@ -158,21 +163,21 @@ if(isset($_SERVER['HTTP_REFERER'])){
 
 
 
-
-							<li class="hidden-xs">
+<!-- Notification Bell -->
+							<!-- <li class="hidden-xs">
 								<a href="#" class="modal-link">
 									<i class="fa fa-bell"></i>
 									<span class="badge"></span>
 								</a>
 							</li>
-
+ -->
 
 
 							
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle account" data-toggle="dropdown">
 									<div class="avatar">
-										<img src="../img/avatar.jpg" class="img-circle" alt="avatar" />
+										<img src="<?php if (isset($_SESSION["userimag"])) echo "../profile/".$_SESSION["userimag"] ;else echo "";  ?>" class="img-circle" alt="avatar" />
 									</div>
 									<i class="fa fa-angle-down pull-right"></i>
 									<div class="user-mini pull-right">
@@ -187,19 +192,7 @@ if(isset($_SERVER['HTTP_REFERER'])){
 											<span>Profile</span>
 										</a>
 									</li>
-									<li>
-										<a href="../ajax/page_messages.html" class="ajax-link">
-											<i class="fa fa-envelope"></i>
-											<span>Messages</span>
-										</a>
-									</li>
 									
-									<li>
-										<a href="#">
-											<i class="fa fa-cog"></i>
-											<span>Settings</span>
-										</a>
-									</li>
 									<li>
 										<a href="../logout.php">
 											<i class="fa fa-power-off"></i>
@@ -229,9 +222,17 @@ if(isset($_SERVER['HTTP_REFERER'])){
 
 
 	<form class="navbar-form pull-left">
+
+	    <input type="text" ng-model='city' name = "location" placeholder="Location " 
+	    uib-typeahead="address for address in getLocation($viewValue)" 
+	    typeahead-loading="loadingLocations" typeahead-no-results="noResults" name="city" 
+	    class="form-control form-field">
+	    <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh" ></i>
+	    <div ng-show="noResults">
+	      <i class="glyphicon glyphicon-remove"></i> No Results Found
+	    </div>
+
 		
-		<input type="text" name="state" id="state" class="form-control form-field" value="" required="required" title="" placeholder = "Select state" ng-model='state' >
-		<input type="text" name="city" id="city" class="form-control form-field" value="" required="required" title="" placeholder = "Select city" ng-model='city'>
 		<select name="event_type" id="input" class="form-control form-field" required="required" 
 		ng-model='event_type'>
 		<option value="1">Business Centre</option>
@@ -250,15 +251,45 @@ if(isset($_SERVER['HTTP_REFERER'])){
 	
 
 <div class="container-fluid" ng-show="venue.checkVal(0)">
+
+
+
 	
 <div class="row">
 	<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-		<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" dir-paginate="item in venues|filter:greaterThan|filter:spaceFilter|itemsPerPage:20">
+<div class="row">
+		<form class="navbar-form navbar-right">
+			<ul class="nav nav-pills">
+  <li role="presentation" ng-class="{active:reverse==true}"><a href="" ng-click="reverse=true">descending</a></li>
+  <li role="presentation" ng-class="{active:reverse==false}"><a href="" ng-click="reverse=false">ascending</a></li>
+</ul>
+			<div class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" id="orderby" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    Order By
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-left" aria-labelledby="orderby">
+    <li><a href="" ng-click="setOrder('weekly_price')">Weekly Price</a></li>
+    <li><a href="" ng-click="setOrder('hourly_price')">Hourly Price</a></li>
+    <li><a href="" ng-click="setOrder('monthly_price')">Monthly Price</a></li>
+  </ul>
+
+	
+
+</div>
+
+		
+		</form>
+		</div>		
+		<!-- <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" dir-paginate="item in venues|filter:greaterThan|filter:spaceFilter|itemsPerPage:20"> -->
+		<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" dir-paginate="item in venues|orderBy:order:reverse|filter:verified|
+		filter:dateChecker|filter:greaterThan|filter:spaceFilter|itemsPerPage:20">
 
 
 			<div ng-attr-name="main_photo_{{item.workspace_id}}">
 			<a ng-attr-href ="../product_details/index.php?workspace_id={{item.workspace_id}}">
-				<img style="max-width: 250px; max-height: 250px;" class = "img-responsive img-rounded" ng-src="../offices/new/{{item.image_1}}" />
+				<img style="max-width: 250px; max-height: 250px;"
+				 class = "img-responsive img-rounded" ng-src="../offices/new/{{item.image_1}}" />
 			</a>
 			</div>
 			
@@ -266,10 +297,10 @@ if(isset($_SERVER['HTTP_REFERER'])){
 				  {{item.weekly_price|currency:"₹"}}
 			</div>
 			<div id="desc">
-			<a  href ="display_venue_detail.php"> <p> {{item.name}} /{{item.space_name}}  </p></a>
+			<a  ng-attr-href ="../product_details/index.php?workspace_id={{item.workspace_id}}"> <p> {{item.name}} /{{item.space_name}}  </p></a>
 			</div>
 			<div id ="spacetype">
-				<a href ="display_venue_detail.php"> <p> {{item.spacetype_value}} </p> </a>
+				<a ng-attr-href ="../product_details/index.php?workspace_id={{item.workspace_id}}"> <p> {{item.spacetype_value}} </p> </a>
 			</div>
 
 			<div id ="rating">
@@ -287,7 +318,7 @@ if(isset($_SERVER['HTTP_REFERER'])){
 
 				<div class="panel-body">
 					<!-- Price range -->
-					<span class="label label-default">Price Range</span>
+					<span class="label label-default">Price Range By Weekly Price</span>
 					<input type="number" ng-model = "minPrice" class="form-control"   pattern="" title="Minimum Price" ></td>
 					<input type="number" ng-model = "maxPrice" class="form-control"   pattern="" title="Maximum Price" ></td>
 

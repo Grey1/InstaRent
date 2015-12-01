@@ -1,6 +1,17 @@
 <?php
 session_start();
 
+if(isset($_SERVER['HTTP_REFERER'])){
+  if($_SERVER['HTTP_REFERER'] == "http://localhost:1234/offices/new/admin.php" ){
+    $userid = $_GET['userid'];
+  }
+  else{
+    $userid = $_SESSION["currentuserid"];
+  }
+ }
+
+
+
 $server_name="localhost";
 $db_name="instarent";
 $username="root";
@@ -15,9 +26,9 @@ $sql = "SELECT
 user.email,user.first_name,user.password,user.surname,user_details.gender,
 user_details.birth_date,user_details.contact,
 user_details.company_name,user_details.address1,
-user_details.address2,user_details.pincode,user_details.city,user_details.photo_path
+user_details.address2,user_details.pincode,user_details.city,user_details.photo_path,user_details.about
 from user LEFT JOIN user_details 
-ON user.userid = user_details.user_id where userid = '".$_SESSION["currentuserid"]."'";
+ON user.userid = user_details.user_id where userid = '".$userid."'";
 $query = mysql_query($sql,$con);
 
 while ($row = mysql_fetch_array($query)) {
@@ -35,6 +46,7 @@ while ($row = mysql_fetch_array($query)) {
   $city=$row['city'];
   $password = $row['password'];
   $photo_path = $row['photo_path'];
+  $about = $row['about'];
 }
 
 mysql_close($con);
@@ -85,7 +97,7 @@ mysql_close($con);
     var company = '<?php echo $company_name; ?>';
     var bday = '<?php echo $birth_date; ?>';
     var gender = '<?php echo $gender; ?>';
-
+    var about = '<?php echo $about; ?>';
     </script>
 
     <script type="text/javascript">
@@ -137,7 +149,7 @@ $(document).ready(function(){
   <div class="container-fluid expanded-panel">
     <div class="row">
       <div id="logo" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-        <a href="#">InstaRent</a>
+        <a href="../member/member_home.php">InstaRent</a>
       </div>
 
       <div id="top-panel" class="col-xs-11 col-sm-11 col-md-11 col-lg-11">
@@ -184,7 +196,7 @@ $(document).ready(function(){
 
 
 
-
+<!-- 
               <li class="hidden-xs">
                 <a href="#" class="modal-link">
                   <i class="fa fa-bell"></i>
@@ -192,13 +204,13 @@ $(document).ready(function(){
                 </a>
               </li>
 
-
+ -->
 
               
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle account" data-toggle="dropdown">
                   <div class="avatar">
-                    <img src="../img/avatar.jpg" class="img-circle" alt="avatar" />
+                    <img src="<?php if (isset($_SESSION["userimag"])) echo $_SESSION["userimag"] ;else echo "";  ?>" class="img-circle" alt="avatar" />
                   </div>
                   <i class="fa fa-angle-down pull-right"></i>
                   <div class="user-mini pull-right">
@@ -213,20 +225,20 @@ $(document).ready(function(){
                       <span>Profile</span>
                     </a>
                   </li>
-                  <li>
+                 <!--  <li>
                     <a href="../ajax/page_messages.html" class="ajax-link">
                       <i class="fa fa-envelope"></i>
                       <span>Messages</span>
                     </a>
                   </li>
-                  
-                  <li>
+                  --> 
+                 <!--  <li>
                     <a href="#">
                       <i class="fa fa-cog"></i>
                       <span>Settings</span>
                     </a>
                   </li>
-                  <li>
+                  --> <li>
                     <a href="../logout.php">
                       <i class="fa fa-power-off"></i>
                       <span>Logout</span>
@@ -257,7 +269,7 @@ $(document).ready(function(){
 {{ocompany = '<?php echo $company_name?>'}}
 {{ocontact = '<?php echo $contact?>'}}
 {{opassword = '<?php echo $password?>'}}
-
+{{oabout = '<?php echo $about ?>'}}
 
 </p>
 <hr>
@@ -298,6 +310,42 @@ $(document).ready(function(){
         
         
 </script>
+ <!-- View review modal -->
+
+<script type="text/ng-template" id="reviewmodal.html">
+        <div class="modal-header" >
+            <h1 class="text-center">Reviews</h1>
+            <div ng-repeat="review in allreviews">
+            <div class="row">
+                <img ng-src={{review.photo_path}} 
+                class=" col-md-3 img-responsive img-circle avatar" style="height:80px;width:80px">
+                <p>{{review.first_name }}{{review.surname}} </p>
+                <p class="pull-right" style="margin-left:2px">{{review.createdOn}}  </p>  
+                <p>{{review.body}} </p>  
+            </div>
+             
+            
+           
+            <div class="rows">
+              <uib-rating ng-model=review.stars max=5 readonly="true"  
+                    on-leave="overStar = null" titles="['one','two','three']">
+                </uib-rating>
+
+            </div>
+
+                        
+            <div class= "row">
+
+            </div>
+
+              
+              
+            
+              
+            </div>
+</div>
+  </script>
+
   
 <div class="container-fluid">
   
@@ -360,7 +408,7 @@ $(document).ready(function(){
                     <td>
                     <div class="avatar">
                         <img class="img-responsive img-circle" alt="avatar" 
-                        ng-src="../member/{{currentbookingbyme.photo_path}}">
+                        ng-src="../profile/{{currentbookingbyme.photo_path}}">
                         <h6 class="text-primary"> {{currentbookingbyme.first_name}}&nbsp{{currentbookingbyme.surname}}</h6>
                     </div>
 
@@ -435,7 +483,7 @@ $(document).ready(function(){
                     <td>
                     <div class="avatar">
                         <img class="img-responsive img-circle" alt="avatar" 
-                        ng-src="../member/{{pastbookingbyme.photo_path}}">
+                        ng-src="../profile/{{pastbookingbyme.photo_path}}">
                         <h6 class="text-primary"> {{pastbookingbyme.first_name}}&nbsp{{pastbookingbyme.surname}}</h6>
                     </div>
 
@@ -540,6 +588,7 @@ $(document).ready(function(){
             <div class="form-group">
               <label class="col-lg-3 control-label">First name:</label>
               <div class="col-lg-8">
+                
                 <input type="text" name="fname" ng-model="fname" id="inputFname" class="form-control" value="" required="required"  title="">
               </div>
             </div>
@@ -602,11 +651,23 @@ $(document).ready(function(){
                 >
               </div>
             </div>
+
+
+
+
+
+            <div class="form-group">
+              <label class="col-md-3 control-label">About Yourself:</label>
+              <div class="col-md-8">
+                
+                <textarea name="" id="input" class="form-control" rows="3" ng-model="about" required></textarea>
+              </div>
+            </div>
             
             <div class="form-group">
               <label class="col-md-3 control-label"></label>
               <div class="col-md-8">
-                <input class="btn btn-primary" ng-click="save()" value="Save Changes" type="submit">
+                <input class="btn btn-primary" ng-click="userform.$valid && save()" value="Save Changes" type="submit">
                 <span></span>
                 <input class="btn btn-default" value="Cancel" ng-click="reset()">
               </div>
@@ -627,6 +688,11 @@ $(document).ready(function(){
             <a ng-attr-href="../offices/new/hosting_venue_details.php?venue_id={{listing.venue_id}}" class="col-md-5"> <img class="img-responsive" ng-src="../offices/new/{{listing.image_1}}"> 
             <span class="label label-info">{{listing.name}}/{{listing.space_name}}</span>
             </a>
+          </div>
+          <div class="col-md-2">
+            <button type="button" ng-attr-id="{{listing.venue_id}}" 
+            class="btn btn-primary pull-left" 
+            ng-click="viewreview(listing.venue_id)">View All Review</button>
           </div>
           <div class="col-md-2">
             <button type="button" ng-attr-id="{{listing.venue_id}}" 
@@ -689,7 +755,7 @@ $(document).ready(function(){
                     <td>
                       <div class="avatar">
                         <img class="img-responsive img-circle" alt="avatar" 
-                        ng-src="../member/{{currentbooking.photo_path}}">
+                        ng-src="../profile/{{currentbooking.photo_path}}">
                         <h6 class="text-primary"> {{currentbooking.first_name}}&nbsp{{currentbooking.surname}}</h6>
                       </div>
                     </td>
@@ -776,7 +842,7 @@ $(document).ready(function(){
                     <td>
                       <div class="avatar">
                       <img class="img-responsive img-circle" alt="avatar" 
-                      ng-src="../member/{{pastbooking.photo_path}}">
+                      ng-src="../profile/{{pastbooking.photo_path}}">
                       <h6 class="text-primary"> {{pastbooking.first_name}}&nbsp{{pastbooking.surname}}</h6>
                       </div>
                     </td>

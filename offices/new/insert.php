@@ -126,11 +126,13 @@ mysql_close($conn);
 else if($num==7){    
 $venue_id = $_SESSION["venueid"];
 
-$fromtime = mysql_real_escape_string($data->fromtime);
-$totime = mysql_real_escape_string($data->totime);
-$availabledays = mysql_real_escape_string($data->availabledays);    
+$fromtime = ($data->fromtime);
+$totime = ($data->totime);
+$availabledays = ($data->availabledays);    
 
-$sql = "UPDATE venue SET opening_time = '".$descr."' , opening_time = '".$type."','available_days'='".$availabledays."'  WHERE venue_id='".$venue_id."'";
+$sql = "UPDATE venue SET opening_time = '".$fromtime."' , closing_time = '".$totime."',
+'available_days'='".$availabledays."'  
+WHERE venue_id='".$venue_id."'";
 
 $query = mysql_query($sql, $conn);
 
@@ -141,6 +143,9 @@ else if($num==0){
   $venue_id = $_SESSION["venueid"];
 $sql = "UPDATE workspace SET listedbyuser = 1  WHERE venue_id='".$venue_id."'";  
 $query = mysql_query($sql, $conn);
+
+$sql_insert_into_verification = "INSERT INTO verification (workspace_id) VALUES('".$venue_id."') ";
+$query = mysql_query($sql_insert_into_verification, $conn);
 mysql_close($conn);
 
 }

@@ -16,8 +16,13 @@ session_start();
 		    die('Could not connect: ' . mysql_error());
 		}
 
+
+		$date = date("Y/m/d");
 		mysql_select_db($dbname,$conn);
-		$sql_verify_booking_exist = "";
+		$sql_verify_booking_exist = "SELECT * from booking where workspace_id = '".$venue_id."'";
+		$query = mysql_query($sql_verify_booking_exist);
+		if(mysql_num_rows($query)=0){
+
 		$sql_venue = "DELETE FROM venue where venue_id='".$venue_id."' ";
 		$sql_workspace = "DELETE FROM workspace where venue_id='".$venue_id."' ";
 		$sql_workspace_pricing = "DELETE FROM workspace_pricing where venue_id='".$venue_id."' ";
@@ -26,7 +31,9 @@ session_start();
 		mysql_query($sql_workspace);
 		mysql_query($sql_workspace_pricing);
 		mysql_query($sql_amenities);
-
-		echo $venue_id;
-
+		echo 1;
+		}
+		else{
+		echo 0;
+}
 ?>

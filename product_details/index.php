@@ -16,22 +16,26 @@ if(!$conn){
 
 mysql_select_db("instarent",$conn);
 
-// if(isset($_SESSION['currentuserid'])){
-// $sql_booking = "SELECT * from booking where workspace_id = '".$workspaceid."'";
-// $query_booking = mysql_query($sql_booking);
-// while ($row = mysql_fetch_assoc($query_booking)) {
-//     # code...
-//     $data_booking[] = $row;
-// }
+if(isset($_SESSION['currentuserid'])){
+$sql_booking = "SELECT * from booking where workspace_id = '".$workspaceid."' AND confirmation_from_host = 1";
+$query_booking = mysql_query($sql_booking);
+while ($row = mysql_fetch_assoc($query_booking)) {
+    # code...
+    $data_booking[] = $row;
+}
 
-// foreach ($data_booking as $key => $value) {
-//     # code...
-//     for ($i = 0; $i <count($data_booking) ; $i++) {
-//         $unavailable_dates[] = $data_booking[]
-//     }
-// }
 
-// }
+    # code...
+if(isset($data_booking)){
+    for ($i = 0; $i <count($data_booking) ; $i++) {
+        $unavailable_dates[$i]['fromdate'] = $data_booking[$i]['from_date'];
+        $unavailable_dates[$i]['todate'] = $data_booking[$i]['to_date'];
+    }
+    }
+
+}
+
+
 
 
 
@@ -53,10 +57,10 @@ while($row = mysql_fetch_assoc($query_reviews)){
 if(isset($data_reviews_old)){
   for ($i=0; $i <count($data_reviews_old) ; $i++) { 
       # code...
-    $sql = "SELECT user.first_name, user.surname, user_details.photo_path from user INNER JOIN user_details ON 
+    $sql_userdetails = "SELECT user.first_name, user.surname, user_details.photo_path from user INNER JOIN user_details ON 
     user.userid = user_details.user_id
      where user.userid = '".$data_reviews_old[$i]['author_id']."'";
-    $username = mysql_fetch_assoc(mysql_query($sql));
+    $username = mysql_fetch_assoc(mysql_query($sql_userdetails));
 
     $data_reviews_old[$i]['username'] = $username['first_name']." ".$username['surname'];
     $data_reviews_old[$i]['photo_path'] = $username['photo_path'];
@@ -70,17 +74,19 @@ $query = mysql_query($sql,$conn);
     $data=$row;
   }
 
-$sql_user_data = "SELECT * from user where  userid = '".$data['user_id']."'";
+if(isset($data)){
+$sql_user_data = "SELECT * from user INNER JOIN user_details ON user.userid= user_details.user_id 
+where  user.userid = '".$data['user_id']."'";
 $user_data = mysql_fetch_assoc(mysql_query($sql_user_data));
 $query_userdetail = mysql_query($sql);
 $userdetail = mysql_fetch_assoc($query_userdetail);
-
+}
 // print_r($userdetail);
 
 
 // print_r($data_reviews);
 
-// print_r($user_data);
+ //print_r($user_data);
 mysql_close($conn);
 
 ?>
@@ -115,6 +121,48 @@ mysql_close($conn);
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <script type="text/javascript">
+    <?php if(isset($unavailable_dates)){ $unavailable_dates_js = json_encode($unavailable_dates); ?>
+        
+        var unavailable_dates = <?php echo $unavailable_dates_js ;?>;
+
+        <?php } else{ ?>
+
+         var unavailable_dates = "";
+         <?php }?>
+
+         function unavilablefromdate(date){
+            for(var i = 0 ; i<unavailable_dates.length; i++){
+
+                if(date < new Date(unavailable_dates[i].fromdate)
+                    || date >new Date (unavailable_dates[i].todate)){}
+                    else return [false,"","Unavailable"];
+            }
+            
+                return [true,"",""];
+         }
+
+
+         function unavilabletodate(date){
+            var scope = angular.element(document.body).scope();
+            
+            //if(date<scope.fromdate) return [false,"","Unavailable"]
+            if(date >= scope.fromdate){
+            for (var i = 0;i<unavailable_dates.length;i++){
+               if(new Date(unavailable_dates[i].fromdate) > scope.fromdate){
+                if(date < new Date(unavailable_dates[i].fromdate)){
+                }
+                else return [false,"","Unavailable"];
+            }
+
+        }   return [true,"",""];
+        } 
+         return [false,"","Unavailable"];
+
+         }
+
+    </script>
+
 </head>
 
 <body ng-controller="BookingController">
@@ -128,7 +176,7 @@ mysql_close($conn);
     <div class="container-fluid expanded-panel">
         <div class="row">
             <div id="logo" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-                <a href="#">InstaRent</a>
+                <a href="../">InstaRent</a>
             </div>
 
             <div id="top-panel" class="col-xs-11 col-sm-11 col-md-11 col-lg-11">
@@ -176,10 +224,10 @@ else{
             
                             <ul class="nav navbar-nav pull-right panel-menu">
                             <li class="hidden-xs">
-                                <a href="#" class="modal-link">
+                                <a href="../office/new/hosting_details.php" class="modal-link">
                                     <div class="host"> Host  
                                     <i class="fa fa-building"></i>
-                                    <span class="badge">7</span>
+                                    <span class="badge">0</span>
                                     </div>
                                 </a>
                             </li>
@@ -188,55 +236,43 @@ else{
                             </li>
 
 
-
+<!-- 
 
                             <li class="hidden-xs">
                                 <a href="#" class="modal-link">
                                     <i class="fa fa-bell"></i>
                                     <span class="badge">7</span>
                                 </a>
-                            </li>
+                            </li> -->
 
 
 
-                            
+                            <!-- 
                             <li class="hidden-xs">
                                 <a href="../ajax/page_messages.html" class="ajax-link">
                                     <i class="fa fa-envelope"></i>
                                     <span class="badge">7</span>
                                 </a>
-                            </li>
+                            </li> -->
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle account" data-toggle="dropdown">
                                     <div class="avatar">
-                                        <img src="../img/avatar.jpg" class="img-circle" alt="avatar" />
+                                        <img src="<?php if (isset($_SESSION["userimag"])) echo "../profile/".$_SESSION["userimag"] ;else echo "";  ?>" class="img-circle" alt="avatar" />
                                     </div>
                                     <i class="fa fa-angle-down pull-right"></i>
                                     <div class="user-mini pull-right">
                                         <span class="welcome">Welcome,</span>
-                                        <span><?php echo $_SESSION["fullname"]  ?></span>
+                                        <span><?php if (isset($_SESSION["fullname"])) echo $_SESSION["fullname"] ;else echo "";  ?></span>
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a href="#">
+                                        <a href="../profile/user_profile.php">
                                             <i class="fa fa-user"></i>
                                             <span>Profile</span>
                                         </a>
                                     </li>
-                                    <li>
-                                        <a href="../ajax/page_messages.html" class="ajax-link">
-                                            <i class="fa fa-envelope"></i>
-                                            <span>Messages</span>
-                                        </a>
-                                    </li>
                                     
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-cog"></i>
-                                            <span>Settings</span>
-                                        </a>
-                                    </li>
                                     <li>
                                         <a href="../logout.php">
                                             <i class="fa fa-power-off"></i>
@@ -301,17 +337,22 @@ else {?>
 
             <div class="col-md-3">
                 <p class="lead">About the Host</p>
-                <div class="list-group">
-                    <a href="#" class="list-group-item active">Category 1</a>
-                    <a href="#" class="list-group-item">Category 2</a>
-                    <a href="#" class="list-group-item">Category 3</a>
-                </div>
+                
+                    
+                    
+        <img src="<?php echo "../profile/".$user_data['photo_path']; ?>" class="avatar img-circle" alt="avatar"
+        style="height:80px; width:80px;cursor:pointer;"> 
+        <p class="text-info"><?php echo $user_data['first_name']." ".$user_data['surname']; ?> </p>
+        <br><br> <br><br><br><br>
+                <p class="text-info"><?php echo $user_data['about']; ?> </p>
+                
             </div>
+
 
             <div class="col-md-9">
 
                 <div class="thumbnail"> 
-                    <img class="img-responsive" alt="" src="<?php echo "../offices/new/".$data['image_1'] ?>" >
+                    <img style="height:250px;width:1000px" class="img-responsive img-rounded" alt="" src="<?php echo "../offices/new/".$data['image_1'] ?>" >
                     <div class="caption-full">
                         <h5 class="pull-right">
                             <div class="panel panel-default">
@@ -321,6 +362,9 @@ else {?>
 
                                         </h3>
                                   </div>
+
+
+
                                   <div class="panel-body">
                                         <div class="form-group">
                                             
@@ -328,9 +372,9 @@ else {?>
                     <span> 
                     <form name = "bookingform">                                                    
                     <input type="date" ng-model="fromdate" name="" 
-                    id="from" class="form-control" value="" required="required" title="" placeholder="From Date">
+                    id="from" class="form-control" value="" required="required" readonly title="" placeholder="From Date">
                     <input type="date" name="" ng-model="todate" id="to" 
-                    class="form-control" value="" required="required" title="" placeholder="To Date">
+                    class="form-control" value="" required="required" title="" placeholder="To Date" readonly>
                     <input type="number" name="" ng-model="team_size" id="teamcount" 
                     class="form-control" value="" min=1 max="" required="required" title="" placeholder="Team Count">
                     
@@ -459,6 +503,10 @@ else {?>
 
 
 <div class="well">
+ <div class="text-right">
+                        <p class="text-info">More Photos</p>
+                    </div>
+
     <div class="images " style="display:inline-flex;position:relative">
         <?php if ($data['image_2']!="") { ?>
             <img style="margin:2px;max-height:200px; ,max-width:200px" class="img-responsive img-rounded" 

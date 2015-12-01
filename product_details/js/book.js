@@ -59,6 +59,9 @@ $scope.reviews = reviews;
 $scope.isLoggedIn = isLoggedIn;
 
 
+console.log(unavailable_dates);
+
+
 $scope.isUserLoggedIn = function(){
     return $scope.isLoggedIn;
 }
@@ -81,7 +84,7 @@ $scope.confirmBooking = false;
 			'hourly_price':$scope.hourly_price, 'monthly_price':$scope.monthly_price, 
 			'weekly_price':$scope.weekly_price, 'total_days':diffDays,
 		}).success(function(data){
-			
+			alert("Bookin request Sent to host");
              $scope.confirmBooking = true;
             
 		})
@@ -103,17 +106,21 @@ $scope.confirmBooking = false;
 $(function() {
             
             $("#from").datepicker({
-                minDate:0,
+                minDate:1,
                 dateFormat: "yy-mm-dd",
                 onSelect: function() {
                     var scope = angular.element(document.body).scope();
                     scope.fromdate = new Date($('#from').val());
                     scope.$apply();
+
             $("#to").datepicker(
                     "change",
                     { minDate: new Date($('#from').val()) }
             );
-        }
+        },
+
+        beforeShowDay : unavilablefromdate,
+
     });
     $("#to").datepicker({
         minDate:0,
@@ -126,9 +133,11 @@ $(function() {
                     "change",
                     { maxDate: new Date($('#to').val()) }
             );
-        }
+        
+        },
+         beforeShowDay : unavilabletodate,
     });
-    
+       
         });
 
 setTimeout(function(){

@@ -4,28 +4,30 @@ session_start();
 
       // set up the connection variables
         $servername = "localhost";
-		$username = "root";
-		$password = "";
-		$dbname="instarent";		
+        $username = "root";
+        $password = "";
+        $dbname="instarent";        
 
-		$data = json_decode(file_get_contents("php://input"));
+        $data = json_decode(file_get_contents("php://input"));
     
-		
+        
 
 
         
-		$event_type = mysql_real_escape_string($data->event_type);
+        $event_type = mysql_real_escape_string($data->event_type);
         $city = mysql_real_escape_string($data->city);
 
-		$conn = mysql_connect($servername, $username,$password);
-		if (!$conn) {
-		    die('Could not connect: ' . mysql_error());
-		}
+        $conn = mysql_connect($servername, $username,$password);
+        if (!$conn) {
+            die('Could not connect: ' . mysql_error());
+        }
 
-		mysql_select_db($dbname,$conn);
+        mysql_select_db($dbname,$conn);
         
         
-    $sql = "SELECT * FROM venue where event_type = '".$event_type."' AND city = '".$city."' ";
+    $sql = "SELECT * FROM venue where event_type = '".$event_type."' AND city = '".$city."'
+    AND user_id != '".$_SESSION['currentuserid']."'";
+    
 
         $query = mysql_query($sql);
         $i = 0;
@@ -46,14 +48,16 @@ session_start();
         while($j<$i){
 
             $sql = "SELECT * FROM workspace INNER JOIN spacetype 
-            ON workspace.type = spacetype.spacetype_id where workspace_id='".${"workspace_".$j}['workspace_id']."'";
+            ON workspace.type = spacetype.spacetype_id 
+            where workspace_id='".${"workspace_".$j}['workspace_id']."'";
             $querydetails = mysql_query($sql);  
             if(!is_resource($querydetails)){
             die('Can\'t connect : ' . mysql_error());
             }
 
             ${"details_".$j} = mysql_fetch_assoc($querydetails);
-            $sql = "SELECT hourly_price, weekly_price, monthly_price from workspace_pricing where venue_id='".${"workspace_".$j}['workspace_id']."'"; 
+            $sql = "SELECT hourly_price, weekly_price, monthly_price
+             from workspace_pricing where venue_id='".${"workspace_".$j}['workspace_id']."'"; 
             $query_pricing = mysql_query($sql); 
             if(!is_resource($query_pricing)){
             die('Can\'t connect : ' . mysql_error());
@@ -76,10 +80,11 @@ session_start();
         
 
         // // convert to json
-        if(isset($workspace_data))
-{          $json = json_encode( $workspace_data );
+        if(isset($workspace_data)){
+          $json = json_encode( $workspace_data );
 
         
         // // // echo the json string
         echo $json;
-}?>
+    }
+?>

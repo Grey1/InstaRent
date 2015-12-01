@@ -23,6 +23,8 @@ this.login = function(){
     }).success(function(data,status){
         var userid = data.userid;
         var usertype = data.usertype;
+
+    console.log(usertype,usertype);
         
         if(userid==null && usertype == null){
         
@@ -31,17 +33,17 @@ this.login = function(){
             $scope.email="";
             $scope.password="";
         }
-        else if ( userid!=null && usertype==="user") {
+        else if ( userid!=null && usertype=="user") {
 
-        
-            $scope.isAUser= 0;
             $window.location.href="/member/member_home.php";
+            $scope.isAUser= 0;
+            
         }
         else if(usertype == "admin"){
         
 
             $scope.isAUser= 0;
-            $window.location.href="/member/member_home.php";   
+            $window.location.href="offices/new/admin.php";   
         }
     })
 };
@@ -103,6 +105,16 @@ $scope.city=""
 
 
 //END -- defining scope variables
+$scope.setOrder = function (order) {
+        $scope.order = order;        
+};
+
+
+$scope.listed = function(item){
+    return item.listedbyuser == 1;
+}
+
+
 $scope.verified = function(item){
     return item.verifiedbyadmin == 1;
 }
@@ -115,7 +127,8 @@ $scope.greaterThan = function(item){
 $scope.dateChecker = function(item){
 
 
-if($scope.bookings!=undefined && $scope.from_date!=undefined && $scope.to_date!=undefined){
+if(($scope.bookings!=undefined && $scope.bookings!="") &&
+ $scope.from_date!=undefined && $scope.to_date!=undefined){
 
 for (var i = ($scope.bookings).length - 1; i >= 0; i--) {
     
@@ -217,10 +230,10 @@ $scope.includeSpace = function(spacetypeid){
 $scope.spaceFilter = function(venues) {
         if ($scope.spacetypeIncludes.length > 0) {
             if ($.inArray(venues.type, $scope.spacetypeIncludes) < 0)
-                return;
+                return false;
         }
         
-        return venues;
+        return true;
     }
 
 })

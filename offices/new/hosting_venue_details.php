@@ -3,6 +3,7 @@ session_start();
 
 if(isset($_SERVER['HTTP_REFERER'])){
 	if($_SERVER['HTTP_REFERER']=="http://localhost:1234/profile/user_profile.php"){
+
 		$venue_id = $_GET['venue_id'];
 		$_SESSION["venueid"] = $venue_id;
 
@@ -22,7 +23,7 @@ if(isset($_SERVER['HTTP_REFERER'])){
 		ON venue.venue_id = workspace_pricing.venue_id where venue.venue_id = '".$venue_id."'";
 		$query = mysql_query($sql);
 		$data = mysql_fetch_assoc($query);
-		
+
 
 
 }
@@ -80,11 +81,117 @@ if(isset($_SERVER['HTTP_REFERER'])){
 <body >
 
 <!-- Header -->
-<?php
+<div class="container-fluid">	
+ <div class="row" style="vertical-align:0">
+ 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+<header class="navbar">
+	<div class="container-fluid expanded-panel">
+		<div class="row">
+			<div id="logo" class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+				<a href="#">InstaRent</a>
+			</div>
 
-include("../../header/headerafterlogin.html");
+			<div id="top-panel" class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+			<div class="col-xs-7 col-md-7 col-lg-7 col-sm-7">
+			<form class="navbar-form navbar-left" role="search" 
+			ng-show="venue.checkVal(0)" style="margin-bottom:2px">
 
-?>
+						
+			    <input type="text" ng-model='city' name = "location" placeholder="Location " 
+	    uib-typeahead="address for address in getLocation($viewValue)" 
+	    typeahead-loading="loadingLocations" typeahead-no-results="noResults" name="city" 
+	    class="form-control form-field" style="	margin-bottom: 21px;
+	margin-top: -7px;">
+	    <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh" ></i>
+	    <div ng-show="noResults">
+	      <i class="glyphicon glyphicon-remove"></i> No Results Found
+	    </div>
+
+
+		<select name="event_type" id="input" class="form-control form-field" required="required" 
+		ng-model='event_type' style="margin-top:-7px">
+			<option value="1">Business Centre</option>
+			<option value="2">Corporate Office</option>
+			<option value="3">Coworking Office</option>
+			<option value="4">Hotel</option>
+			<option value="5">Startup Office</option>
+			<option value="6">Studio</option>
+		</select>
+
+		<button type="submit" id="search" class="btn btn-primary" style="height:44px;line-height:10px;margin-top:-1%" ng-click="getVenues();venue.setVal(0)" >Search</button>
+
+
+		</form>
+		</div>
+		<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 ">
+			
+							<ul class="nav navbar-nav pull-right panel-menu">
+							<li class="hidden-xs">
+								<a href="hosting_details.php" class="modal-link">
+									<div class="host"> Host  
+									<i class="fa fa-building"></i>
+									<span class="badge"></span>
+									</div>
+								</a>
+							</li>
+							<li>
+								&nbsp&nbsp&nbsp&nbsp
+							</li>
+
+
+
+<!-- Notification Bell -->
+							<!-- <li class="hidden-xs">
+								<a href="#" class="modal-link">
+									<i class="fa fa-bell"></i>
+									<span class="badge"></span>
+								</a>
+							</li>
+ -->
+
+
+							
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle account" data-toggle="dropdown">
+									<div class="avatar">
+										<img src="<?php if (isset($_SESSION["userimag"])) echo "../../profile/".$_SESSION["userimag"] ;else echo "";  ?>" class="img-circle" alt="avatar" />
+									</div>
+									<i class="fa fa-angle-down pull-right"></i>
+									<div class="user-mini pull-right">
+										<span class="welcome">Welcome,</span>
+										<span><?php if (isset($_SESSION["fullname"])) echo $_SESSION["fullname"] ;else echo "";  ?></span>
+									</div>
+								</a>
+								<ul class="dropdown-menu">
+									<li>
+										<a href="../../profile/user_profile.php">
+											<i class="fa fa-user"></i>
+											<span>Profile</span>
+										</a>
+									</li>
+									
+									<li>
+										<a href="../../logout.php">
+											<i class="fa fa-power-off"></i>
+											<span>Logout</span>
+										</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+		</div>
+ <!-- Insert code here					 -->
+
+					
+				
+			</div>
+		</div>
+	</div>
+</header>
+ </div>
+</div>
+ </div>
+
 
 <!-- Header -->
 
@@ -97,35 +204,60 @@ include("../../header/headerafterlogin.html");
 				   
 					<ul class="nav nav-pills nav-stacked">
 						<p claas="pull-right" style="color:#C0C0C0" > Listing </p>
-  						<li role="presentation" ng-class = "{current:data.isSelected(1)}"><a href ng-click="data.selectTab(1)" style="color:#808080" >Venue description <p class="pull-right">  <span class="glyphicon glyphicon-plus" aria-hidden="true"> </span> </p> </a></li>
-  						<li role="presentation" ng-class = "{current:data.isSelected(2)}" ><a href ng-click="data.selectTab(2)"style="color:#808080">Location <p class="pull-right">  <span class="glyphicon glyphicon-plus" aria-hidden="true"> </span> </p> </a></li>
-  						<li role="presentation" ng-class = "{current:data.isSelected(3)}" ><a href ng-click="data.selectTab(3)" style="color:#808080">Workspaces <p class="pull-right">  <span class="glyphicon glyphicon-plus" aria-hidden="true"> </span> </p> </a></li>
+  						<li role="presentation" ng-class = "{current:data.isSelected(1)}">
+  							<a href ng-click="data.selectTab(1)" style="color:#808080" >Venue description 
+  								<p class="pull-right"> 
+  								 <span ng-class="{glyphicon:true,'glyphicon-plus':!venueform.$valid,'glyphicon-ok':venueform.$valid}" aria-hidden="true"> </span> </p> </a></li>
+  						<li role="presentation" ng-class = "{current:data.isSelected(2)}" >
+  							<a href ng-click="data.selectTab(2)"style="color:#808080">Location <p class="pull-right">  
+  								<span ng-class="{glyphicon:true,'glyphicon-plus':!addressform.$valid,'glyphicon-ok':addressform.$valid}" aria-hidden="true"> </span> </p> </a></li>
+  						<li role="presentation" ng-class = "{current:data.isSelected(3)}" >
+  							<a href ng-click="data.selectTab(3)" style="color:#808080">Workspaces <p class="pull-right">  
+  								<span ng-class="{glyphicon:true,'glyphicon-plus':!workspaceform.$valid,'glyphicon-ok':workspaceform.$valid}" aria-hidden="true"> </span> </p> </a></li>
   						
-  						<li role="presentation" ng-class = "{current:data.isSelected(4)}"><a href ng-click="data.selectTab(4)" style="color:#808080">Photos <p class="pull-right">  <span class="glyphicon glyphicon-plus" aria-hidden="true"> </span> </p> </a></li>
-  						<li role="presentation" ng-class = "{current:data.isSelected(5)}" ><a href ng-click="data.selectTab(5)" style="color:#808080">Amenities  </a></li>
+  						<li role="presentation" ng-class = "{current:data.isSelected(4)}">
+  							<a href ng-click="data.selectTab(4)" style="color:#808080">Photos 
+  								<p class="pull-right">  
+  									<span class="" aria-hidden="true"> </span> </p> </a></li>
+  						<li role="presentation" ng-class = "{current:data.isSelected(5)}" >
+  							<a href ng-click="data.selectTab(5)" style="color:#808080">Amenities  </a></li>
   						 <p claas="pull-right" style="color:#C0C0C0" > Hosting </p>
-  						<li role="presentation" ng-class = "{current:data.isSelected(6)}" ><a href ng-click="data.selectTab(6)" style="color:#808080">Pricing <p class="pull-right">  <span class="glyphicon glyphicon-plus" aria-hidden="true"> </span> </p> </a></li>
-  						<li role="presentation" ng-class = "{current:data.isSelected(7)}" ><a href ng-click="data.selectTab(7)" style="color:#808080">Calendar <p class="pull-right">  <span class="glyphicon glyphicon-plus" aria-hidden="true"> </span> </p> </a></li>
-  						<li style="display:none;"role="presentation" ng-class = "{current:data.isSelected(8)}"><a href ng-click="data.selectTab(8)" style="color:#808080">Reservation <p class="pull-right">  <span class="glyphicon glyphicon-plus" aria-hidden="true"> </span> </p> </a></li>
+  						<li role="presentation" ng-class = "{current:data.isSelected(6)}" >
+  							<a href ng-click="data.selectTab(6)" style="color:#808080">Pricing 
+  								<p class="pull-right"> 
+  								 <span ng-class="{glyphicon:true,'glyphicon-plus':!pricingform.$valid,'glyphicon-ok':pricingform.$valid}" aria-hidden="true"> </span> </p> </a></li>
+  						<li role="presentation" ng-class = "{current:data.isSelected(7)}" >
+  							<a href ng-click="data.selectTab(7)" style="color:#808080">Calendar 
+  								<p class="pull-right"> 
+  								 <span ng-class="{glyphicon:true,'glyphicon-plus':!calendarform.$valid,'glyphicon-ok':calendarform.$valid}" aria-hidden="true"> </span> </p> </a></li>
+  						<li style="display:none;"role="presentation" ng-class = "{current:data.isSelected(8)}">
+  							<a href ng-click="data.selectTab(8)" style="color:#808080">Reservation <p class="pull-right"> 
+  							 <span ng-class="{glyphicon:true,'glyphicon-plus':!calendarform.$valid,'glyphicon-ok':calendarform.$valid}" aria-hidden="true"> </span> </p> </a></li>
 
 					</ul>
 
 				</div>
 				<div class="jumbotron animate-show" ng-show="!(venueform.$valid && addressform.$valid && workspaceform.$valid
 				&& pricingform.$valid && calendarform.$valid)" 
-				style="padding:20px">  Complete <i class="lead"><strong> {{numberofsteps}} steps</strong></i> &nbsp for hosting your space
+				style="padding:20px"> Complete <i class="lead"><strong> {{numberofsteps}} steps</strong></i> &nbsp for hosting your space
 				</div>
-				<div class="jumbotron animate-show" ng-show="venueform.$valid && addressform.$valid && workspaceform.$valid
+				<div class="jumbotron animate-show"
+				 ng-show="venueform.$valid && addressform.$valid && workspaceform.$valid
 				&& pricingform.$valid && calendarform.$valid" 
-				style="padding:20px"> <button type="button" class="btn btn-success" ng-click="listspace()">List Your space</button>
+				style="padding:20px"> <button type="button" ng-disabled ="showConfirmationOfListing" class="btn btn-success" ng-click="listspace()">List Your space</button>
+				</div>
+
+				<div ng-show="showConfirmationOfListingMessage" class="alert alert-success" role="alert">Well Done! You Have succesfully listed your space.
+  				You can Edit your workspace	<a href="../../profile/user_profile.php" class="alert-link"> <strong>Here</strong> </a>
 				</div>
 
 			</div>
 		</div>
 
+
 		<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
 
-			<?php if(isset($data)){ ?>
+			<?php if(isset($data)){ ;?>
 			<script type="text/javascript">
 
 			var event_type = '<?php echo $data["event_type"]; ?>';
@@ -154,38 +286,47 @@ include("../../header/headerafterlogin.html");
 			var pricePerHour = <?php echo $data["hourly_price"]; ?>;
 			var pricePerWeek = <?php echo $data["weekly_price"]; ?>;
 			var pricePerMonth = <?php echo $data["monthly_price"]; ?>;
-			$scope.descr= descr;
-			var scope = angular.element(document.body).scope();
-$scope.area= area;
-$scope.type = event_type;
-$scope.floors = floors;
-$scope.rooms = rooms;
-$scope.desks = desks;
-$scope.neighbours = neighbours
-$scope.tel = tel;
-$scope.email = email;
-$scope.url=url;
-$scope.addr=addr;
-$scope.spacetype=spacetype;
-$scope.spacename=spacename;
-$scope.no_similar_space=no_similar_space;
-$scope.spacedesc=spacedesc;
-$scope.essentials=essentials;
-$scope.internet=internet;
-$scope.wireless=wireless;
-$scope.parking=parking;
-$scope.elevator=elevator;
-$scope.buzzer=buzzer;
-$scope.doorman=doorman;
-$scope.kitchen=kitchen;
-$scope.pricePerHour=pricePerHour;
-$scope.pricePerWeek=pricePerWeek;
-$scope.pricePerMonth=pricePerMonth;
-
-scope.$apply();
+			var fromtime = '<?php echo $data["opening_time"]; ?>';
+			var totime = '<?php echo $data["closing_time"]; ?>';
+			var availabledays = <?php echo $data["available_days"] ?>;
 			
 
 			</script>
+			<?php } else { ?>
+
+<script type="text/javascript">
+			var event_type ="";
+			var descr="";
+			var floors="";
+			var area="";
+			var rooms="";
+			var desks="";
+			var neighbours="";
+			var tel="";
+			var email="";
+			var url="";
+			var addr="";
+			var spacetype="";
+			var spacename="";
+			var no_similar_space="";
+			var spacedesc="";
+			var essentials ="";
+			var internet ="";
+			var wireless ="";
+			var parking ="";
+			var elevator ="";
+			var buzzer ="";
+			var doorman ="";
+			var kitchen ="";
+			var pricePerHour ="";
+			var pricePerWeek ="";
+			var pricePerMonth ="";
+
+var fromtime ="";
+var totime = "";
+var availabledays ="";
+
+</script>
 			<?php }?>
 
 			<div class="panel panel-info">
@@ -408,6 +549,7 @@ scope.$apply();
                 
 
         </div>
+
         <div class="modal fade" id="delete<?php echo $index; ?>" style="">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -444,7 +586,7 @@ scope.$apply();
 						Required  </h5>
 				
 				<div class="col-sm-8" style="margin-bottom:10px">
-					<input required ng-model="fromtime" type="time" name = "fromtime" id="fromtime" class="form-control" placeholder="Earliest Check in time">
+					<input required ng-model="fromtime" type="text" name = "fromtime" id="fromtime" class="form-control" placeholder="Earliest Check in time">
 				</div>
 
 				<label for="totime" class="col-sm-4 control-label">To Time</label>
@@ -453,7 +595,7 @@ scope.$apply();
 						Required  </h5>
 				
 				<div class="col-sm-8" style="margin-bottom:10px">
-					<input type="time" required name=" totime" id="totime" 
+					<input type="text" required name=" totime" id="totime" 
 					class="form-control" placeholder=" Latest Check out time" ng-model="totime">
 				</div>
 

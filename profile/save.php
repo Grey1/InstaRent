@@ -21,14 +21,16 @@ $company = mysql_real_escape_string($data->company);
 $gender = mysql_real_escape_string($data->gender);
 $contact =mysql_real_escape_string($data->contact);
 $bday = mysql_real_escape_string($data->bday);
+$about = mysql_real_escape_string($data->about);
 
 $sql="UPDATE user set email= '".$email."' , password = '".$password."', first_name = '".$fname."',
 surname = '".$surname."' where userid = '".$_SESSION['currentuserid']."'  "; 
 
 mysql_query($sql);
 
-$sql = $sql="UPDATE user_details set gender= '".$gender."' , birth_date = '".$bday."', contact = '".$contact."',
-where userid = '".$_SESSION['currentuserid']."'  "; 
+$sql = $sql="UPDATE user_details set gender= '".$gender."' , about = '".$about."' , 
+birth_date = '".$bday."', contact = '".$contact."', company_name = '".$company."'
+where user_id = '".$_SESSION['currentuserid']."'  "; 
 
 mysql_query($sql);
 

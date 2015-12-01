@@ -25,7 +25,17 @@ $_fname = $_POST['uFname'];
 $_sname = $_POST['sname'];
 $_email = $_POST['uEmail'];
 $_password = $_POST['uPassword'];
-$sql = "INSERT INTO user (email,password,first_name, surname, active) VALUES ('".$_email."','".$_password."','".$_fname."','".$_sname."',1)";
+
+$sql_verify= "SELECT * from user where email = '".$_email."'";
+$query_verify  = mysql_query($sql_verify);
+if(mysql_num_rows($query_verify)>0){
+      die('Email Already exists in the database. Please Login with your existing database or Register with a new email ');      
+}
+
+
+
+$sql = "INSERT INTO user (email,password,first_name, surname, active,usertype)
+ VALUES ('".$_email."','".$_password."','".$_fname."','".$_sname."',1,'user')";
 $query = mysql_query($sql, $conn);
 
    if(! $query )

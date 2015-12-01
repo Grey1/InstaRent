@@ -45,6 +45,7 @@ $sql = "UPDATE user_details SET ".$column_name." = '".$image_src."' WHERE user_i
 $_SESSION['currentuserphoto'] = $image_src;
 $query = mysql_query($sql, $conn);
 
+$_SESSION['userimag']=$image_src;
 
 
 

@@ -211,8 +211,36 @@ if(isset($_SESSION['currentuserid'])){
 <div class="container-fluid animate-show" ng-show="venue.checkVal(0)">
 	
 <div class="row">
+
 	<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-		<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" dir-paginate="item in venues|filter:verified|filter:dateChecker|filter:greaterThan|filter:spaceFilter|itemsPerPage:20" ng-animate=" 'animate' ">
+		<div class="row">
+		<form class="navbar-form navbar-right">
+			<ul class="nav nav-pills">
+  <li role="presentation" ng-class="{active:reverse==true}"><a href="" ng-click="reverse=true">descending</a></li>
+  <li role="presentation" ng-class="{active:reverse==false}"><a href="" ng-click="reverse=false">ascending</a></li>
+</ul>
+			<div class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" id="orderby" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    Order By
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-left" aria-labelledby="orderby">
+    <li><a href="" ng-click="setOrder('weekly_price')">Weekly Price</a></li>
+    <li><a href="" ng-click="setOrder('hourly_price')">Hourly Price</a></li>
+    <li><a href="" ng-click="setOrder('monthly_price')">Monthly Price</a></li>
+  </ul>
+
+	
+
+</div>
+
+		
+		</form>
+			
+		</div>
+		<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"
+		 dir-paginate="item in venues|orderBy:order:reverse|filter:verified|
+		filter:dateChecker|filter:greaterThan|filter:spaceFilter|itemsPerPage:20">
 
 
 			<div ng-attr-name="main_photo_{{item.workspace_id}}">
@@ -225,10 +253,10 @@ if(isset($_SESSION['currentuserid'])){
 				  {{item.weekly_price|currency:"₹"}}
 			</div>
 			<div id="desc">
-			<a  href ="display_venue_detail.php"> <p> {{item.name}} /{{item.space_name}}  </p></a>
+			<a  ng-attr-href ="product_details/index.php?workspace_id={{item.workspace_id}}"> <p> {{item.name}} /{{item.space_name}}  </p></a>
 			</div>
 			<div id ="spacetype">
-				<a href ="display_venue_detail.php"> <p> {{item.spacetype_value}} </p> </a>
+				<a ng-attr-href ="product_details/index.php?workspace_id={{item.workspace_id}}"> <p> {{item.spacetype_value}} </p> </a>
 			</div>
 
 			<div id ="rating">

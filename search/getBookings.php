@@ -24,7 +24,7 @@ mysql_select_db($dbname,$conn);
 $i = count($workspace);
 
 for ($index = 0; $index < $i ; $index++){
-	$sql = "SELECT * from booking where workspace_id = '".$workspace[$index]."' AND confirmation_from_host = 0";	
+	$sql = "SELECT * from booking where workspace_id = '".$workspace[$index]."' AND confirmation_from_host = 1";	
 	$query = mysql_query($sql);
 	${"booking_".$index} [] ="";
 	 while($row = mysql_fetch_assoc($query)) {
@@ -49,7 +49,9 @@ if(${"booking_".$j}[$i]!=""){
 }
 
 
-
+if(isset($bookingdata)){
 echo json_encode($bookingdata);
-
+}
+else
+echo "";
 ?>
